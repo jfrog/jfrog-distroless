@@ -1,0 +1,6 @@
+schemaVersion: "1.0.0"
+commandTests:
+  # Check that access user
+  - name: check creds
+    command: ["cat", "/etc/passwd"]
+    expectedOutput: ["access:x:1030:1030:user:/home:/bin/bash"]

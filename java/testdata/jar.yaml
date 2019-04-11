@@ -1,0 +1,7 @@
+schemaVersion: "1.0.0"
+commandTests:
+  # Check jar command is in path
+  - name: jar
+    command: ["jar","--help"]
+    exitCode: 0
+    expectedOutput: ['Usage: jar \[OPTION...\]']

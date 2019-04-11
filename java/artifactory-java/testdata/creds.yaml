@@ -1,0 +1,6 @@
+schemaVersion: "1.0.0"
+commandTests:
+  # Check that artifactory user
+  - name: check creds
+    command: ["cat", "/etc/passwd"]
+    expectedOutput: ["artifactory:x:1030:1030:user:/home:/bin/bash"]

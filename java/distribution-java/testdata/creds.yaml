@@ -1,0 +1,6 @@
+schemaVersion: "1.0.0"
+commandTests:
+  # Check that distribution user
+  - name: check creds
+    command: ["cat", "/etc/passwd"]
+    expectedOutput: ["distribution:x:1020:1020:user:/home:/bin/bash"]

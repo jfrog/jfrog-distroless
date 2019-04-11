@@ -1,0 +1,6 @@
+schemaVersion: "1.0.0"
+commandTests:
+  # Check that jfmc user
+  - name: check creds
+    command: ["cat", "/etc/passwd"]
+    expectedOutput: ["jfmc:x:1050:1050:user:/home:/bin/bash"]

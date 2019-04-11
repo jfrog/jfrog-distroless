@@ -1,0 +1,6 @@
+schemaVersion: "1.0.0"
+commandTests:
+  # Check that xray user
+  - name: check creds
+    command: ["cat", "/etc/passwd"]
+    expectedOutput: ["xray:x:1035:1035:user:/home:/bin/bash"]
