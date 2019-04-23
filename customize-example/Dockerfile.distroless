@@ -1,11 +1,16 @@
-# This is an example of how to switch base image and install python resources
+# An example of customising Artifactory using the artifactory-java base image.
+# Using Docker multi stage build.
+# Taking the Artifactory file system (including java) and adding it to your custom distroless image.
 
+# The Artifactory official Docker image
 FROM docker.bintray.io/jfrog/artifactory-pro:6.9.1 AS artifactory
 
+# This will be your custom distroless image. In this example it's artifactory-java:adoptopenjdk11-14
 FROM docker.jfrog.io/jfrog/distroless/base/artifactory-java:adoptopenjdk11-14
 
 USER root
 
+# Environment needed for Artifactory
 ENV ARTIFACTORY_USER_NAME=artifactory \
     ARTIFACTORY_HOME=/opt/jfrog/artifactory \
     ARTIFACTORY_DATA=/var/opt/jfrog/artifactory \
@@ -14,11 +19,13 @@ ENV ARTIFACTORY_USER_NAME=artifactory \
     MIN_MAX_OPEN_FILES=10000 \
     RECOMMENDED_MAX_OPEN_PROCESSES=1024
 
+# Copy needed file system from artifactory (Artifactory offical image)
 COPY --from=artifactory /opt/jfrog /opt/jfrog
 COPY --from=artifactory /var/opt/jfrog/artifactory /var/opt/jfrog/artifactory
 COPY --from=artifactory /artifactory_extra_conf /artifactory_extra_conf
 COPY --from=artifactory /entrypoint-artifactory.sh /entrypoint-artifactory.sh
 
+# Adjust file system ownership
 RUN chown -R ${ARTIFACTORY_USER_NAME}:${ARTIFACTORY_USER_NAME} ${ARTIFACTORY_HOME} ${ARTIFACTORY_EXTRA_CONF} ${ARTIFACTORY_DATA}
 
 USER ${ARTIFACTORY_USER_NAME}

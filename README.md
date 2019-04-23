@@ -1,5 +1,4 @@
 # JFrog distroless base images 
-
 This project is based on Google [distroless](https://github.com/GoogleContainerTools/distroless) project 
 and build using [Bazel](https://bazel.build/) build tool
 
@@ -7,7 +6,6 @@ and build using [Bazel](https://bazel.build/) build tool
 Create a light weight image with no security vulnerabilities 
 
 ## Build Image
-
 To build all images run the following in the root directory, it expect BUILD_NUMBER (Jenkins Ready) to be pre set.
 ```bash
 # Set BUILD_NUMBER for local use
@@ -49,3 +47,9 @@ To install new debian you need to declare it in the [WORKSPACE](WORKSPACE) in th
 
 * Resources that are not available as deb files can be installed as tar files. The download resource is define as http_archive in the [WORKSPACE](WORKSPACE) file and you build them under experimental directory, last command should tar it then you can 
 add them as tar action during the image build.
+
+## Custom Artifactory Docker image
+In some cases, you'll want to customise the Artifactory Docker image and add more tools or do some other customisations to it.<br>
+See [customize-example](customize-example) directory with a couple of Dockerfiles as examples of how this can be done.
+
+**NOTE:** These are examples only and are meant to be extended as needed!
