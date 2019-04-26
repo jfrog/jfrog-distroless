@@ -1,6 +1,6 @@
 # An example of customising Artifactory using Ubuntu base image.
 # Using Docker multi stage build.
-# Taking the Artifactory file system (including java) and adding python and awscli (using apt-get and pip).
+# Taking the Artifactory file system (including java) and adding curl to it for debugging
 
 # The Artifactory official Docker image
 FROM docker.bintray.io/jfrog/artifactory-pro:6.9.1 AS base
@@ -27,11 +27,11 @@ COPY --from=base /entrypoint-artifactory.sh /entrypoint-artifactory.sh
 COPY --from=base /java /java
 COPY --from=base /tmp/plugins /tmp/plugins
 
-# Create the user, fix file system ownership and install needed tools with apt-get and pip
+# Create the user, fix file system ownership and install needed tools with apt-get
 # NOTE - wget must be installed for Artifactory HA
 RUN useradd -M -s /usr/sbin/nologin --uid ${ARTIFACTORY_USER_ID} --user-group ${ARTIFACTORY_USER_NAME} && \
     chown -R ${ARTIFACTORY_USER_NAME}:${ARTIFACTORY_USER_NAME} ${ARTIFACTORY_HOME} ${ARTIFACTORY_EXTRA_CONF} ${ARTIFACTORY_DATA} /tmp/plugins && \
-    apt-get update && apt-get install wget python-pip -y && pip install awscli
+    apt-get update && apt-get install -y wget curl
 
 USER $ARTIFACTORY_USER_NAME
 
