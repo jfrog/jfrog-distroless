@@ -24,6 +24,12 @@ docker_build(
         packages["liblz4-1"],
         packages["libgcrypt20"],
         packages["libgpg-error0"],
+        packages["libpng16-16"],
+        packages["libfreetype6"],
+        packages["fonts-dejavu-core"],
+        packages["fontconfig-config"],
+        packages["libexpat1"],
+        packages["libfontconfig1"],
     ],
     stamp = True,
     entrypoint = [
