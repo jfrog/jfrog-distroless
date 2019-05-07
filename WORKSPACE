@@ -97,6 +97,12 @@ dpkg_list(
         "zlib1g",
         "libgcrypt20=1.8.4-5",
         "libgpg-error0",
+        "libpng16-16",
+        "libfreetype6",
+        "fonts-dejavu-core",
+        "fontconfig-config",
+        "libfontconfig1",
+        "libexpat1",
     ],
     # Takes the first package found: security updates should go first
     # If there was a security fix to a package before the stable release, this will find
