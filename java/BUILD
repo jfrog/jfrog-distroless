@@ -10,7 +10,7 @@ cacerts_java(
 )
 
 docker_build(
-    name = "java11",
+    name = "java-base",
     base = "//cc:debug",
     debs = [
         packages["zlib1g"],
@@ -30,7 +30,21 @@ docker_build(
         packages["fontconfig-config"],
         packages["libexpat1"],
         packages["libfontconfig1"],
+        packages["bash"],
+        packages["dash"],
+        packages["libtinfo5"],
+        packages["libstdc++6"],
+        packages["libgcc1"]
     ],
+    stamp = True,
+    entrypoint = ["/busybox/sh"],
+
+    tars = [":cacerts_java"],
+)
+
+docker_build(
+    name = "java11",
+    base = ":java-base",
     stamp = True,
     entrypoint = [
         "/usr/bin/java",
@@ -41,7 +55,7 @@ docker_build(
     symlinks = {
         "/usr/bin/java": "/java/jdk-11.0.2+9/bin/java",
     },
-    tars = ["//experimental/adoptopenjdk:adoptopenjdk.tar",":cacerts_java"],
+    tars = ["//experimental/adoptopenjdk:adoptopenjdk.tar"],
 )
 
 docker_build(
@@ -83,6 +97,14 @@ container_test(
 )
 
 load("@io_bazel_rules_docker//container:container.bzl", "container_push")
+container_push(
+   name = "publish-base",
+   image = ":java-base",
+   format = "Docker",
+   registry = "docker.jfrog.io",
+   repository = "jfrog/distroless/base/java",
+   tag =  "@BUILD_NUMBER@",
+)
 container_push(
    name = "publish",
    image = ":java11",

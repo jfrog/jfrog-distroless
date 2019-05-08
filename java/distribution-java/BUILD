@@ -60,14 +60,6 @@ pkg_tar(
 docker_build(
     name = "distribution-java",
     base = "//java:debug",
-    debs = [
-    	packages["bash"],
-        packages["dash"],
-        packages["libtinfo5"],
-        packages["zlib1g"],
-        packages["libstdc++6"],
-        packages["libgcc1"],
-    ],
     stamp = True,
     tars = [
         ":passwd",

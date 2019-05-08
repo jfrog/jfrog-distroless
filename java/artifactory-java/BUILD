@@ -58,16 +58,19 @@ pkg_tar(
 )
 
 docker_build(
+    name = "artifactory-java-base",
+    base = "//java:java-base",
+    stamp = True,
+    tars = [
+        ":passwd",
+        ":group_tar",
+    ],
+    entrypoint = ["/busybox/sh"]
+)
+
+docker_build(
     name = "artifactory-java",
     base = "//java:debug",
-    debs = [
-    	packages["bash"],
-        packages["dash"],
-        packages["libtinfo5"],
-        packages["zlib1g"],
-        packages["libstdc++6"],
-        packages["libgcc1"],
-    ],
     stamp = True,
     tars = [
         ":passwd",
@@ -90,5 +93,14 @@ container_push(
    format = "Docker",
    registry = "docker.jfrog.io",
    repository = "jfrog/distroless/base/artifactory-java",
+   tag =  "adoptopenjdk11-@BUILD_NUMBER@",
+)
+
+container_push(
+   name = "publish-base",
+   image = ":artifactory-java-base",
+   format = "Docker",
+   registry = "docker.jfrog.io",
+   repository = "jfrog/distroless/base/artifactory-java-base",
    tag =  "adoptopenjdk11-@BUILD_NUMBER@",
 )
