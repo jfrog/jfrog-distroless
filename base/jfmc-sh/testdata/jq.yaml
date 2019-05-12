@@ -9,3 +9,6 @@ commandTests:
     command: ["jq","--help"]
     exitCode: 0
     expectedOutput: ['jq - commandline JSON processor \[version 1\.6\]']
+  - name: jq-owner
+    command: ["ls","-ld","/jq"]
+    expectedOutput: ['drwxr-xr-x    2 root     root']

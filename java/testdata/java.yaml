@@ -3,6 +3,9 @@ commandTests:
   - name: java
     command: ["java", "-version"]
     expectedError: ['openjdk version "11\.*.*"']
+  - name: java-owner
+    command: ["ls","-ld","/java"]
+    expectedOutput: ['drwxr-xr-x    3 root     root']
 fileExistenceTests:
   - name: certs
     path: "/etc/ssl/certs/java/cacerts"
