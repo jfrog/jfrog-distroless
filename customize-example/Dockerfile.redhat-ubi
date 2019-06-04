@@ -1,0 +1,41 @@
+# An example of customising Artifactory using RedHat Univeral Base Image (UBI).
+# Using Docker multi stage build.
+# Taking the Artifactory file system (including Java for Linux x64)
+
+# The Artifactory official Docker image
+FROM docker.bintray.io/jfrog/artifactory-pro:6.10.2 AS base
+
+# The new image based on registry.access.redhat.com/ubi
+FROM registry.access.redhat.com/ubi8
+
+# Environment needed for Artifactory
+ENV ARTIFACTORY_USER_NAME=artifactory \
+    ARTIFACTORY_USER_ID=1030 \
+    ARTIFACTORY_HOME=/opt/jfrog/artifactory \
+    ARTIFACTORY_DATA=/var/opt/jfrog/artifactory \
+    ARTIFACTORY_EXTRA_CONF=/artifactory_extra_conf \
+    RECOMMENDED_MAX_OPEN_FILES=32000 \
+    MIN_MAX_OPEN_FILES=10000 \
+    JAVA_HOME=/java/jdk-11.0.2+9 \
+    RECOMMENDED_MAX_OPEN_PROCESSES=1024
+
+# Copy needed file system from base (Artifactory image)
+COPY --from=base /opt/jfrog /opt/jfrog
+COPY --from=base /var/opt/jfrog/artifactory /var/opt/jfrog/artifactory
+COPY --from=base /artifactory_extra_conf /artifactory_extra_conf
+COPY --from=base /entrypoint-artifactory.sh /entrypoint-artifactory.sh
+COPY --from=base /java /java
+COPY --from=base /tmp/plugins /tmp/plugins
+
+# Create the user, fix file system ownership and install needed tools with Yum
+# NOTE - wget must be installed for Artifactory HA
+RUN useradd -M -s /usr/sbin/nologin --uid ${ARTIFACTORY_USER_ID} --user-group ${ARTIFACTORY_USER_NAME} && \
+    chown -R ${ARTIFACTORY_USER_NAME}:${ARTIFACTORY_USER_NAME} ${ARTIFACTORY_HOME} ${ARTIFACTORY_EXTRA_CONF} ${ARTIFACTORY_DATA} /tmp/plugins && \
+    yum install -y --disableplugin=subscription-manager wget
+
+USER $ARTIFACTORY_USER_NAME
+
+VOLUME ${ARTIFACTORY_DATA}
+VOLUME ${ARTIFACTORY_EXTRA_CONF}
+
+ENTRYPOINT ["/entrypoint-artifactory.sh"]
