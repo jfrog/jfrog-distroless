@@ -17,8 +17,8 @@ passwd_entry(
 
 passwd_entry(
     name = "router_user",
-    gid = 1000,
-    uid = 1000,
+    gid = 1117,
+    uid = 1117,
     username = "router",
 )
 
@@ -40,7 +40,7 @@ group_entry(
 
 group_entry(
     name = "router_group",
-    gid = 1000,
+    gid = 1117,
     groupname = "router",
 )
 

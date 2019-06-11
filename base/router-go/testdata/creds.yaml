@@ -3,4 +3,4 @@ commandTests:
   # Check that router user
   - name: check router creds
     command: ["cat", "/etc/passwd"]
-    expectedOutput: ["router:x:1000:1000:user:/home:/bin/bash"]
+    expectedOutput: ["router:x:1117:1117:user:/home:/bin/bash"]
