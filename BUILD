@@ -7,6 +7,7 @@ docker_bundle(
     images = {
         "docker.jfrog.io/jfrog/distroless/base/go:{BUILD_NUMBER}": "//base:static",
         "docker.jfrog.io/jfrog/distroless/base/xray-go:{BUILD_NUMBER}": "//base/xray-go",
+        "docker.jfrog.io/jfrog/distroless/base/router-go:{BUILD_NUMBER}": "//base/router-go",
         "docker.jfrog.io/jfrog/distroless/base/insight-sh:{BUILD_NUMBER}": "//base/insight-sh",
         "docker.jfrog.io/jfrog/distroless/base/jfmc-sh:{BUILD_NUMBER}": "//base/jfmc-sh",
         "docker.jfrog.io/jfrog/distroless/base/base:{BUILD_NUMBER}": "//base:base",
