@@ -5,6 +5,11 @@
 # The Artifactory official Docker image
 FROM docker.bintray.io/jfrog/artifactory-pro:6.10.2 AS base
 
+LABEL name="JFrog Artifactory Pro" \
+      description="The Universal Base Image is designed and engineered to be the base layer for all of your containerized applications, middleware and utilities. This base image is freely redistributable, but Red Hat only supports Red Hat technologies through subscriptions for Red Hat products. This image is maintained by Red Hat and updated regularly." \
+      vendor="JFrog" \
+      summary="JFrog Artifactory Pro (Red Hat UBI)"
+
 # The new image based on registry.access.redhat.com/ubi
 FROM registry.access.redhat.com/ubi8
 
