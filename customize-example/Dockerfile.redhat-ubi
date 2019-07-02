@@ -3,7 +3,7 @@
 # Taking the Artifactory file system (including Java for Linux x64)
 
 # The Artifactory official Docker image
-FROM docker.bintray.io/jfrog/artifactory-pro:6.10.2 AS base
+FROM docker.bintray.io/jfrog/artifactory-pro:6.10.6 AS base
 
 # The new image based on registry.access.redhat.com/ubi
 FROM registry.access.redhat.com/ubi8
