@@ -3,10 +3,15 @@
 # Taking the Artifactory file system (including Java for Linux x64)
 
 # The Artifactory official Docker image
-FROM docker.bintray.io/jfrog/artifactory-pro:6.10.2 AS base
+FROM docker.bintray.io/jfrog/artifactory-pro:6.11.1 AS base
 
 # The new image based on registry.access.redhat.com/ubi
 FROM registry.access.redhat.com/ubi8
+
+LABEL name="JFrog Artifactory Pro" \
+      description="JFrog Artifactory Pro image based on the Red Hat Universal Base Image." \
+      vendor="JFrog" \
+      summary="JFrog Artifactory Pro (Red Hat UBI)"
 
 # Environment needed for Artifactory
 ENV ARTIFACTORY_USER_NAME=artifactory \
@@ -26,12 +31,16 @@ COPY --from=base /artifactory_extra_conf /artifactory_extra_conf
 COPY --from=base /entrypoint-artifactory.sh /entrypoint-artifactory.sh
 COPY --from=base /java /java
 COPY --from=base /tmp/plugins /tmp/plugins
+# Add license information to meet the Red Hat container image certification requirements
+COPY --from=base /opt/jfrog/artifactory/*.html /licenses/
+COPY --from=base /opt/jfrog/artifactory/COPYING* /licenses/
 
 # Create the user, fix file system ownership and install needed tools with Yum
 # NOTE - wget must be installed for Artifactory HA
 RUN useradd -M -s /usr/sbin/nologin --uid ${ARTIFACTORY_USER_ID} --user-group ${ARTIFACTORY_USER_NAME} && \
     chown -R ${ARTIFACTORY_USER_NAME}:${ARTIFACTORY_USER_NAME} ${ARTIFACTORY_HOME} ${ARTIFACTORY_EXTRA_CONF} ${ARTIFACTORY_DATA} /tmp/plugins && \
     yum install -y --disableplugin=subscription-manager wget
+
 
 USER $ARTIFACTORY_USER_NAME
 
