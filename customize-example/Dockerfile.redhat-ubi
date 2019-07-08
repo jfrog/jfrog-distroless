@@ -1,12 +1,16 @@
 # An example of customising Artifactory using RedHat Univeral Base Image (UBI).
 # Using Docker multi stage build.
 # Taking the Artifactory file system (including Java for Linux x64)
-
+ARG ARTIFACTORY_BASE_VERSION=6.11.1
+ARG UBI_BASE_IMAGE=ubi8
 # The Artifactory official Docker image
-FROM docker.bintray.io/jfrog/artifactory-pro:6.11.1 AS base
+FROM docker.bintray.io/jfrog/artifactory-pro:${ARTIFACTORY_BASE_VERSION} AS base
 
 # The new image based on registry.access.redhat.com/ubi
-FROM registry.access.redhat.com/ubi8
+FROM registry.access.redhat.com/${UBI_BASE_IMAGE}
+
+ARG ARTIFACTORY_BASE_VERSION
+ARG UBI_BASE_IMAGE
 
 LABEL name="JFrog Artifactory Pro" \
       description="JFrog Artifactory Pro image based on the Red Hat Universal Base Image." \
@@ -34,6 +38,10 @@ COPY --from=base /tmp/plugins /tmp/plugins
 # Add license information to meet the Red Hat container image certification requirements
 COPY --from=base /opt/jfrog/artifactory/*.html /licenses/
 COPY --from=base /opt/jfrog/artifactory/COPYING* /licenses/
+
+# Metadata to let Artifactory know its installation source
+RUN mkdir -p ${ARTIFACTORY_DATA}/etc/info
+RUN echo "{\"productId\": \"JFrogRedHatUBI\",  \"features\": [{\"featureId\": \"${UBI_BASE_IMAGE}\"}]}" >${ARTIFACTORY_DATA}/etc/info/installer-info.json
 
 # Create the user, fix file system ownership and install needed tools with Yum
 # NOTE - wget must be installed for Artifactory HA
