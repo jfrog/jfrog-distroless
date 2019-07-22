@@ -98,8 +98,8 @@ docker_build(
     base = ":base",
     directory = "/",
     entrypoint = ["/busybox/sh"],
-    env = {"PATH": "$PATH:/busybox"},
-    tars = ["//experimental/busybox:busybox.tar"],
+    env = {"PATH": "$PATH:/busybox:/curl"},
+    tars = ["//experimental/busybox:busybox.tar","//experimental/curl:curl.tar"],
      stamp = True,
 )
 

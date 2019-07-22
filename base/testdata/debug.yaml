@@ -11,3 +11,6 @@ commandTests:
   - name: busybox-owner
     command: ["ls","-ld","/busybox"]
     expectedOutput: ['drwxr-xr-x    2 root     root']
+  - name: curl
+    command: ["curl","-h"]
+    expectedOutput: ['Usage: curl \[options\.\.\.\] <url>']

@@ -144,7 +144,13 @@ http_file(
     sha256 = "af052caf38fe81eae321005c5c151650d64714bbe0a3f5e1f7cb39ba179cf7d6",
     urls = ["https://deepscan.jfrog.io/deepscan/distroless-generic/busybox/1.30.0-glibc-busybox.tar.xz"],
 )
-
+#Adding pre compiled curl based on http://www.magicermine.com/demos/curl/curl/curl.html
+http_file(
+    name = "curl",
+    executable = True,
+    sha256 = "9b6a127173cfdca7db0b95ceef2a7946ad592ec23e193dc65ac3d302edc21264",
+    urls = ["https://deepscan.jfrog.io/deepscan/distroless-generic/curl/curl-7.30.0.ermine.tar.bz2"],
+)
 # Docker rules.
 git_repository(
     name = "io_bazel_rules_docker",
