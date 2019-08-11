@@ -41,7 +41,7 @@ dpkg_src(
     distro = "stretch",
     sha256 = "79a66cd92ba9096fce679e15d0b5feb9effcf618b0a6d065eb32684dbffd0311",
     snapshot = "20190224T095432Z",
-    url = "https://deepscan.jfrog.io/deepscan/snapshot.debian.org/archive",
+    url = "https://deepscan.jfrog.io/deepscan/debian/archive",
 )
 
 dpkg_src(
@@ -50,13 +50,13 @@ dpkg_src(
     distro = "stretch-backports",
     sha256 = "521da2a9eb91afccfb008272a05c7e8e2fde1d1d54f46a1d356b7be88920fffe",
     snapshot = "20190217T090420Z",
-    url = "https://deepscan.jfrog.io/deepscan/snapshot.debian.org/archive",
+    url = "https://deepscan.jfrog.io/deepscan/debian/archive",
 )
 
 dpkg_src(
     name = "debian_stretch_security",
-    package_prefix = "https://deepscan.jfrog.io/deepscan/snapshot.debian.org/archive/debian-security/20190131T235445Z/",
-    packages_gz_url = "https://deepscan.jfrog.io/deepscan/snapshot.debian.org/archive/debian-security/20190131T235445Z/dists/stretch/updates/main/binary-amd64/Packages.gz",
+    package_prefix = "https://deepscan.jfrog.io/deepscan/debian/archive/debian-security/20190131T235445Z/",
+    packages_gz_url = "https://deepscan.jfrog.io/deepscan/debian/archive/debian-security/20190131T235445Z/dists/stretch/updates/main/binary-amd64/Packages.gz",
     sha256 = "4108944dd44b1b0d57c4765115244d363c1d69285c1d574ad61bb51f6d81828f",
 )
 
@@ -103,6 +103,9 @@ dpkg_list(
         "fontconfig-config",
         "libfontconfig1",
         "libexpat1",
+        "db-util",
+        "db5.3-util",
+        "libdb5.3",
     ],
     # Takes the first package found: security updates should go first
     # If there was a security fix to a package before the stable release, this will find

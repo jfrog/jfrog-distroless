@@ -83,6 +83,9 @@ docker_build(
                 packages["zlib1g"],
                 packages["libstdc++6"],
                 packages["libgcc1"],
+                packages["db-util"],
+                packages["db5.3-util"],
+                packages["libdb5.3"],
             ],
     tars = [
             ":passwd",
@@ -96,7 +99,11 @@ container_test(
     image = ":xray-go",
 )
 
-
+container_test(
+    name = "db_test",
+    configs = ["testdata/db.yaml"],
+    image = ":xray-go",
+)
 
 load("@io_bazel_rules_docker//container:container.bzl", "container_push")
 container_push(
