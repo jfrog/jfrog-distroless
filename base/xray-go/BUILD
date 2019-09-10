@@ -78,7 +78,6 @@ docker_build(
     debs = [
             	packages["bash"],
                 packages["dash"],
-#                packages["zip"],
                 packages["libtinfo5"],
                 packages["zlib1g"],
                 packages["libstdc++6"],
@@ -86,40 +85,13 @@ docker_build(
                 packages["db-util"],
                 packages["db5.3-util"],
                 packages["libdb5.3"],
-                # PostgreSQL client ->
-                packages["postgresql-client-9.6"],
-                packages["postgresql-client-common"],
-                packages["perl"],
-                packages["perl-base"],
-                packages["perl-modules-5.24"],
-                packages["libperl5.24"],
-                packages["libpq5"],
-                packages["libedit2"],
-                packages["libc-bin"],
-                packages["libgssapi-krb5-2"],
-                packages["libldap-2.4-2"],
-                packages["libncurses5"],
-                packages["libbsd0"],
-                packages["libkrb5-3"],
-                packages["libk5crypto3"],
-                packages["libcom-err2"],
-                packages["libkrb5support0"],
-                packages["libkeyutils1"],
-                packages["libsasl2-2"],
-                packages["libgnutls30"],
-                packages["libp11-kit0"],
-                packages["libidn11"],
-                packages["libtasn1-6"],
-                packages["libnettle6"],
-                packages["libhogweed4"],
-                packages["libgmp10"],
-                packages["libffi6"],
-                # <- PostgreSQL client
             ],
     tars = [
             ":passwd",
             ":group_tar",
+            "//experimental/postgresql-client:postgresql-client.tar",
         ],
+    env = {"PATH": "$PATH:/postgresql-client/bin"},
     entrypoint = ["/busybox/sh"]
 )
 container_test(
@@ -131,6 +103,12 @@ container_test(
 container_test(
     name = "db_test",
     configs = ["testdata/db.yaml"],
+    image = ":xray-go",
+)
+
+container_test(
+    name = "psql_test",
+    configs = ["testdata/psql.yaml"],
     image = ":xray-go",
 )
 

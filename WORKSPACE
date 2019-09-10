@@ -106,35 +106,6 @@ dpkg_list(
         "db-util",
         "db5.3-util",
         "libdb5.3",
-        # PostgreSQL client ->
-        "postgresql-client-9.6",
-        "postgresql-client-common",
-        "perl",
-        "perl-base=5.24.1-3+deb9u5",
-        "perl-modules-5.24",
-        "libperl5.24",
-        "libpq5",
-        "libedit2",
-        "libc-bin",
-        "libgssapi-krb5-2",
-        "libldap-2.4-2",
-        "libncurses5",
-        "libbsd0",
-        "libkrb5-3",
-        "libk5crypto3",
-        "libcom-err2",
-        "libkrb5support0",
-        "libkeyutils1",
-        "libsasl2-2",
-        "libgnutls30",
-        "libp11-kit0",
-        "libidn11",
-        "libtasn1-6",
-        "libnettle6",
-        "libhogweed4",
-        "libgmp10",
-        "libffi6",
-        # <- PostgreSQL client
     ],
     # Takes the first package found: security updates should go first
     # If there was a security fix to a package before the stable release, this will find
@@ -148,12 +119,19 @@ dpkg_list(
 )
 
 # Java adoptopenjdk file, change the url for diffrent java installation
-
 http_file(
     name = "adoptopenjdk",
     executable = True,
     sha256 = "d02089d834f7702ac1a9776d8d0d13ee174d0656cf036c6b68b9ffb71a6f610e",
     urls = ["https://deepscan.jfrog.io/deepscan/distroless-generic/java/OpenJDK11U-jdk_x64_linux_hotspot_11.0.2_9.tar.gz"],
+)
+
+# PostgreSQL Client for MongoDB -> PostgreSQL migration
+http_file(
+    name = "postgresql-client",
+    executable = True,
+    sha256 = "18102fdccdd3c71e34f4d827e3f51fa3d694f55bf25c4c06af397aa241ecb15d",
+    urls = ["https://deepscan.jfrog.io/deepscan/distroless-generic/postgresql/postgresql-9.5.2-1-linux-x64-binaries.tar.gz"],
 )
 
 http_file(
