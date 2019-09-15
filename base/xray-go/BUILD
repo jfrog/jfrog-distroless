@@ -78,7 +78,6 @@ docker_build(
     debs = [
             	packages["bash"],
                 packages["dash"],
-#                packages["zip"],
                 packages["libtinfo5"],
                 packages["zlib1g"],
                 packages["libstdc++6"],
@@ -90,7 +89,9 @@ docker_build(
     tars = [
             ":passwd",
             ":group_tar",
+            "//experimental/postgresql-client:postgresql-client.tar",
         ],
+    env = {"PATH": "$PATH:/postgresql-client/bin"},
     entrypoint = ["/busybox/sh"]
 )
 container_test(
@@ -102,6 +103,12 @@ container_test(
 container_test(
     name = "db_test",
     configs = ["testdata/db.yaml"],
+    image = ":xray-go",
+)
+
+container_test(
+    name = "psql_test",
+    configs = ["testdata/psql.yaml"],
     image = ":xray-go",
 )
 

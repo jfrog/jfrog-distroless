@@ -119,12 +119,19 @@ dpkg_list(
 )
 
 # Java adoptopenjdk file, change the url for diffrent java installation
-
 http_file(
     name = "adoptopenjdk",
     executable = True,
     sha256 = "d02089d834f7702ac1a9776d8d0d13ee174d0656cf036c6b68b9ffb71a6f610e",
     urls = ["https://deepscan.jfrog.io/deepscan/distroless-generic/java/OpenJDK11U-jdk_x64_linux_hotspot_11.0.2_9.tar.gz"],
+)
+
+# PostgreSQL Client for MongoDB -> PostgreSQL migration
+http_file(
+    name = "postgresql-client",
+    executable = True,
+    sha256 = "18102fdccdd3c71e34f4d827e3f51fa3d694f55bf25c4c06af397aa241ecb15d",
+    urls = ["https://deepscan.jfrog.io/deepscan/distroless-generic/postgresql/postgresql-9.5.2-1-linux-x64-binaries.tar.gz"],
 )
 
 http_file(
