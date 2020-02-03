@@ -64,7 +64,7 @@ dpkg_src(
     name = "debian_stretch_local",
     package_prefix = "https://deepscan.jfrog.io/deepscan/debian-local/",
     packages_gz_url = "https://deepscan.jfrog.io/deepscan/debian-local/dists/stretch/main/binary-amd64/Packages.gz",
-    sha256 = "c33c898bcd3573a64169982d1270a07aee6a01996cf22e82ba0cca13251a8418",
+    sha256 = "538d763e5199f6c95abee89239b4d9f70f2d2914c9de52083276caa914702a3e",
 )
 
 dpkg_list(
