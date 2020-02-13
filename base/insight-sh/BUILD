@@ -20,6 +20,7 @@ passwd_entry(
     name = "elasticsearch_user",
     gid = 1000,
     uid = 1000,
+    home = "/home/elasticsearch",
     username = "elasticsearch",
 )
 
@@ -27,6 +28,7 @@ passwd_entry(
     name = "jfmc_user",
     gid = 1050,
     uid = 1050,
+    home = "/home/jfmc",
     username = "jfmc",
 )
 
