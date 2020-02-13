@@ -21,7 +21,7 @@ LABEL name="JFrog Artifactory Pro" \
 # Environment needed for Artifactory
 ENV JF_ARTIFACTORY_USER=artifactory \
     ARTIFACTORY_USER_ID=1030 \
-    ARTIFACTORY_VERSION=${ARTIFACTORY_VERSION} \
+    ARTIFACTORY_VERSION=${ARTIFACTORY_BASE_VERSION} \
     JF_PRODUCT_HOME=/opt/jfrog/artifactory \
     JF_PRODUCT_DATA_INTERNAL=/var/opt/jfrog/artifactory \
     RECOMMENDED_MAX_OPEN_FILES=32000 \
@@ -36,7 +36,7 @@ COPY --from=base /entrypoint-artifactory.sh /entrypoint-artifactory.sh
 
 # Metadata to let Artifactory know its installation source
 RUN mkdir -p ${JF_PRODUCT_DATA_INTERNAL}/etc/info
-RUN echo "{\"productId\": \"JFrogRedHatUBI\",  \"features\": [{\"featureId\": \"${UBI_BASE_IMAGE}\"}]}" >${JF_PRODUCT_DATA_INTERNAL}/etc/info/installer-info.json
+RUN echo "{\"productId\":\"RHE8_Artifactory/${ARTIFACTORY_VERSION}\",\"features\":[{\"featureId\":\"ArtifactoryVersion/${ARTIFACTORY_VERSION}\"},{\"featureId\":\"Derby/0.0.0\"},{\"featureId\":\"Platform/${UBI_BASE_IMAGE}\"},{\"featureId\":\"ACC-006983\"}]}" > ${JF_PRODUCT_DATA_INTERNAL}/etc/info/installer-info.json
 
 # Create the user, fix file system ownership and install needed tools with Yum
 # NOTE - wget must be installed for Artifactory HA
