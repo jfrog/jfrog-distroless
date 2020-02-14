@@ -36,7 +36,7 @@ COPY --from=base /entrypoint-artifactory.sh /entrypoint-artifactory.sh
 
 # Metadata to let Artifactory know its installation source
 RUN mkdir -p ${JF_PRODUCT_DATA_INTERNAL}/etc/info
-RUN echo "{\"productId\":\"RHE8_Artifactory/${ARTIFACTORY_VERSION}\",\"features\":[{\"featureId\":\"ArtifactoryVersion/${ARTIFACTORY_VERSION}\"},{\"featureId\":\"Derby/0.0.0\"},{\"featureId\":\"Platform/${UBI_BASE_IMAGE}\"},{\"featureId\":\"ACC-006983\"}]}" > ${JF_PRODUCT_DATA_INTERNAL}/etc/info/installer-info.json
+RUN echo "{\"productId\":\"UBI8_artifactory/1.0.0\",\"features\":[{\"featureId\":\"Partner/ACC-006983\"}]}" > ${JF_PRODUCT_DATA_INTERNAL}/etc/info/installer-info.json
 
 # Create the user, fix file system ownership and install needed tools with Yum
 # NOTE - wget must be installed for Artifactory HA
