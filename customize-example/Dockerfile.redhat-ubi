@@ -25,7 +25,7 @@ ENV ARTIFACTORY_USER_NAME=artifactory \
     ARTIFACTORY_EXTRA_CONF=/artifactory_extra_conf \
     RECOMMENDED_MAX_OPEN_FILES=32000 \
     MIN_MAX_OPEN_FILES=10000 \
-    JAVA_HOME=/java/jdk-11.0.2+9 \
+    JAVA_HOME=/java/jdk-11.0.6+10 \
     RECOMMENDED_MAX_OPEN_PROCESSES=1024
 
 # Copy needed file system from base (Artifactory image)
