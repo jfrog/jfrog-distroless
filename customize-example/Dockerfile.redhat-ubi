@@ -1,7 +1,7 @@
 # An example of customising Artifactory using RedHat Univeral Base Image (UBI).
 # Using Docker multi stage build.
 # Taking the Artifactory file system (including Java for Linux x64)
-ARG ARTIFACTORY_BASE_VERSION=6.11.3
+ARG ARTIFACTORY_BASE_VERSION=6.17.0
 ARG UBI_BASE_IMAGE=ubi8
 # The Artifactory official Docker image
 FROM docker.bintray.io/jfrog/artifactory-pro:${ARTIFACTORY_BASE_VERSION} AS base
@@ -25,7 +25,7 @@ ENV ARTIFACTORY_USER_NAME=artifactory \
     ARTIFACTORY_EXTRA_CONF=/artifactory_extra_conf \
     RECOMMENDED_MAX_OPEN_FILES=32000 \
     MIN_MAX_OPEN_FILES=10000 \
-    JAVA_HOME=/java/jdk-11.0.6+10 \
+    JAVA_HOME=/java/jdk-11.0.2+9 \
     RECOMMENDED_MAX_OPEN_PROCESSES=1024
 
 # Copy needed file system from base (Artifactory image)
@@ -41,7 +41,7 @@ COPY --from=base /opt/jfrog/artifactory/COPYING* /licenses/
 
 # Metadata to let Artifactory know its installation source
 RUN mkdir -p ${ARTIFACTORY_DATA}/etc/info
-RUN echo "{\"productId\": \"JFrogRedHatUBI\",  \"features\": [{\"featureId\": \"${UBI_BASE_IMAGE}\"}]}" >${ARTIFACTORY_DATA}/etc/info/installer-info.json
+RUN echo "{\"productId\":\"UBI8_artifactory/1.0.0\",\"features\":[{\"featureId\":\"Partner/ACC-006983\"}]}" > ${ARTIFACTORY_DATA}/etc/info/installer-info.json
 
 # Create the user, fix file system ownership and install needed tools with Yum
 # NOTE - wget must be installed for Artifactory HA
