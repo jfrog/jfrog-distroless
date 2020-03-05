@@ -34,6 +34,9 @@ COPY --from=base /opt/jfrog /opt/jfrog
 COPY --from=base /var/opt/jfrog/artifactory /var/opt/jfrog/artifactory
 COPY --from=base /entrypoint-artifactory.sh /entrypoint-artifactory.sh
 
+# Add license information to meet the Red Hat container image certification requirements
+COPY --from=base /opt/jfrog/artifactory/app/doc/* /licenses/
+
 # Metadata to let Artifactory know its installation source
 RUN mkdir -p ${JF_PRODUCT_DATA_INTERNAL}/etc/info
 RUN echo "{\"productId\":\"UBI8_artifactory/1.0.0\",\"features\":[{\"featureId\":\"Partner/ACC-006983\"}]}" > ${JF_PRODUCT_DATA_INTERNAL}/etc/info/installer-info.json
