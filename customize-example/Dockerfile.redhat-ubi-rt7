@@ -39,7 +39,7 @@ COPY --from=base /opt/jfrog/artifactory/app/doc/* /licenses/
 
 # Metadata to let Artifactory know its installation source
 RUN mkdir -p ${JF_PRODUCT_DATA_INTERNAL}/etc/info
-RUN echo "{\"productId\":\"UBI8_artifactory/1.0.0\",\"features\":[{\"featureId\":\"Partner/ACC-006983\"}]}" > ${JF_PRODUCT_DATA_INTERNAL}/etc/info/installer-info.json
+RUN echo "{\"productId\":\"UBI8_artifactory/1.0.0\",\"features\":[{\"featureId\":\"Partner/ACC-006983\"}]}" > ${JF_PRODUCT_DATA_INTERNAL}/etc/artifactory/info/installer-info.json
 
 # Create the user, fix file system ownership and install needed tools with Yum
 # NOTE - wget must be installed for Artifactory HA
