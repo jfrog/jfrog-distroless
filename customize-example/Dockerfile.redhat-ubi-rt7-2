@@ -1,0 +1,60 @@
+# An example of customising Artifactory using RedHat Univeral Base Image (UBI).
+# Using Docker multi stage build.
+# Taking the Artifactory file system
+ARG ARTIFACTORY_BASE_VERSION=7.2.1
+ARG UBI_BASE_IMAGE=ubi8
+
+# The Artifactory early access Docker image
+FROM docker.bintray.io/jfrog/artifactory-pro:${ARTIFACTORY_BASE_VERSION} AS base
+
+# The new image based on registry.access.redhat.com/ubi
+FROM registry.access.redhat.com/${UBI_BASE_IMAGE}
+
+ARG ARTIFACTORY_BASE_VERSION
+ARG UBI_BASE_IMAGE
+
+LABEL name="JFrog Artifactory Pro" \
+      description="JFrog Artifactory Pro image based on the Red Hat Universal Base Image." \
+      vendor="JFrog" \
+      summary="JFrog Artifactory Pro (Red Hat UBI)"
+
+# Environment needed for Artifactory
+ENV ARTIFACTORY_USER_NAME=artifactory \
+    ARTIFACTORY_USER_ID=1030 \
+    ARTIFACTORY_HOME=/opt/jfrog/artifactory \
+    ARTIFACTORY_DATA=/var/opt/jfrog/artifactory \
+    RECOMMENDED_MAX_OPEN_FILES=32000 \
+    MIN_MAX_OPEN_FILES=10000 \
+    ## JAVA_HOME=/java/jdk-11.0.2+9 \
+    RECOMMENDED_MAX_OPEN_PROCESSES=1024
+
+# Copy needed file system from base (Artifactory image)
+COPY --from=base /opt/jfrog /opt/jfrog
+COPY --from=base /var/opt/jfrog/artifactory /var/opt/jfrog/artifactory
+COPY --from=base /entrypoint-artifactory.sh /entrypoint-artifactory.sh
+
+
+# Metadata to let Artifactory know its installation source
+RUN mkdir -p ${ARTIFACTORY_DATA}/etc/info
+RUN echo "{\"productId\": \"JFrogRedHatUBI\",  \"features\": [{\"featureId\": \"${UBI_BASE_IMAGE}\"}]}" >${ARTIFACTORY_DATA}/etc/info/installer-info.json
+
+# system.yaml configuration
+RUN cp /opt/jfrog/artifactory/var/etc/system.basic-template.yaml /opt/jfrog/artifactory/var/etc/system.yaml
+RUN sed -i -e "s/#id: \"art1\"/id: \"artifactory\"/" /opt/jfrog/artifactory/var/etc/system.yaml
+#RUN sed -i -e "s/#primary: true/primary: true/" /opt/jfrog/artifactory/var/etc/system.yaml
+#RUN sed -i -e "s/#haEnabled:/haEnabled:/" /opt/jfrog/artifactory/var/etc/system.yaml
+
+# Create the user, fix file system ownership and install needed tools with Yum
+# NOTE - wget must be installed for Artifactory HA
+RUN useradd -M -s /usr/sbin/nologin --uid ${ARTIFACTORY_USER_ID} --user-group ${ARTIFACTORY_USER_NAME} && \
+    chown -R ${ARTIFACTORY_USER_NAME}:${ARTIFACTORY_USER_NAME} ${ARTIFACTORY_HOME} ${ARTIFACTORY_EXTRA_CONF} ${ARTIFACTORY_DATA} && \
+    yum install -y --disableplugin=subscription-manager wget
+
+
+USER $ARTIFACTORY_USER_NAME
+
+
+VOLUME ${ARTIFACTORY_DATA}
+
+
+ENTRYPOINT ["/entrypoint-artifactory.sh"]
