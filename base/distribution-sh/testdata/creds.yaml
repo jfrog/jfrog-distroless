@@ -1,0 +1,9 @@
+schemaVersion: "1.0.0"
+commandTests:
+  # Check that distribution user
+  - name: check distribution creds
+    command: ["cat", "/etc/passwd"]
+    expectedOutput: ["distribution:x:1020:1020:user:/home/distribution:/bin/bash"]
+  - name: check distribution groups
+    command: ["id", "distribution"]
+    expectedOutput: ["groups.*1020.*distribution.*"]

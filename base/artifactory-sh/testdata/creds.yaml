@@ -1,0 +1,9 @@
+schemaVersion: "1.0.0"
+commandTests:
+  # Check that artifactory user
+  - name: check artifactory creds
+    command: ["cat", "/etc/passwd"]
+    expectedOutput: ["artifactory:x:1030:1030:user:/home/artifactory:/bin/bash"]
+  - name: check artifactory groups
+    command: ["id", "artifactory"]
+    expectedOutput: ["groups.*1030.*artifactory.*"]
