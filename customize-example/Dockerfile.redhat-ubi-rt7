@@ -49,10 +49,11 @@ RUN useradd -M -s /usr/sbin/nologin --uid ${ARTIFACTORY_USER_ID} --user-group ${
     chown -R ${JF_ARTIFACTORY_USER}:${JF_ARTIFACTORY_USER} ${JF_PRODUCT_HOME} ${JF_PRODUCT_DATA_INTERNAL} && \
     yum install -y --disableplugin=subscription-manager wget && \
     yum install -y --disableplugin=subscription-manager procps && \
+    yum install -y --disableplugin=subscription-manager net-tools && \
     yum install -y --disableplugin=subscription-manager hostname
 
 
-USER $ARTIFACTORY_USER_NAME
+USER $JF_ARTIFACTORY_USER
 
 VOLUME ${JF_PRODUCT_DATA_INTERNAL}
 
