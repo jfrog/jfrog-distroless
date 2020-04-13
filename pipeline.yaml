@@ -40,4 +40,4 @@ pipelines:
           inputSteps:
             - name: docker_push
           outputResources:
-            - name: partnershipArtifactory
+            - name: jefferyfryDistrolessArtifactory
