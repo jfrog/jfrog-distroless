@@ -1,0 +1,43 @@
+resources:
+  - name: jefferyfryDistrolessGithubRepo
+    type: GitRepo
+    configuration:
+      gitProvider: jefferyfryGithub
+      path: jefferyfry/jfrog-distroless
+  - name: partnershipArtifactory
+    type: BuildInfo
+    configuration:
+      sourceArtifactory: PartnershipArtifactory
+      buildName: svc_build
+      buildNumber: 1
+pipelines:
+  - name: pipeline_docker_build_push
+    steps:
+      - name: docker_build
+        type: DockerBuild
+        configuration:
+          affinityGroup: dockerGroup
+          dockerFileLocation: customize-example
+          dockerFileName: Dockerfile.redhat-ubi-rt7
+          dockerImageName: 'rh/ubi/artifactory-rh'
+          dockerImageTag: ${run_number}
+          inputResources:
+            - name: jefferyfryDistrolessGithubRepo
+          integrations:
+            - name: PartnershipArtifactory
+      - name: docker_push
+        type: DockerPush
+        configuration:
+          affinityGroup: dockerGroup
+          targetRepository: public-images
+          integrations:
+            - name: PartnershipArtifactory
+          inputSteps:
+            - name: docker_build
+      - name: publish_build_info
+        type: PublishBuildInfo
+        configuration:
+          inputSteps:
+            - name: docker_push
+          outputResources:
+            - name: partnershipArtifactory
