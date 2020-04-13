@@ -4,7 +4,7 @@ resources:
     configuration:
       gitProvider: jefferyfryGithub
       path: jefferyfry/jfrog-distroless
-  - name: partnershipArtifactory
+  - name: jefferyfryDistrolessArtifactory
     type: BuildInfo
     configuration:
       sourceArtifactory: PartnershipArtifactory
