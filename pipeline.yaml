@@ -13,7 +13,7 @@ resources:
       buildName: docker_build
       buildNumber: 1
 pipelines:
-  - name: pipeline_docker_build_push
+  - name: distroless_docker_build_push
     steps:
       - name: docker_build
         type: DockerBuild
