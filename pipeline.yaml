@@ -22,7 +22,7 @@ pipelines:
           dockerFileLocation: customize-example
           dockerFileName: Dockerfile.redhat-ubi-rt7
           dockerImageName: 'rh/ubi/artifactory-rh'
-          dockerImageTag: ${res_jefferyfryDistrolessArtifactory_gitTagName}-${run_number}
+          dockerImageTag: ${run_number}
           inputResources:
             - name: jefferyfryDistrolessGithubRepo
           integrations:
