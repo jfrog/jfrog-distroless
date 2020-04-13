@@ -4,11 +4,13 @@ resources:
     configuration:
       gitProvider: jefferyfryGithub
       path: jefferyfry/jfrog-distroless
+      branches:
+        include: ^{{gitBranch}}$
   - name: jefferyfryDistrolessArtifactory
     type: BuildInfo
     configuration:
       sourceArtifactory: PartnershipArtifactory
-      buildName: svc_build
+      buildName: docker_build
       buildNumber: 1
 pipelines:
   - name: pipeline_docker_build_push
@@ -20,7 +22,7 @@ pipelines:
           dockerFileLocation: customize-example
           dockerFileName: Dockerfile.redhat-ubi-rt7
           dockerImageName: 'rh/ubi/artifactory-rh'
-          dockerImageTag: ${run_number}
+          dockerImageTag: ${res_jefferyfryDistrolessArtifactory_gitTagName}-${run_number}
           inputResources:
             - name: jefferyfryDistrolessGithubRepo
           integrations:
