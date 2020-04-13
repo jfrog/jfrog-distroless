@@ -31,7 +31,7 @@ pipelines:
         type: DockerPush
         configuration:
           affinityGroup: dockerGroup
-          targetRepository: public-images
+          targetRepository: jfrog-artifactory
           integrations:
             - name: PartnershipArtifactory
           inputSteps:
