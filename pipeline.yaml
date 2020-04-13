@@ -2,8 +2,8 @@ resources:
   - name: distrolessGithubRepo
     type: GitRepo
     configuration:
-      gitProvider: Github
-      path: jefferyfry/jfrog-distroless
+      gitProvider: DistrolessGithub
+      path: jfrog/jfrog-distroless
       branches:
         include: ^{{gitBranch}}$
   - name: distrolessArtifactory
