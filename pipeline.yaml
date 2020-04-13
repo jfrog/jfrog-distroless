@@ -21,7 +21,7 @@ pipelines:
           affinityGroup: dockerGroup
           dockerFileLocation: customize-example
           dockerFileName: Dockerfile.redhat-ubi-rt7
-          dockerImageName: 'rh/ubi/artifactory-rh'
+          dockerImageName: 'partnership.jfrog.io/rh/ubi/artifactory-rh'
           dockerImageTag: ${run_number}
           inputResources:
             - name: jefferyfryDistrolessGithubRepo
