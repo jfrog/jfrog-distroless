@@ -1,12 +1,12 @@
 resources:
-  - name: jefferyfryDistrolessGithubRepo
+  - name: distrolessGithubRepo
     type: GitRepo
     configuration:
-      gitProvider: jefferyfryGithub
+      gitProvider: Github
       path: jefferyfry/jfrog-distroless
       branches:
         include: ^{{gitBranch}}$
-  - name: jefferyfryDistrolessArtifactory
+  - name: distrolessArtifactory
     type: BuildInfo
     configuration:
       sourceArtifactory: PartnershipArtifactory
@@ -24,7 +24,7 @@ pipelines:
           dockerImageName: 'partnership-jfrog-artifactory.jfrog.io/artifactory-rh-ubi'
           dockerImageTag: ${run_number}
           inputResources:
-            - name: jefferyfryDistrolessGithubRepo
+            - name: distrolessGithubRepo
           integrations:
             - name: PartnershipArtifactory
       - name: docker_push
@@ -42,4 +42,4 @@ pipelines:
           inputSteps:
             - name: docker_push
           outputResources:
-            - name: jefferyfryDistrolessArtifactory
+            - name: distrolessArtifactory
