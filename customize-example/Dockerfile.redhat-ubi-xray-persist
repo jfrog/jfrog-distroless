@@ -19,7 +19,8 @@ ENV JF_XRAY_USER=xray \
     XRAY_USER_ID=1035 \
     XRAY_VERSION=${XRAY_BASE_VERSION} \
     JF_PRODUCT_HOME=/opt/jfrog/xray \
-    JF_PRODUCT_DATA_INTERNAL=/var/opt/jfrog/xray
+    JF_PRODUCT_DATA_INTERNAL=/var/opt/jfrog/xray \
+    SERVICE_NAME=persist
 
 COPY --from=base /opt/jfrog/xray /opt/jfrog/xray
 COPY --from=base /postgresql-client /postgresql-client
@@ -38,6 +39,6 @@ RUN useradd -M -s /usr/sbin/nologin --uid 1035 --user-group xray && \
 
 USER xray
 
-#VOLUME /var/opt/jfrog/xray
+VOLUME /var/opt/jfrog/xray
 
 ENTRYPOINT ["/opt/jfrog/xray/app/bin/wrapper.sh"]
