@@ -14,7 +14,7 @@ LABEL name="JFrog Xray Indexer" \
       vendor="JFrog" \
       summary="JFrog Xray Indexer (Red Hat UBI)"
 
-# Environment needed for Artifactory
+# Environment needed for Xray
 ENV JF_XRAY_USER=xray \
     XRAY_USER_ID=1035 \
     XRAY_VERSION=${XRAY_BASE_VERSION} \

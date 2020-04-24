@@ -14,7 +14,7 @@ LABEL name="JFrog Xray Server" \
       vendor="JFrog" \
       summary="JFrog Xray Server (Red Hat UBI)"
 
-# Environment needed for Artifactory
+# Environment needed for Xray
 ENV JF_XRAY_USER=xray \
     XRAY_USER_ID=1035 \
     XRAY_VERSION=${XRAY_BASE_VERSION} \
