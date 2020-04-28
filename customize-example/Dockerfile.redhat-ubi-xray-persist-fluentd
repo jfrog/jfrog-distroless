@@ -47,15 +47,15 @@ RUN mkdir -p /usr/lib/rpm/redhat/ && \
     touch /usr/lib/rpm/redhat/redhat-hardened-cc1 && \
     touch /usr/lib/rpm/redhat/redhat-hardened-ld && \
     touch /usr/lib/rpm/redhat/redhat-annobin-cc1 && \
-    fluent-gem install fluent-plugin-splunk-hec && \
-    fluent-gem install fluent-plugin-datadog
+    td-agent-gem install fluent-plugin-splunk-hec && \
+    td-agent-gem install fluent-plugin-datadog
 
 # REMOVE THE DEV TOOLS NEEDED FOR GEM INSTALL NOW..
 RUN yum remove -y --disableplugin=subscription-manager gcc gcc-c++ make
 
-COPY fluent.conf /etc/td-agent/td-agent.conf
+USER $JF_XRAY_USER
 
-USER xray
+COPY fluent.conf /etc/td-agent/td-agent.conf
 
 VOLUME /var/opt/jfrog/xray
 
