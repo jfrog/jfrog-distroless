@@ -62,9 +62,8 @@ RUN mkdir -p /usr/lib/rpm/redhat/ && \
     touch /usr/lib/rpm/redhat/redhat-hardened-cc1 && \
     touch /usr/lib/rpm/redhat/redhat-hardened-ld && \
     touch /usr/lib/rpm/redhat/redhat-annobin-cc1 && \
-    gem install fluent-plugin-splunk-hec && \
-    gem install fluent-plugin-datadog && \
-    gem install fluent-plugin-sumologic_output
+    fluent-gem install fluent-plugin-splunk-hec && \
+    fluent-gem install fluent-plugin-datadog
 
 
 # REMOVE THE DEV TOOLS NEEDED FOR GEM INSTALL NOW..
