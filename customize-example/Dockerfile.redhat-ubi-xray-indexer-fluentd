@@ -1,0 +1,63 @@
+ARG XRAY_BASE_VERSION=3.2.3
+ARG UBI_BASE_IMAGE=ubi8
+
+FROM docker.bintray.io/jfrog/xray-indexer:${XRAY_BASE_VERSION} AS base
+
+# The new image based on registry.access.redhat.com/ubi
+FROM registry.access.redhat.com/${UBI_BASE_IMAGE}
+
+ARG XRAY_BASE_VERSION
+ARG UBI_BASE_IMAGE
+
+LABEL name="JFrog Xray Indexer" \
+      description="JFrog Xray Indexer image based on the Red Hat Universal Base Image." \
+      vendor="JFrog" \
+      summary="JFrog Xray Indexer (Red Hat UBI)"
+
+# Environment needed for Xray
+ENV JF_XRAY_USER=xray \
+    XRAY_USER_ID=1035 \
+    XRAY_VERSION=${XRAY_BASE_VERSION} \
+    JF_PRODUCT_HOME=/opt/jfrog/xray \
+    JF_PRODUCT_DATA_INTERNAL=/var/opt/jfrog/xray \
+    SERVICE_NAME=indexer
+
+COPY --from=base /opt/jfrog/xray /opt/jfrog/xray
+COPY --from=base /postgresql-client /postgresql-client
+
+# Add license information to meet the Red Hat container image certification requirements
+COPY --from=base /opt/jfrog/xray/app/doc/* /licenses/
+
+RUN mkdir -p /var/opt/jfrog && chmod 0777 /var/opt/jfrog
+
+RUN useradd -M -s /usr/sbin/nologin --uid 1035 --user-group xray && \
+    chown -R 1035:1035 /opt/jfrog/xray /var/opt/jfrog /postgresql-client && \
+    yum install -y --disableplugin=subscription-manager wget && \
+    yum install -y --disableplugin=subscription-manager procps && \
+    yum install -y --disableplugin=subscription-manager net-tools && \
+    yum install -y --disableplugin=subscription-manager hostname && \
+    yum install -y --disableplugin=subscription-manager sudo gem ruby-devel gcc gcc-c++ make
+RUN curl -L https://toolbelt.treasuredata.com/sh/install-redhat-td-agent3.sh | sh
+
+RUN mkdir -p /var/log/td-agent/buffer && \
+    chown -R ${JF_XRAY_USER}:${JF_XRAY_USER} /var/log/td-agent && \
+    chown -R ${JF_XRAY_USER}:${JF_XRAY_USER} /etc/td-agent
+
+RUN mkdir -p /usr/lib/rpm/redhat/ && \
+    touch /usr/lib/rpm/redhat/redhat-hardened-cc1 && \
+    touch /usr/lib/rpm/redhat/redhat-hardened-ld && \
+    touch /usr/lib/rpm/redhat/redhat-annobin-cc1 && \
+    gem install fluent-plugin-splunk-hec && \
+    gem install fluent-plugin-datadog && \
+    gem install fluent-plugin-sumologic_output
+
+# REMOVE THE DEV TOOLS NEEDED FOR GEM INSTALL NOW..
+RUN yum remove -y --disableplugin=subscription-manager gem ruby-devel gcc gcc-c++ make
+
+COPY fluent.conf /etc/td-agent/fluent.conf
+
+USER xray
+
+VOLUME /var/opt/jfrog/xray
+
+ENTRYPOINT ["/opt/jfrog/xray/app/bin/wrapper.sh"]

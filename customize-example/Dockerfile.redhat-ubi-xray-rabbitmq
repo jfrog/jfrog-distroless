@@ -5,7 +5,6 @@ LABEL name="JFrog Xray Rabbit MQ" \
       vendor="JFrog" \
       summary="JFrog Rabbit MQ (Red Hat UBI)"
 
-
 ARG ERLANG_VERSION=22.1.4
 ARG RABBITMQ_AUTOCLUSTER_VERSION=0.10.0
 ARG RABBITMQ_VERSION=3.8.0
@@ -53,7 +52,7 @@ RUN set -xe && \
     chmod -R g=u /var/lib/rabbitmq /etc/rabbitmq && \
     rm -rf /var/lib/rabbitmq/.erlang.cookie && \
     ln -sf "$RABBITMQ_HOME/plugins" /plugins && \
-    INSTALL_PKGS="hostname" && \
+    INSTALL_PKGS="wget procps net-tools hostname" && \
     yum install -y $INSTALL_PKGS && \
     rm -rf /var/cache/yum
 
@@ -62,5 +61,5 @@ USER 1001
 ENV PATH=$RABBITMQ_HOME/sbin:$PATH
 ENTRYPOINT ["docker-entrypoint.sh"]
 
-EXPOSE 5672 25672
+EXPOSE 4369 5672 25672
 CMD ["rabbitmq-server"]
