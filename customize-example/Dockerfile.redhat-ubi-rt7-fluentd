@@ -62,7 +62,7 @@ RUN mkdir -p /usr/lib/rpm/redhat/ && \
     touch /usr/lib/rpm/redhat/redhat-hardened-cc1 && \
     touch /usr/lib/rpm/redhat/redhat-hardened-ld && \
     touch /usr/lib/rpm/redhat/redhat-annobin-cc1 && \
-    td-agent-gem install fluent-plugin-splunk-hec && \
+    td-agent-gem install fluent-plugin-splunk-enterprise && \
     td-agent-gem install fluent-plugin-datadog
 
 

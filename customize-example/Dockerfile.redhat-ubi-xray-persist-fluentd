@@ -1,4 +1,4 @@
-ARG XRAY_BASE_VERSION=3.2.3
+ARG XRAY_BASE_VERSION=3.3.0
 ARG UBI_BASE_IMAGE=ubi8
 
 FROM docker.bintray.io/jfrog/xray-persist:${XRAY_BASE_VERSION} AS base
@@ -47,7 +47,7 @@ RUN mkdir -p /usr/lib/rpm/redhat/ && \
     touch /usr/lib/rpm/redhat/redhat-hardened-cc1 && \
     touch /usr/lib/rpm/redhat/redhat-hardened-ld && \
     touch /usr/lib/rpm/redhat/redhat-annobin-cc1 && \
-    td-agent-gem install fluent-plugin-splunk-hec && \
+    td-agent-gem install fluent-plugin-splunk-enterprise && \
     td-agent-gem install fluent-plugin-datadog
 
 # REMOVE THE DEV TOOLS NEEDED FOR GEM INSTALL NOW..
