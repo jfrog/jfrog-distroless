@@ -68,9 +68,9 @@ RUN mkdir -p /usr/lib/rpm/redhat/ && \
 
 
 # REMOVE THE DEV TOOLS NEEDED FOR GEM INSTALL NOW..
-RUN yum remove -y --disableplugin=subscription-manager gem ruby-devel gcc gcc-c++ make
+RUN yum remove -y --disableplugin=subscription-manager gcc gcc-c++ make
 
-COPY fluent.conf /etc/td-agent/fluent.conf
+COPY fluent.conf /etc/td-agent/td-agent.conf
 
 USER $JF_ARTIFACTORY_USER
 

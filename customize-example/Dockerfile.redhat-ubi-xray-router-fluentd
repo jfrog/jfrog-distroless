@@ -1,37 +1,36 @@
-ARG XRAY_BASE_VERSION=3.2.3
+ARG ROUTER_BASE_VERSION=1.2.1
 ARG UBI_BASE_IMAGE=ubi8
 
-FROM docker.bintray.io/jfrog/xray-indexer:${XRAY_BASE_VERSION} AS base
+FROM docker.bintray.io/jfrog/router:${ROUTER_BASE_VERSION} AS base
 
 # The new image based on registry.access.redhat.com/ubi
 FROM registry.access.redhat.com/${UBI_BASE_IMAGE}
 
-ARG XRAY_BASE_VERSION
+ARG ROUTER_BASE_VERSION
 ARG UBI_BASE_IMAGE
 
-LABEL name="JFrog Xray Indexer" \
-      description="JFrog Xray Indexer image based on the Red Hat Universal Base Image." \
+LABEL name="JFrog Router" \
+      description="JFrog Router image based on the Red Hat Universal Base Image." \
       vendor="JFrog" \
-      summary="JFrog Xray Indexer (Red Hat UBI)"
+      summary="JFrog Router (Red Hat UBI)"
 
-# Environment needed for Xray
-ENV JF_XRAY_USER=xray \
-    XRAY_USER_ID=1035 \
-    XRAY_VERSION=${XRAY_BASE_VERSION} \
-    JF_PRODUCT_HOME=/opt/jfrog/xray \
-    JF_PRODUCT_DATA_INTERNAL=/var/opt/jfrog/xray \
-    SERVICE_NAME=indexer
+# Environment needed for Router
+ENV JF_ROUTER_USER=router \
+    ROUTER_USER_ID=1117 \
+    ROUTER_VERSION=${ROUTER_BASE_VERSION} \
+    JF_PRODUCT_HOME=/opt/jfrog/router \
+    JF_PRODUCT_DATA_INTERNAL=/var/opt/jfrog/router \
+    SERVICE_NAME=router
 
-COPY --from=base /opt/jfrog/xray /opt/jfrog/xray
-COPY --from=base /postgresql-client /postgresql-client
+COPY --from=base /opt/jfrog/router /opt/jfrog/router
 
 # Add license information to meet the Red Hat container image certification requirements
-COPY --from=base /opt/jfrog/xray/app/doc/* /licenses/
+COPY --from=base /opt/jfrog/router/app/doc/* /licenses/
 
 RUN mkdir -p /var/opt/jfrog && chmod 0777 /var/opt/jfrog
 
-RUN useradd -M -s /usr/sbin/nologin --uid 1035 --user-group xray && \
-    chown -R 1035:1035 /opt/jfrog/xray /var/opt/jfrog /postgresql-client && \
+RUN useradd -M -s /usr/sbin/nologin --uid 1117 --user-group router && \
+    chown -R 1117:1117 /opt/jfrog/router /var/opt/jfrog && \
     yum install -y --disableplugin=subscription-manager wget && \
     yum install -y --disableplugin=subscription-manager procps && \
     yum install -y --disableplugin=subscription-manager net-tools && \
@@ -56,8 +55,8 @@ RUN yum remove -y --disableplugin=subscription-manager gcc gcc-c++ make
 
 COPY fluent.conf /etc/td-agent/td-agent.conf
 
-USER xray
+USER router
 
-VOLUME /var/opt/jfrog/xray
+VOLUME /var/opt/jfrog/router
 
-ENTRYPOINT ["/opt/jfrog/xray/app/bin/wrapper.sh"]
+ENTRYPOINT ["/opt/jfrog/router/app/bin/entrypoint-router.sh"]
