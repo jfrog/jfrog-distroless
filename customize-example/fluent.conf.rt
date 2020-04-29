@@ -137,9 +137,10 @@
   tag jfrog.rt.router.request
   <parse>
     @type json
+    time_key time
+    time_format %Y-%m-%dT%H:%M:%SZ
   </parse>
 </source>
-
 <source>
   @type tail
   @id artifactory_access_tail
@@ -166,14 +167,24 @@
     time_format %Y-%m-%dT%H:%M:%S.%LZ
   </parse>
 </source>
-
 <filter jfrog.**>
   @type record_transformer
   <record>
     log_source ${tag}
   </record>
 </filter>
-
+<match jfrog.rt.router.request>
+  @type splunk_tcp
+  host splunk
+  port 9997
+  format json
+  use_ssl false
+  # buffered output parameter
+  flush_interval 10s
+  # time format
+  time_key time
+  time_format %Y-%m-%dT%H:%M:%S.%LZ
+</match>
 <match jfrog.**>
   @type splunk_tcp
   host splunk
@@ -182,4 +193,7 @@
   use_ssl false
   # buffered output parameter
   flush_interval 10s
+  # time format
+  time_key timestamp
+  time_format %Y-%m-%dT%H:%M:%S.%LZ
 </match>
