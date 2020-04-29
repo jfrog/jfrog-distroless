@@ -71,7 +71,7 @@ RUN yum remove -y --disableplugin=subscription-manager gcc gcc-c++ make
 
 USER $JF_ARTIFACTORY_USER
 
-COPY fluent.conf /etc/td-agent/td-agent.conf
+COPY fluent.conf.rt /etc/td-agent/td-agent.conf
 
 VOLUME ${JF_PRODUCT_DATA_INTERNAL}
 
