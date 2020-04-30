@@ -30,7 +30,7 @@ COPY --from=base /opt/jfrog/xray/app/doc/* /licenses/
 
 RUN mkdir -p /var/opt/jfrog && chmod 0777 /var/opt/jfrog
 
-RUN useradd -M -s /usr/sbin/nologin --uid 1035 --user-group xray && \
+RUN useradd -s /usr/sbin/nologin --uid 1035 --user-group xray && \
     chown -R 1035:1035 /opt/jfrog/xray /var/opt/jfrog /postgresql-client && \
     yum install -y --disableplugin=subscription-manager wget && \
     yum install -y --disableplugin=subscription-manager procps && \

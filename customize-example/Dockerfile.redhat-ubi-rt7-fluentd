@@ -45,7 +45,7 @@ RUN echo "{\"productId\":\"UBI8_artifactory/1.0.0\",\"features\":[{\"featureId\"
 # NOTE - wget must be installed for Artifactory HA
 # procps must be installed to run Artifactory
 # hostname is needed to generate nodeID
-RUN useradd -M -s /usr/sbin/nologin --uid ${ARTIFACTORY_USER_ID} --user-group ${JF_ARTIFACTORY_USER} && \
+RUN useradd -s /usr/sbin/nologin --uid ${ARTIFACTORY_USER_ID} --user-group ${JF_ARTIFACTORY_USER} && \
     chown -R ${JF_ARTIFACTORY_USER}:${JF_ARTIFACTORY_USER} ${JF_PRODUCT_HOME} ${JF_PRODUCT_DATA_INTERNAL} && \
     yum install -y --disableplugin=subscription-manager wget && \
     yum install -y --disableplugin=subscription-manager procps && \
