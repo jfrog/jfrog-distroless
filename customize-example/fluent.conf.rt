@@ -176,7 +176,7 @@
 <match jfrog.rt.router.request>
   @type splunk_tcp
   host splunk
-  port 9997
+  port 9996
   format json
   use_ssl false
   # buffered output parameter
@@ -188,7 +188,7 @@
 <match jfrog.**>
   @type splunk_tcp
   host splunk
-  port 9997
+  port 9996
   format json
   use_ssl false
   # buffered output parameter
