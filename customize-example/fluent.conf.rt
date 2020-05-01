@@ -103,6 +103,14 @@
     time_format %Y-%m-%dT%H:%M:%S.%LZ
   </parse>
 </source>
+<filter jfrog.rt.artifactory.request>
+  @type record_transformer
+  enable_ruby true
+  <record>
+    repo ${record["request_url"].split('/')[3]}
+    image ${record["request_url"].split('/')[5]}
+  </record>
+</filter>
 <source>
   @type tail
   @id frontend_request_tail
