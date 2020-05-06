@@ -48,7 +48,9 @@ RUN mkdir -p /usr/lib/rpm/redhat/ && \
     touch /usr/lib/rpm/redhat/redhat-hardened-ld && \
     touch /usr/lib/rpm/redhat/redhat-annobin-cc1 && \
     td-agent-gem install fluent-plugin-splunk-enterprise && \
-    td-agent-gem install fluent-plugin-datadog
+    td-agent-gem install fluent-plugin-datadog && \
+    td-agent-gem install fluent-plugin-detect-exceptions && \
+    td-agent-gem install fluent-plugin-rewrite-tag-filter
 
 # REMOVE THE DEV TOOLS NEEDED FOR GEM INSTALL NOW..
 RUN yum remove -y --disableplugin=subscription-manager gcc gcc-c++ make

@@ -181,6 +181,24 @@
     log_source ${tag}
   </record>
 </filter>
+
+<match jfrog.rt.**.service>
+  @type rewrite_tag_filter
+  <rule>
+    key message
+    pattern /(.*)Exception(.+)/
+    tag removeme.${tag}.$1
+  </rule>
+</match>
+
+<match removeme**>
+  @type detect_exceptions
+  remove_tag_prefix           removeme
+  message                     message
+  languages                   java
+  multiline_flush_interval    1
+</match>
+
 <match jfrog.rt.router.request>
   @type splunk_tcp
   host splunk
