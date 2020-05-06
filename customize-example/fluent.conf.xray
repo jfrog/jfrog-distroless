@@ -15,7 +15,6 @@
     message ${record["message"].gsub(/\e\[([;\d]+)?m/, '')}
   </record>
 </filter>
-
 <source>
   @type tail
   @id xray_persist_tail
@@ -33,7 +32,6 @@
     message ${record["message"].gsub(/\e\[([;\d]+)?m/, '')}
   </record>
 </filter>
-
 <source>
   @type tail
   @id xray_indexer_tail
@@ -51,7 +49,6 @@
     message ${record["message"].gsub(/\e\[([;\d]+)?m/, '')}
   </record>
 </filter>
-
 <source>
   @type tail
   @id xray_analysis_tail
@@ -69,7 +66,6 @@
     message ${record["message"].gsub(/\e\[([;\d]+)?m/, '')}
   </record>
 </filter>
-
 <source>
   @type tail
   @id xray_router_tail
@@ -87,7 +83,6 @@
     message ${record["message"].gsub(/\e\[([;\d]+)?m/, '')}
   </record>
 </filter>
-
 <source>
   @type tail
   @id xray_router_traefik_tail
@@ -101,7 +96,6 @@
       time_format %Y-%m-%dT%H:%M:%S.%LZ
   </parse>
 </source>
-
 <source>
   @type tail
   @id xray_router_request_tail
@@ -114,7 +108,6 @@
     time_format %Y-%m-%dT%H:%M:%SZ
   </parse>
 </source>
-
 <source>
   @type tail
   @id xray_request_tail
@@ -128,43 +121,23 @@
     time_format %Y-%m-%dT%H:%M:%S.%LZ
   </parse>
 </source>
-
 <filter jfrog.xray.**.service>
   @type parser
   key_name message
   <parse>
-      @type regexp
-      expression ^(?<timestamp>[^ ]*) \[(?<service_type>[^\]]*)\] \[(?<log_level>[^\]]*)\] \[(?<trace_id>[^\]]*)\] \[(?<class_line_number>.*)\] \[(?<thread>.*)\] (?<message>.*)$
+      @type multiline
+      format_firstline /\d{4}-\d{1,2}-\d{1,2}/
+      format1 /^(?<timestamp>[^ ]*) \[(?<service_type>[^\]]*)\] \[(?<log_level>[^\]]*)\] \[(?<trace_id>[^\]]*)\] \[(?<class_line_number>.*)\] \[(?<thread>.*)\] (?<message>.*)$/
       time_key timestamp
       time_format %Y-%m-%dT%H:%M:%S.%LZ
   </parse>
 </filter>
-
 <filter jfrog.**>
   @type record_transformer
   <record>
     log_source ${tag}
   </record>
 </filter>
-
-
-<match jfrog.xray.**.service>
-  @type rewrite_tag_filter
-  <rule>
-    key message
-    pattern /(.*)Exception(.+)/
-    tag removeme.${tag}.$1
-  </rule>
-</match>
-
-<match removeme**>
-  @type detect_exceptions
-  remove_tag_prefix           removeme
-  message                     message
-  languages                   java
-  multiline_flush_interval    1
-</match>
-
 <match jfrog.xray.router.request>
   @type splunk_tcp
   host splunk
@@ -177,7 +150,6 @@
   time_key time
   time_format %Y-%m-%dT%H:%M:%S.%LZ
 </match>
-
 <match jfrog.**>
   @type splunk_tcp
   host splunk

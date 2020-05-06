@@ -63,9 +63,7 @@ RUN mkdir -p /usr/lib/rpm/redhat/ && \
     touch /usr/lib/rpm/redhat/redhat-hardened-ld && \
     touch /usr/lib/rpm/redhat/redhat-annobin-cc1 && \
     td-agent-gem install fluent-plugin-splunk-enterprise && \
-    td-agent-gem install fluent-plugin-datadog && \
-    td-agent-gem install fluent-plugin-detect-exceptions && \
-    td-agent-gem install fluent-plugin-rewrite-tag-filter
+    td-agent-gem install fluent-plugin-datadog
 
 
 # REMOVE THE DEV TOOLS NEEDED FOR GEM INSTALL NOW..
