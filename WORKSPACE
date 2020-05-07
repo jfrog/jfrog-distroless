@@ -67,6 +67,13 @@ dpkg_src(
     sha256 = "538d763e5199f6c95abee89239b4d9f70f2d2914c9de52083276caa914702a3e",
 )
 
+dpkg_src(
+    name = "debian_stretch_openssl",
+    package_prefix = "https://deepscan.jfrog.io/artifactory/snapshot.debian.org-gcp/archive/debian-security/20191028T085816Z/",
+    packages_gz_url = "https://deepscan.jfrog.io/artifactory/snapshot.debian.org-gcp/archive/debian-security/20191028T085816Z/dists/stretch/updates/main/binary-amd64/Packages.gz",
+    sha256 = "acea7d952d8ab84de3cd2c26934a1bcf5ad244d344ecdb7b2d0173712bbd9d7b",
+)
+
 dpkg_list(
     name = "package_bundle",
     packages = [
@@ -76,8 +83,8 @@ dpkg_list(
         "base-files",
         "ca-certificates",
 #        "openssl=1.1.1a-1",
-        "openssl",
-        "libssl1.1",
+        "openssl=1.1.0l-1~deb9u1",
+        "libssl1.1=1.1.0l-1~deb9u1",
         "libtinfo5",
         "netbase",
         "tzdata",
@@ -115,6 +122,7 @@ dpkg_list(
         "@debian_stretch_backports//file:Packages.json",
         "@debian_stretch//file:Packages.json",
         "@debian_stretch_local//file:Packages.json",
+        "@debian_stretch_openssl//file:Packages.json",
     ],
 )
 
