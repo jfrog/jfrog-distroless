@@ -12,7 +12,8 @@ ARG UBI_BASE_IMAGE
 LABEL name="JFrog Xray Indexer" \
       description="JFrog Xray Indexer image based on the Red Hat Universal Base Image." \
       vendor="JFrog" \
-      summary="JFrog Xray Indexer (Red Hat UBI)"
+      summary="JFrog Xray Indexer (Red Hat UBI)" \
+      com.jfrog.license_terms="https://jfrog.com/xray/eula/"
 
 # Environment needed for Xray
 ENV JF_XRAY_USER=xray \

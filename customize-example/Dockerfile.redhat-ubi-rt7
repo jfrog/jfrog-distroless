@@ -16,7 +16,8 @@ ARG UBI_BASE_IMAGE
 LABEL name="JFrog Artifactory Pro" \
       description="JFrog Artifactory Pro image based on the Red Hat Universal Base Image." \
       vendor="JFrog" \
-      summary="JFrog Artifactory Pro (Red Hat UBI)"
+      summary="JFrog Artifactory Pro (Red Hat UBI)" \
+      com.jfrog.license_terms="https://jfrog.com/artifactory/eula/"
 
 # Environment needed for Artifactory
 ENV JF_ARTIFACTORY_USER=artifactory \
