@@ -138,33 +138,16 @@
     log_source ${tag}
   </record>
 </filter>
-<match jfrog.xray.router.request>
-  @type splunk_hec
-  host HEC_HOST
-  port HEC_PORT
-  token HEC_TOKEN
-  format json
-  # buffered output parameter
-  flush_interval 10s
-  # time format
-  time_key time
-  time_format %Y-%m-%dT%H:%M:%S.%LZ
-  # ssl parameter
-  use_ssl true
-  ca_file /path/to/ca.pem
-</match>
+#ELASTIC OUTPUT
 <match jfrog.**>
-  @type splunk_hec
-  host HEC_HOST
-  port HEC_PORT
-  token HEC_TOKEN
-  format json
-  # buffered output parameter
-  flush_interval 10s
-  # time format
-  time_key timestamp
-  time_format %Y-%m-%dT%H:%M:%S.%LZ
-  # ssl parameter
-  use_ssl true
-  ca_file /path/to/ca.pem
+  @type elasticsearch
+  @id elasticsearch
+  @log_level info
+  include_tag_key true
+  type_name fluentd
+  host elasticsearch
+  port 9200
+  index_name unified-xray
+  logstash_format false
 </match>
+#END ELASTIC OUTPUT
