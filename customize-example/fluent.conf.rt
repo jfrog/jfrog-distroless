@@ -181,6 +181,8 @@
     time_format %Y-%m-%dT%H:%M:%S.%LZ
   </parse>
 </source>
+
+# WHAT LOG IT WAS INTO THE JSON
 <filter jfrog.**>
   @type record_transformer
   <record>
@@ -219,13 +221,19 @@
   <buffer>
     flush_interval 5s
   </buffer>
-  <auth>
-    method basic
-    username <user>
-    password <password>
-  </auth>
 </match>
 #END CALL HOME
+
+
+<match jfrog.**>
+  @type elasticsearch
+  host localhost
+  port 9200
+  logstash_format true
+</match>
+
+
+
 #SPLUNK OUTPUT
 <match jfrog.rt.router.request>
   @type splunk_hec
@@ -258,3 +266,11 @@
   ca_file /path/to/ca.pem
 </match>
 #END SPLUNK OUTPUT
+
+
+<match jfrog.**>
+  @type elasticsearch
+  host localhost
+  port 9200
+  logstash_format true
+</match>

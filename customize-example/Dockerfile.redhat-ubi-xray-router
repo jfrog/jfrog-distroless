@@ -9,10 +9,10 @@ FROM registry.access.redhat.com/${UBI_BASE_IMAGE}
 ARG ROUTER_BASE_VERSION
 ARG UBI_BASE_IMAGE
 
-LABEL name="JFrog Router" \
-      description="JFrog Router image based on the Red Hat Universal Base Image." \
+LABEL name="JFrog Xray Router" \
+      description="JFrog Xray Router image based on the Red Hat Universal Base Image." \
       vendor="JFrog" \
-      summary="JFrog Router (Red Hat UBI)" \
+      summary="JFrog Xray Router (Red Hat UBI)" \
       com.jfrog.license_terms="https://jfrog.com/xray/eula/"
 
 # Environment needed for Router
