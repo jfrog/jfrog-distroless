@@ -2,7 +2,6 @@ resources:
   - name: distrolessGithubRepo
     type: GitRepo
     configuration:
-      nodePool: node_pool_1
       gitProvider: shahin_test
       path: shahiinn/jfrog-distroless
       branches:
@@ -10,7 +9,6 @@ resources:
   - name: distrolessArtifactory
     type: BuildInfo
     configuration:
-      nodePool: node_pool_1
       sourceArtifactory: artifact_test
       buildName: docker_distro_build
       buildNumber: 1
