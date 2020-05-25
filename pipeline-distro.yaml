@@ -12,6 +12,12 @@ resources:
       source: artifact_test
       fileLocation: testrepo1
       fileName: distro-build.sh
+  - name: file_test
+    type: FileSpec
+    configuration:     
+      sourceArtifactory: artifact_test
+      pattern: testrepo1/distro-build.sh
+      target: distro-build.sh
   - name: distrolessArtifactory
     type: BuildInfo
     configuration:
