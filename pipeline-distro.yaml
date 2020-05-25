@@ -42,6 +42,6 @@ pipelines:
             - name: artifact_test
         execution:
           onExecute:
-            - bash -x $res_file_test_resourcePath
+            - bash -x $res_file_test_resourcePath/distro-build.sh
           onSuccess:
             - echo "Job well done!"
