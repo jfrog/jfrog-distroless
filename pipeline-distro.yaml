@@ -1,0 +1,32 @@
+resources:
+  - name: distrolessGithubRepo
+    type: GitRepo
+    configuration:
+      gitProvider: shahin_test
+      path: shahiinn/jfrog-distroless
+      branches:
+        include: master
+  - name: distrolessArtifactory
+    type: BuildInfo
+    configuration:
+      sourceArtifactory: artifact_test
+      buildName: docker_distro_build
+      buildNumber: 1
+pipelines:
+  - name: distroless_docker_build_push
+    steps:
+      - name: docker_build_push_publish
+        type: Bash
+        configuration:
+          environmentVariables:
+            username: value1
+            password: value2
+            url: value3
+          nodePool: node_pool_1
+          integrations:
+            - name: artifact_test
+        execution:
+          onExecute:
+            - bash -x distro-build.sh
+          onSuccess:
+            - echo "Job well done!"
