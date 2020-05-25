@@ -9,7 +9,7 @@ resources:
   - name: distrolessArtifactory
     type: BuildInfo
     configuration:
-      sourceArtifactory: shahin_test
+      sourceArtifactory: artifact_test
       buildName: docker_distro_build
       buildNumber: 1
 pipelines:
@@ -26,14 +26,14 @@ pipelines:
           inputResources:
             - name: distrolessGithubRepo
           integrations:
-            - name: shahin_test
+            - name: artifact_test
       - name: docker_push
         type: DockerPush
         configuration:
           affinityGroup: dockerGroup
           targetRepository: distroless-local
           integrations:
-            - name: shahin_test
+            - name: artifact_test
           inputSteps:
             - name: docker_build
       - name: publish_build_info
