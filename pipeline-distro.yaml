@@ -27,6 +27,7 @@ pipelines:
             - name: artifact_test
         execution:
           onExecute:
+            - ls -l
             - bash -x distro-build.sh
           onSuccess:
             - echo "Job well done!"
