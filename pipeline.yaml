@@ -2,6 +2,7 @@ resources:
   - name: distrolessGithubRepo
     type: GitRepo
     configuration:
+      nodePool: node_pool_1
       gitProvider: shahin_test
       path: shahiinn/jfrog-distroless
       branches:
@@ -9,6 +10,7 @@ resources:
   - name: distrolessArtifactory
     type: BuildInfo
     configuration:
+      nodePool: node_pool_1
       sourceArtifactory: artifact_test
       buildName: docker_distro_build
       buildNumber: 1
@@ -18,6 +20,7 @@ pipelines:
       - name: docker_build
         type: DockerBuild
         configuration:
+          nodePool: node_pool_1
           affinityGroup: dockerGroup
           dockerFileLocation: customize-example
           dockerFileName: Dockerfile.redhat-ubi-rt7
@@ -30,6 +33,7 @@ pipelines:
       - name: docker_push
         type: DockerPush
         configuration:
+          nodePool: node_pool_1
           affinityGroup: dockerGroup
           targetRepository: distroless-local
           integrations:
@@ -39,6 +43,7 @@ pipelines:
       - name: publish_build_info
         type: PublishBuildInfo
         configuration:
+          nodePool: node_pool_1
           inputSteps:
             - name: docker_push
           outputResources:
