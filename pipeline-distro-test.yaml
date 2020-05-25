@@ -41,6 +41,7 @@ pipelines:
           dockerFileLocation: customize-example
           dockerFileName: Dockerfile.redhat-ubi-rt7
           dockerImageName: 'chartstesting-distroless-local.jfrog.io/artifactory-rh-ubi'
+          dockerOptions: --build-arg ARTIFACTORY_BASE_VERSION=7.4.1
           dockerImageTag: ${run_number}
           inputResources:
             - name: distrolessGithubRepo
