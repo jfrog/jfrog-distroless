@@ -19,9 +19,7 @@ resources:
       buildName: docker_distro_build_pipe
       buildNumber: 1
 pipelines:
-  pipelines:
-pipelines:
-  - name: distroless_docker_build_push
+  - name: Distroless pipeline
     steps:
       - name: start
         type: Bash
@@ -34,8 +32,6 @@ pipelines:
             - echo "Starting the build"
           onSuccess:
             - echo "Triggered the build"
-  - name: distroless_docker_build_push
-    steps:
       - name: docker_build
         type: DockerBuild
         configuration:
