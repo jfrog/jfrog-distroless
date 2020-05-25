@@ -95,7 +95,7 @@ pipelines:
             - name: distrolessGithubRepo
           integrations:
             - name: artifact_test            
-      - name: docker_push
+      - name: docker_push_1
         type: DockerPush
         configuration:
           affinityGroup: dockerGroup
@@ -104,7 +104,7 @@ pipelines:
             - name: artifact_test
           inputSteps:
             - name: docker_build_1
-      - name: docker_push
+      - name: docker_push_2
         type: DockerPush
         configuration:
           affinityGroup: dockerGroup
@@ -113,7 +113,7 @@ pipelines:
             - name: artifact_test
           inputSteps:
             - name: docker_build_2            
-      - name: docker_push
+      - name: docker_push_3
         type: DockerPush
         configuration:
           affinityGroup: dockerGroup
@@ -122,7 +122,7 @@ pipelines:
             - name: artifact_test
           inputSteps:
             - name: docker_build_3            
-      - name: docker_push
+      - name: docker_push_4
         type: DockerPush
         configuration:
           affinityGroup: dockerGroup
@@ -131,7 +131,7 @@ pipelines:
             - name: artifact_test
           inputSteps:
             - name: docker_build_4                        
-      - name: docker_push
+      - name: docker_push_5
         type: DockerPush
         configuration:
           affinityGroup: dockerGroup
