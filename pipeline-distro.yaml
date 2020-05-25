@@ -17,7 +17,7 @@ resources:
     configuration:     
       sourceArtifactory: artifact_test
       pattern: testrepo1/distro-build.sh
-      target: shahin/distro-build.sh
+      target: distro-build.sh
   - name: distrolessArtifactory
     type: BuildInfo
     configuration:
