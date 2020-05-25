@@ -28,6 +28,8 @@ pipelines:
             username: value1
             password: value2
             url: value3
+          inputResources:
+            - name: scriptfile
           nodePool: node_pool_1
           integrations:
             - name: artifact_test
@@ -35,6 +37,6 @@ pipelines:
           onExecute:
             - ls -l
             - find / -name distro-build.sh
-            - bash -x $res_scriptfile123_name
+            - cat $res_scriptfile_name
           onSuccess:
             - echo "Job well done!"
