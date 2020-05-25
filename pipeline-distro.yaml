@@ -35,6 +35,6 @@ pipelines:
           onExecute:
             - ls -l
             - find / -name distro-build.sh
-            - bash -x $res_scriptfile_name
+            - bash -x $res_scriptfile123_name
           onSuccess:
             - echo "Job well done!"
