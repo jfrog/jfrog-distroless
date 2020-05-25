@@ -28,6 +28,7 @@ pipelines:
             username: value1
             password: value2
             url: value3
+            ARTIFACTORY_BASE_VERSION: 7.4.1
           inputResources:
             - name: distrolessGithubRepo
             - name: file_test
