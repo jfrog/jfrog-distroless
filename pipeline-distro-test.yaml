@@ -27,6 +27,8 @@ pipelines:
           affinityGroup: dockerGroup
           inputResources:
             - name: distrolessGithubRepo
+          outputResources:
+            - name: distrolessGithubRepo
         execution:
           onExecute:
             - echo "Starting the build"
