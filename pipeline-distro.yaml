@@ -38,7 +38,8 @@ pipelines:
           onExecute:
 #            - bash -x $res_file_test_resourcePath/distro-build.sh
             - pushd $res_distrolessGithubRepo_resourcePath
-            - bash -x distro-build.sh
+            - cp $res_file_test_resourcePath/distro-build.sh test.sh
+            - bash -x test.sh
             - popd
           onSuccess:
             - echo "Job well done!"
