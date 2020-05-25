@@ -140,3 +140,14 @@ pipelines:
             - name: artifact_test
           inputSteps:
             - name: docker_build_5            
+      - name: publish_build_info
+        type: PublishBuildInfo
+        configuration:
+          inputSteps:
+            - name: docker_push_1
+            - name: docker_push_2
+            - name: docker_push_3
+            - name: docker_push_4
+            - name: docker_push_5
+          outputResources:
+            - name: artifact_test            
