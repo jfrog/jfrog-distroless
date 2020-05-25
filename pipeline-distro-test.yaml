@@ -43,6 +43,6 @@ pipelines:
           dockerImageName: 'chartstesting-distroless-local.jfrog.io/artifactory-rh-ubi'
           dockerImageTag: ${run_number}
           inputResources:
-#            - name: distrolessGithubRepo
+            - name: distrolessGithubRepo
           integrations:
             - name: artifact_test
