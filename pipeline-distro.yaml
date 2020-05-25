@@ -6,12 +6,6 @@ resources:
       path: shahiinn/jfrog-distroless
       branches:
         include: master
-  - name: scriptfile
-    type: RemoteFile
-    configuration:     
-      source: artifact_test
-      fileLocation: testrepo1
-      fileName: distro-build.sh
   - name: file_test
     type: FileSpec
     configuration:     
@@ -35,13 +29,16 @@ pipelines:
             password: value2
             url: value3
           inputResources:
-            - name: scriptfile
+            - name: distrolessGithubRepo
             - name: file_test
           nodePool: node_pool_1
           integrations:
             - name: artifact_test
         execution:
           onExecute:
-            - bash -x $res_file_test_resourcePath/distro-build.sh
+#            - bash -x $res_file_test_resourcePath/distro-build.sh
+            - pushd $res_distrolessGithubRepo_resourcePath
+            - ./distro-build.sh
+            - popd
           onSuccess:
             - echo "Job well done!"
