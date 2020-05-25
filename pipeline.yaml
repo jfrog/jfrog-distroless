@@ -18,6 +18,8 @@ pipelines:
       - name: docker_build
         type: DockerBuild
         configuration:
+          environmentVariables:
+            ARTIFACTORY_BASE_VERSION: 7.4.0
           nodePool: node_pool_1
           affinityGroup: dockerGroup
           dockerFileLocation: customize-example
