@@ -16,7 +16,7 @@ resources:
     type: BuildInfo
     configuration:
       sourceArtifactory: artifact_test
-      buildName: docker_distro_build_pipe
+      buildName: DistrolessPipe
       buildNumber: 1
 pipelines:
   - name: DistrolessPipe
@@ -147,35 +147,35 @@ pipelines:
           inputSteps:
             - name: docker_push_1
           outputResources:
-            - name: artifact_test           
+            - name: distrolessArtifactory          
       - name: publish_build_info_2
         type: PublishBuildInfo
         configuration:
           inputSteps:
             - name: docker_push_2
           outputResources:
-            - name: artifact_test
+            - name: distrolessArtifactory
       - name: publish_build_info_3
         type: PublishBuildInfo
         configuration:
           inputSteps:
             - name: docker_push_3
           outputResources:
-            - name: artifact_test           
+            - name: distrolessArtifactory           
       - name: publish_build_info_4
         type: PublishBuildInfo
         configuration:
           inputSteps:
             - name: docker_push_4
           outputResources:
-            - name: artifact_test           
+            - name: distrolessArtifactory           
       - name: publish_build_info_5
         type: PublishBuildInfo
         configuration:
           inputSteps:
             - name: docker_push_5
           outputResources:
-            - name: artifact_test            
+            - name: distrolessArtifactory            
             
             
             
