@@ -6,6 +6,12 @@ resources:
       path: shahiinn/jfrog-distroless
       branches:
         include: master
+  - name: scriptfile
+    type: RemoteFile
+    configuration:     
+      source: artifact_test
+      fileLocation: testrepo1
+      fileName: distro-build.sh
   - name: distrolessArtifactory
     type: BuildInfo
     configuration:
@@ -28,6 +34,7 @@ pipelines:
         execution:
           onExecute:
             - ls -l
+            - find / -name distro-build.sh
             - bash -x distro-build.sh
           onSuccess:
             - echo "Job well done!"
