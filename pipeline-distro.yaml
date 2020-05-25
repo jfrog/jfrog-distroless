@@ -42,11 +42,6 @@ pipelines:
             - name: artifact_test
         execution:
           onExecute:
-            - ls -l
-            - find / -name distro-build.sh
-            - ls -l
-            - echo $res_file_test_resourcePath
-            - echo $scriptfile
-            - echo $res_scriptfile_fileLocation
+            - bash -x $res_file_test_resourcePath
           onSuccess:
             - echo "Job well done!"
