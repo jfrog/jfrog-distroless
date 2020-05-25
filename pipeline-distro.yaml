@@ -17,7 +17,7 @@ resources:
     configuration:     
       sourceArtifactory: artifact_test
       pattern: testrepo1/distro-build.sh
-      target: distro-build.sh
+      target: shahin/distro-build.sh
   - name: distrolessArtifactory
     type: BuildInfo
     configuration:
@@ -44,6 +44,7 @@ pipelines:
           onExecute:
             - ls -l
             - find / -name distro-build.sh
+            - ls -l
             - echo $scriptfile
             - echo $res_scriptfile_fileLocation
           onSuccess:
