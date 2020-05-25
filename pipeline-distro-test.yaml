@@ -140,10 +140,10 @@ pipelines:
             - name: artifact_test
           inputSteps:
             - name: docker_build_5
-          forceXrayScan: true
       - name: publish_build_info_1
         type: PublishBuildInfo
         configuration:
+          forceXrayScan: true        
           inputSteps:
             - name: docker_push_1
           outputResources:
@@ -151,6 +151,7 @@ pipelines:
       - name: publish_build_info_2
         type: PublishBuildInfo
         configuration:
+          forceXrayScan: true        
           inputSteps:
             - name: docker_push_2
           outputResources:
@@ -158,6 +159,7 @@ pipelines:
       - name: publish_build_info_3
         type: PublishBuildInfo
         configuration:
+          forceXrayScan: true        
           inputSteps:
             - name: docker_push_3
           outputResources:
@@ -165,6 +167,7 @@ pipelines:
       - name: publish_build_info_4
         type: PublishBuildInfo
         configuration:
+          forceXrayScan: true        
           inputSteps:
             - name: docker_push_4
           outputResources:
@@ -172,11 +175,8 @@ pipelines:
       - name: publish_build_info_5
         type: PublishBuildInfo
         configuration:
+          forceXrayScan: true        
           inputSteps:
             - name: docker_push_5
           outputResources:
-            - name: distrolessArtifactory            
-            
-            
-            
-            
+            - name: distrolessArtifactory           
