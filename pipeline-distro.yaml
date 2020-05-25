@@ -36,6 +36,7 @@ pipelines:
             url: value3
           inputResources:
             - name: scriptfile
+            - name: file_test
           nodePool: node_pool_1
           integrations:
             - name: artifact_test
