@@ -1,0 +1,50 @@
+resources:
+  - name: distrolessGithubRepo
+    type: GitRepo
+    configuration:
+      gitProvider: shahin_test
+      path: shahiinn/jfrog-distroless
+      branches:
+        include: master
+  - name: file_test
+    type: FileSpec
+    configuration:     
+      sourceArtifactory: artifact_test
+      pattern: testrepo1/distro-build.sh
+      target: distro-build.sh
+  - name: distrolessArtifactory
+    type: BuildInfo
+    configuration:
+      sourceArtifactory: artifact_test
+      buildName: docker_distro_build_pipe
+      buildNumber: 1
+pipelines:
+  pipelines:
+pipelines:
+  - name: distroless_docker_build_push
+    steps:
+      - name: start
+        type: Bash
+        configuration:
+          affinityGroup: dockerGroup
+          inputResources:
+            - name: distrolessGithubRepo
+        execution:
+          onExecute:
+            - echo "Starting the build"
+          onSuccess:
+            - echo "Triggered the build"
+  - name: distroless_docker_build_push
+    steps:
+      - name: docker_build
+        type: DockerBuild
+        configuration:
+          affinityGroup: dockerGroup
+          dockerFileLocation: customize-example
+          dockerFileName: Dockerfile.redhat-ubi-rt7
+          dockerImageName: 'chartstesting-distroless-local.jfrog.io/artifactory-rh-ubi'
+          dockerImageTag: ${run_number}
+          inputResources:
+            - name: distrolessGithubRepo
+          integrations:
+            - name: artifact_test
