@@ -34,7 +34,7 @@ pipelines:
             - echo "Starting the build"
           onSuccess:
             - echo "Triggered the build"
-      - name: docker_build
+      - name: docker_build_1
         type: DockerBuild
         configuration:
           affinityGroup: dockerGroup
@@ -46,7 +46,7 @@ pipelines:
             - name: distrolessGithubRepo
           integrations:
             - name: artifact_test
-      - name: docker_build
+      - name: docker_build_2
         type: DockerBuild
         configuration:
           affinityGroup: dockerGroup
@@ -58,7 +58,7 @@ pipelines:
             - name: distrolessGithubRepo
           integrations:
             - name: artifact_test
-      - name: docker_build
+      - name: docker_build_3
         type: DockerBuild
         configuration:
           affinityGroup: dockerGroup
@@ -70,7 +70,7 @@ pipelines:
             - name: distrolessGithubRepo
           integrations:
             - name: artifact_test
-      - name: docker_build
+      - name: docker_build_4
         type: DockerBuild
         configuration:
           affinityGroup: dockerGroup
@@ -82,7 +82,7 @@ pipelines:
             - name: distrolessGithubRepo
           integrations:
             - name: artifact_test
-      - name: docker_build
+      - name: docker_build_5
         type: DockerBuild
         configuration:
           affinityGroup: dockerGroup
