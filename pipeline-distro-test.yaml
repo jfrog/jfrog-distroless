@@ -19,7 +19,7 @@ resources:
       buildName: docker_distro_build_pipe
       buildNumber: 1
 pipelines:
-  - name: Distroless pipeline
+  - name: DistrolessPipe
     steps:
       - name: start
         type: Bash
