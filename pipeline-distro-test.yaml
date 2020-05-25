@@ -46,3 +46,52 @@ pipelines:
             - name: distrolessGithubRepo
           integrations:
             - name: artifact_test
+      - name: docker_build
+        type: DockerBuild
+        configuration:
+          affinityGroup: dockerGroup
+          dockerFileLocation: customize-example
+          dockerFileName: Dockerfile.python
+          dockerImageName: 'chartstesting-distroless-local.jfrog.io/python'
+          dockerImageTag: ${run_number}
+          inputResources:
+            - name: distrolessGithubRepo
+          integrations:
+            - name: artifact_test
+      - name: docker_build
+        type: DockerBuild
+        configuration:
+          affinityGroup: dockerGroup
+          dockerFileLocation: customize-example
+          dockerFileName: Dockerfile.curl
+          dockerImageName: 'chartstesting-distroless-local.jfrog.io/curl'
+          dockerImageTag: ${run_number}
+          inputResources:
+            - name: distrolessGithubRepo
+          integrations:
+            - name: artifact_test
+      - name: docker_build
+        type: DockerBuild
+        configuration:
+          affinityGroup: dockerGroup
+          dockerFileLocation: customize-example
+          dockerFileName: Dockerfile.distroless
+          dockerImageName: 'chartstesting-distroless-local.jfrog.io/distroless'
+          dockerImageTag: ${run_number}
+          inputResources:
+            - name: distrolessGithubRepo
+          integrations:
+            - name: artifact_test
+      - name: docker_build
+        type: DockerBuild
+        configuration:
+          affinityGroup: dockerGroup
+          dockerFileLocation: customize-example
+          dockerFileName: Dockerfile.redhat-ubi
+          dockerImageName: 'chartstesting-distroless-local.jfrog.io/redhat-ubi'
+          dockerImageTag: ${run_number}
+          inputResources:
+            - name: distrolessGithubRepo
+          integrations:
+            - name: artifact_test            
+            
