@@ -48,6 +48,6 @@ pipelines:
             - echo "Starting the build"
             - curl -fL https://getcli.jfrog.io | sh
             - ./jfrog --version
-            - export JFROG_CLI_OFFER_CONFIG=false; ./jfrog rt docker-push chartstesting-distroless-local.jfrog.io/$res_docker_build_1_imageName distroless-local --build-name=DistrolessPipe --build-number=${run_number} --server-id chartstesting --url ${int_artifact-test_url} --user ${int_artifact-test_user} --password ${int_artifact-test_apikey}
+            - export JFROG_CLI_OFFER_CONFIG=false; ./jfrog rt docker-push chartstesting-distroless-local.jfrog.io/$res_docker_build_1_imageName distroless-local --build-name=DistrolessPipe --build-number=${run_number} --server-id chartstesting --url ${int_artifact-test_url} --user ${int_artifact-test_user} --password ${int_artifact-test_password}
           onSuccess:
             - echo "Triggered the build"
