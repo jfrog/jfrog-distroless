@@ -184,6 +184,6 @@ pipelines:
         type: PublishBuildInfo
         configuration:
           inputSteps:
-            - name: docker_build_5
+            - name: DockerPush_5
           outputResources:
             - name: distrolessArtifactory
