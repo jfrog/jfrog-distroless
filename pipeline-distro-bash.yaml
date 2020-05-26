@@ -21,6 +21,19 @@ resources:
 pipelines:
   - name: DistrolessPipe
     steps:
+      - name: start
+        type: Bash
+        configuration:
+          affinityGroup: dockerGroup
+          inputResources:
+            - name: file_test
+          outputResources:
+            - name: distrolessGithubRepo
+        execution:
+          onExecute:
+            - echo "Starting the build"
+          onSuccess:
+            - echo "Triggered the build"    
       - name: docker_build_1
         type: DockerBuild
         configuration:
@@ -88,6 +101,8 @@ pipelines:
           affinityGroup: dockerGroup
           inputSteps:
             - name: docker_build_1
+          outputResources:
+            - name: distrolessArtifactory
           integrations:
             - name: artifact_test
         execution:
@@ -103,6 +118,8 @@ pipelines:
             - name: docker_build_2
           integrations:
             - name: artifact_test
+          outputResources:
+            - name: distrolessArtifactory
         execution:
           onExecute:
             - echo "Starting the build"
@@ -116,6 +133,8 @@ pipelines:
             - name: docker_build_3
           integrations:
             - name: artifact_test
+          outputResources:
+            - name: distrolessArtifactory
         execution:
           onExecute:
             - echo "Starting the build"
@@ -129,6 +148,8 @@ pipelines:
             - name: docker_build_4
           integrations:
             - name: artifact_test
+          outputResources:
+            - name: distrolessArtifactory
         execution:
           onExecute:
             - echo "Starting the build"
@@ -142,6 +163,8 @@ pipelines:
             - name: docker_build_5
           integrations:
             - name: artifact_test
+          outputResources:
+            - name: distrolessArtifactory
         execution:
           onExecute:
             - echo "Starting the build"
