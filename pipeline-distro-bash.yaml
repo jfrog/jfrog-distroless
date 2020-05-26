@@ -177,9 +177,9 @@ pipelines:
             - name: DockerPush_5
           outputResources:
             - name: distrolessArtifactory
-#        execution:
-#          onExecute:
-#            - echo "Collecting Buildinfo"            
+        execution:
+          onExecute:
+            - echo "Collecting Buildinfo"            
 #      - name: BuildPublish
 #        type: PublishBuildInfo
 #        configuration:
