@@ -183,7 +183,7 @@ pipelines:
       - name: BuildPublish
         type: PublishBuildInfo
         configuration:
- #         inputSteps:
- #           - name: CollectinBuildinfo
+          inputSteps:
+            - name: CollectinBuildinfo
           outputResources:
             - name: distrolessArtifactory
