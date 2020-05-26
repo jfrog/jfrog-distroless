@@ -183,8 +183,7 @@ pipelines:
       - name: BuildPublish
         type: PublishBuildInfo
         configuration:
-          affinityGroup: dockerGroup
-          inputSteps:
-            - name: CollectinBuildinfo
+ #         inputSteps:
+ #           - name: CollectinBuildinfo
           outputResources:
             - name: distrolessArtifactory
