@@ -41,8 +41,8 @@ pipelines:
           affinityGroup: dockerGroup
           inputSteps:
             - name: docker_build_1
-#          outputResources:
-#            - name: distrolessGithubRepo
+          inputResources:
+            - name: artifact_test
         execution:
           onExecute:
             - echo "Starting the build"
