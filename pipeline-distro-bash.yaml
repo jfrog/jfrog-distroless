@@ -1,0 +1,37 @@
+resources:
+  - name: distrolessGithubRepo
+    type: GitRepo
+    configuration:
+      gitProvider: shahin_test
+      path: shahiinn/jfrog-distroless
+      branches:
+        include: master
+  - name: file_test
+    type: FileSpec
+    configuration:     
+      sourceArtifactory: artifact_test
+      pattern: testrepo1/distro-build.sh
+      target: distro-build.sh
+  - name: distrolessArtifactory
+    type: BuildInfo
+    configuration:
+      sourceArtifactory: artifact_test
+      buildName: DistrolessPipe
+      buildNumber: 1
+pipelines:
+  - name: DistrolessPipe
+    steps:
+      - name: start
+        type: Bash
+        configuration:
+          affinityGroup: dockerGroup
+          inputResources:
+            - name: file_test
+          outputResources:
+            - name: distrolessGithubRepo
+        execution:
+          onExecute:
+            - echo "Starting the build"
+            - jfrog --version
+          onSuccess:
+            - echo "Triggered the build"
