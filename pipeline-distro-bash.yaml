@@ -173,8 +173,8 @@ pipelines:
       - name: CollectinBuildinfo
         type: Bash
         configuration:
-          inputResources:
-            - name: distrolessArtifactory
+#          inputResources:
+#            - name: distrolessArtifactory
           outputResources:
             - name: distrolessArtifactory
         execution:
