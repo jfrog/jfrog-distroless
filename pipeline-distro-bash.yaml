@@ -231,10 +231,10 @@ pipelines:
  #           - docker kill c28a1c13faae ; docker rm c28a1c13faae
             - docker ps
             - netstat -tulnp
-            - docker run -dit --name test chartstesting-distroless-local.jfrog.io/artifactory-rh-ubi:${run_number}
+            - docker run -dit --name test -p 8082:8082 chartstesting-distroless-local.jfrog.io/artifactory-rh-ubi:${run_number}
             - docker ps
-            - docker logs -f test
-            - docker exec -it test ls
-            - docker exec -it test "ps -ef"
-            - docker exec -it test "until $(curl --output /dev/null --silent --head --fail localhost:8082/artifactory/api/system/ping -uadmin:password); do     printf '.';     sleep 5; done"
+#            - docker logs -f test
+#            - docker exec -it test ls
+#            - docker exec -it test "ps -ef"
+            - until $(curl --output /dev/null --silent --head --fail localhost:8082/artifactory/api/system/ping -uadmin:password); do     printf '.'; curl "localhost:8082/artifactory/api/system/ping" -u admin:password1 ; sleep 5; done
             - docker exec -it test "curl -s http://localhost:8082/router/api/v1/system/health"
