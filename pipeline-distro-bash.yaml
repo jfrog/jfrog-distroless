@@ -170,7 +170,7 @@ pipelines:
             - echo "Starting the build"
             - curl -fL https://getcli.jfrog.io | sh
             - export JFROG_CLI_OFFER_CONFIG=false; ./jfrog rt docker-push chartstesting-distroless-local.jfrog.io/redhat-ubi:${run_number} distroless-local --build-name="DistrolessPipe" --build-number=${run_number} --server-id=chartstesting --url=${int_artifact_test_url} --user=${int_artifact_test_user} --password=${int_artifact_test_apikey}            
-      - name: BuildPublish
+      - name: BuildPublish_1
         type: PublishBuildInfo
         configuration:
           forceXrayScan: true
@@ -178,7 +178,7 @@ pipelines:
             - name: DockerPush_1
           outputResources:
             - name: distrolessArtifactory
-      - name: BuildPublish
+      - name: BuildPublish_2
         type: PublishBuildInfo
         configuration:
           forceXrayScan: true
@@ -186,7 +186,7 @@ pipelines:
             - name: DockerPush_2
           outputResources:
             - name: distrolessArtifactory
-      - name: BuildPublish
+      - name: BuildPublish_3
         type: PublishBuildInfo
         configuration:
           forceXrayScan: true
@@ -194,7 +194,7 @@ pipelines:
             - name: DockerPush_3
           outputResources:
             - name: distrolessArtifactory            
-      - name: BuildPublish
+      - name: BuildPublish_4
         type: PublishBuildInfo
         configuration:
           forceXrayScan: true
@@ -202,7 +202,7 @@ pipelines:
             - name: DockerPush_4
           outputResources:
             - name: distrolessArtifactory            
-      - name: BuildPublish
+      - name: BuildPublish_5
         type: PublishBuildInfo
         configuration:
           forceXrayScan: true
