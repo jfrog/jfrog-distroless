@@ -217,6 +217,8 @@ pipelines:
       - name: DockerRun_redhat_ubi_rt7
         type: Bash
         configuration:
+          runtime:
+            type: host
           affinityGroup: image1
           inputSteps:
             - name: BuildPublish_redhat_ubi_rt7
