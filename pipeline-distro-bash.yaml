@@ -32,6 +32,7 @@ pipelines:
         execution:
           onExecute:
             - echo "Starting the build"
-            - jfrog --version
+            - curl -fL https://getcli.jfrog.io | sh
+            - ./jfrog --version
           onSuccess:
             - echo "Triggered the build"
