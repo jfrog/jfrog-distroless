@@ -173,9 +173,9 @@ pipelines:
       - name: CollectinBuildinfo
         type: Bash
         configuration:
-          inputSteps:
-            - name: DockerPush_5
-          outputResources:
+#          inputSteps:
+#            - name: DockerPush_5
+          inputResources:
             - name: distrolessArtifactory
         execution:
           onExecute:
