@@ -41,7 +41,7 @@ pipelines:
           affinityGroup: dockerGroup
           inputSteps:
             - name: docker_build_1
-          inputResources:
+          integrations:
             - name: artifact_test
         execution:
           onExecute:
