@@ -172,6 +172,7 @@ pipelines:
       - name: BuildPublish_redhat_ubi_rt7
         type: PublishBuildInfo
         configuration:
+          affinityGroup: image1
 #          forceXrayScan: true
           inputSteps:
             - name: DockerPush_redhat_ubi_rt7
@@ -180,6 +181,7 @@ pipelines:
       - name: BuildPublish_python
         type: PublishBuildInfo
         configuration:
+          affinityGroup: image2
           forceXrayScan: true
           inputSteps:
             - name: DockerPush_python
@@ -188,6 +190,7 @@ pipelines:
       - name: BuildPublish_curl
         type: PublishBuildInfo
         configuration:
+          affinityGroup: image3
           forceXrayScan: true
           inputSteps:
             - name: DockerPush_curl
@@ -196,6 +199,7 @@ pipelines:
       - name: BuildPublish_distroless
         type: PublishBuildInfo
         configuration:
+          affinityGroup: image4
           forceXrayScan: true
           inputSteps:
             - name: DockerPush_distroless
@@ -204,6 +208,7 @@ pipelines:
       - name: BuildPublish_redhat_ubi
         type: PublishBuildInfo
         configuration:
+          affinityGroup: image5
           forceXrayScan: true
           inputSteps:
             - name: DockerPush_redhat_ubi
