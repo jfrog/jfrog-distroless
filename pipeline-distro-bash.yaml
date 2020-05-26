@@ -170,10 +170,24 @@ pipelines:
             - echo "Starting the build"
             - curl -fL https://getcli.jfrog.io | sh
             - export JFROG_CLI_OFFER_CONFIG=false; ./jfrog rt docker-push chartstesting-distroless-local.jfrog.io/redhat-ubi:${run_number} distroless-local --build-name="DistrolessPipe" --build-number=${run_number} --server-id=chartstesting --url=${int_artifact_test_url} --user=${int_artifact_test_user} --password=${int_artifact_test_apikey}
+#      - name: CollectinBuildinfo
+#        type: Bash
+#        configuration:
+ #         inputResources:
+ #           - name: file_test
+ #         outputResources:
+ #           - name: distrolessArtifactory
+ #       execution:
+ #         onExecute:
+ #           - echo "Collecting Buildinfo"            
       - name: BuildPublish
         type: PublishBuildInfo
         configuration:
-          inputResource:
-            - name: distrolessArtifactory
+          inputsteps:
+            - name: docker_build_1
+            - name: docker_build_2
+            - name: docker_build_3
+            - name: docker_build_4
+            - name: docker_build_5
           outputResources:
             - name: distrolessArtifactory
