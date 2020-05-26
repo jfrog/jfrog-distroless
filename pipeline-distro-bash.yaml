@@ -33,7 +33,7 @@ pipelines:
             - echo "Starting the build"
           onSuccess:
             - echo "Triggered the build"    
-      - name: docker_build_1
+      - name: docker_build_redhat_ubi_rt7
         type: DockerBuild
         configuration:
           dockerFileLocation: customize-example
@@ -45,7 +45,7 @@ pipelines:
             - name: distrolessGithubRepo
           integrations:
             - name: artifact_test    
-      - name: docker_build_2
+      - name: docker_build_python
         type: DockerBuild
         configuration:
           dockerFileLocation: customize-example
@@ -56,7 +56,7 @@ pipelines:
             - name: distrolessGithubRepo
           integrations:
             - name: artifact_test
-      - name: docker_build_3
+      - name: docker_build_curl
         type: DockerBuild
         configuration:
           dockerFileLocation: customize-example
@@ -67,7 +67,7 @@ pipelines:
             - name: distrolessGithubRepo
           integrations:
             - name: artifact_test
-      - name: docker_build_4
+      - name: docker_build_distroless
         type: DockerBuild
         configuration:
           dockerFileLocation: customize-example
@@ -78,7 +78,7 @@ pipelines:
             - name: distrolessGithubRepo
           integrations:
             - name: artifact_test
-      - name: docker_build_5
+      - name: docker_build_redhat_ubi
         type: DockerBuild
         configuration:
           dockerFileLocation: customize-example
@@ -89,11 +89,11 @@ pipelines:
             - name: distrolessGithubRepo
           integrations:
             - name: artifact_test    
-      - name: DockerPush_1
+      - name: DockerPush_redhat_ubi_rt7
         type: Bash
         configuration:
           inputSteps:
-            - name: docker_build_1
+            - name: docker_build_redhat_ubi_rt7
           outputResources:
             - name: distrolessArtifactory
           integrations:
@@ -103,11 +103,11 @@ pipelines:
             - echo "Starting the build"
             - curl -fL https://getcli.jfrog.io | sh
             - export JFROG_CLI_OFFER_CONFIG=false; ./jfrog rt docker-push chartstesting-distroless-local.jfrog.io/artifactory-rh-ubi:${run_number} distroless-local --build-name="DistrolessPipe" --build-number=${run_number} --server-id=chartstesting --url=${int_artifact_test_url} --user=${int_artifact_test_user} --password=${int_artifact_test_apikey}
-      - name: DockerPush_2
+      - name: DockerPush_python
         type: Bash
         configuration:
           inputSteps:
-            - name: docker_build_2
+            - name: docker_build_python
           integrations:
             - name: artifact_test
           outputResources:
@@ -117,11 +117,11 @@ pipelines:
             - echo "Starting the build"
             - curl -fL https://getcli.jfrog.io | sh
             - export JFROG_CLI_OFFER_CONFIG=false; ./jfrog rt docker-push chartstesting-distroless-local.jfrog.io/python:${run_number} distroless-local --build-name="DistrolessPipe" --build-number=${run_number} --server-id=chartstesting --url=${int_artifact_test_url} --user=${int_artifact_test_user} --password=${int_artifact_test_apikey}
-      - name: DockerPush_3
+      - name: DockerPush_curl
         type: Bash
         configuration:
           inputSteps:
-            - name: docker_build_3
+            - name: docker_build_curl
           integrations:
             - name: artifact_test
           outputResources:
@@ -131,11 +131,11 @@ pipelines:
             - echo "Starting the build"
             - curl -fL https://getcli.jfrog.io | sh
             - export JFROG_CLI_OFFER_CONFIG=false; ./jfrog rt docker-push chartstesting-distroless-local.jfrog.io/curl:${run_number} distroless-local --build-name="DistrolessPipe" --build-number=${run_number} --server-id=chartstesting --url=${int_artifact_test_url} --user=${int_artifact_test_user} --password=${int_artifact_test_apikey}
-      - name: DockerPush_4
+      - name: DockerPush_distroless
         type: Bash
         configuration:
           inputSteps:
-            - name: docker_build_4
+            - name: docker_build_distroless
           integrations:
             - name: artifact_test
           outputResources:
@@ -145,12 +145,12 @@ pipelines:
             - echo "Starting the build"
             - curl -fL https://getcli.jfrog.io | sh
             - export JFROG_CLI_OFFER_CONFIG=false; ./jfrog rt docker-push chartstesting-distroless-local.jfrog.io/distroless:${run_number} distroless-local --build-name="DistrolessPipe" --build-number=${run_number} --server-id=chartstesting --url=${int_artifact_test_url} --user=${int_artifact_test_user} --password=${int_artifact_test_apikey}
-      - name: DockerPush_5
+      - name: DockerPush_redhat_ubi
         type: Bash
         configuration:
           affinityGroup: dockerGroup
           inputSteps:
-            - name: docker_build_5
+            - name: docker_build_redhat_ubi
           integrations:
             - name: artifact_test
           outputResources:
@@ -160,44 +160,44 @@ pipelines:
             - echo "Starting the build"
             - curl -fL https://getcli.jfrog.io | sh
             - export JFROG_CLI_OFFER_CONFIG=false; ./jfrog rt docker-push chartstesting-distroless-local.jfrog.io/redhat-ubi:${run_number} distroless-local --build-name="DistrolessPipe" --build-number=${run_number} --server-id=chartstesting --url=${int_artifact_test_url} --user=${int_artifact_test_user} --password=${int_artifact_test_apikey}            
-      - name: BuildPublish_1
+      - name: BuildPublish_redhat_ubi_rt7
         type: PublishBuildInfo
         configuration:
           forceXrayScan: true
           inputSteps:
-            - name: DockerPush_1
+            - name: DockerPush_redhat_ubi_rt7
           outputResources:
             - name: distrolessArtifactory
-      - name: BuildPublish_2
+      - name: BuildPublish_python
         type: PublishBuildInfo
         configuration:
           forceXrayScan: true
           inputSteps:
-            - name: DockerPush_2
+            - name: DockerPush_python
           outputResources:
             - name: distrolessArtifactory
-      - name: BuildPublish_3
+      - name: BuildPublish_curl
         type: PublishBuildInfo
         configuration:
           forceXrayScan: true
           inputSteps:
-            - name: DockerPush_3
+            - name: DockerPush_curl
           outputResources:
             - name: distrolessArtifactory            
-      - name: BuildPublish_4
+      - name: BuildPublish_distroless
         type: PublishBuildInfo
         configuration:
           forceXrayScan: true
           inputSteps:
-            - name: DockerPush_4
+            - name: DockerPush_distroless
           outputResources:
             - name: distrolessArtifactory            
-      - name: BuildPublish_5
+      - name: BuildPublish_redhat_ubi
         type: PublishBuildInfo
         configuration:
           forceXrayScan: true
           inputSteps:
-            - name: DockerPush_5
+            - name: DockerPush_redhat_ubi
           outputResources:
             - name: distrolessArtifactory            
 #      - name: DockerRun_1
