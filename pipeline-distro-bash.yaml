@@ -24,7 +24,6 @@ pipelines:
       - name: start
         type: Bash
         configuration:
-          affinityGroup: dockerGroup
           inputResources:
             - name: file_test
           outputResources:
@@ -37,7 +36,6 @@ pipelines:
       - name: docker_build_1
         type: DockerBuild
         configuration:
-          affinityGroup: dockerGroup
           dockerFileLocation: customize-example
           dockerFileName: Dockerfile.redhat-ubi-rt7
           dockerImageName: 'chartstesting-distroless-local.jfrog.io/artifactory-rh-ubi'
@@ -50,7 +48,6 @@ pipelines:
       - name: docker_build_2
         type: DockerBuild
         configuration:
-          affinityGroup: dockerGroup
           dockerFileLocation: customize-example
           dockerFileName: Dockerfile.python
           dockerImageName: 'chartstesting-distroless-local.jfrog.io/python'
@@ -62,7 +59,6 @@ pipelines:
       - name: docker_build_3
         type: DockerBuild
         configuration:
-          affinityGroup: dockerGroup
           dockerFileLocation: customize-example
           dockerFileName: Dockerfile.curl
           dockerImageName: 'chartstesting-distroless-local.jfrog.io/curl'
@@ -74,7 +70,6 @@ pipelines:
       - name: docker_build_4
         type: DockerBuild
         configuration:
-          affinityGroup: dockerGroup
           dockerFileLocation: customize-example
           dockerFileName: Dockerfile.distroless
           dockerImageName: 'chartstesting-distroless-local.jfrog.io/distroless'
@@ -86,7 +81,6 @@ pipelines:
       - name: docker_build_5
         type: DockerBuild
         configuration:
-          affinityGroup: dockerGroup
           dockerFileLocation: customize-example
           dockerFileName: Dockerfile.redhat-ubi
           dockerImageName: 'chartstesting-distroless-local.jfrog.io/redhat-ubi'
@@ -98,7 +92,6 @@ pipelines:
       - name: DockerPush_1
         type: Bash
         configuration:
-          affinityGroup: dockerGroup
           inputSteps:
             - name: docker_build_1
           outputResources:
@@ -113,7 +106,6 @@ pipelines:
       - name: DockerPush_2
         type: Bash
         configuration:
-          affinityGroup: dockerGroup
           inputSteps:
             - name: docker_build_2
           integrations:
@@ -128,7 +120,6 @@ pipelines:
       - name: DockerPush_3
         type: Bash
         configuration:
-          affinityGroup: dockerGroup
           inputSteps:
             - name: docker_build_3
           integrations:
@@ -143,7 +134,6 @@ pipelines:
       - name: DockerPush_4
         type: Bash
         configuration:
-          affinityGroup: dockerGroup
           inputSteps:
             - name: docker_build_4
           integrations:
@@ -210,4 +200,11 @@ pipelines:
             - name: DockerPush_5
           outputResources:
             - name: distrolessArtifactory            
-            
+#      - name: DockerRun_1
+#        type: Bash
+#        configuration:
+#          inputSteps:
+#            - name: BuildPublish_1
+#        execution:
+#          onExecute:   
+#            - docker run -it 
