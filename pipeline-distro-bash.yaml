@@ -183,6 +183,7 @@ pipelines:
       - name: BuildPublish
         type: PublishBuildInfo
         configuration:
+          affinityGroup: dockerGroup
           inputSteps:
             - name: DockerPush_5
           outputResources:
