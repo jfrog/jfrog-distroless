@@ -39,8 +39,8 @@ pipelines:
         type: Bash
         configuration:
           affinityGroup: dockerGroup
-          inputResources:
-            - name: file_test
+          inputSteps:
+            - name: docker_build_1
           outputResources:
             - name: distrolessGithubRepo
         execution:
