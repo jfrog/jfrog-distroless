@@ -36,6 +36,7 @@ pipelines:
       - name: docker_build_redhat_ubi_rt7
         type: DockerBuild
         configuration:
+          affinityGroup: image1
           dockerFileLocation: customize-example
           dockerFileName: Dockerfile.redhat-ubi-rt7
           dockerImageName: 'chartstesting-distroless-local.jfrog.io/artifactory-rh-ubi'
@@ -48,6 +49,7 @@ pipelines:
       - name: docker_build_python
         type: DockerBuild
         configuration:
+          affinityGroup: image2
           dockerFileLocation: customize-example
           dockerFileName: Dockerfile.python
           dockerImageName: 'chartstesting-distroless-local.jfrog.io/python'
@@ -59,6 +61,7 @@ pipelines:
       - name: docker_build_curl
         type: DockerBuild
         configuration:
+          affinityGroup: image3
           dockerFileLocation: customize-example
           dockerFileName: Dockerfile.curl
           dockerImageName: 'chartstesting-distroless-local.jfrog.io/curl'
@@ -70,6 +73,7 @@ pipelines:
       - name: docker_build_distroless
         type: DockerBuild
         configuration:
+          affinityGroup: image4
           dockerFileLocation: customize-example
           dockerFileName: Dockerfile.distroless
           dockerImageName: 'chartstesting-distroless-local.jfrog.io/distroless'
@@ -81,6 +85,7 @@ pipelines:
       - name: docker_build_redhat_ubi
         type: DockerBuild
         configuration:
+          affinityGroup: image5
           dockerFileLocation: customize-example
           dockerFileName: Dockerfile.redhat-ubi
           dockerImageName: 'chartstesting-distroless-local.jfrog.io/redhat-ubi'
@@ -92,6 +97,7 @@ pipelines:
       - name: DockerPush_redhat_ubi_rt7
         type: Bash
         configuration:
+          affinityGroup: image1
           inputSteps:
             - name: docker_build_redhat_ubi_rt7
           outputResources:
@@ -106,6 +112,7 @@ pipelines:
       - name: DockerPush_python
         type: Bash
         configuration:
+          affinityGroup: image2
           inputSteps:
             - name: docker_build_python
           integrations:
@@ -120,6 +127,7 @@ pipelines:
       - name: DockerPush_curl
         type: Bash
         configuration:
+          affinityGroup: image3
           inputSteps:
             - name: docker_build_curl
           integrations:
@@ -134,6 +142,7 @@ pipelines:
       - name: DockerPush_distroless
         type: Bash
         configuration:
+          affinityGroup: image4
           inputSteps:
             - name: docker_build_distroless
           integrations:
@@ -148,6 +157,7 @@ pipelines:
       - name: DockerPush_redhat_ubi
         type: Bash
         configuration:
+          affinityGroup: image5
           affinityGroup: dockerGroup
           inputSteps:
             - name: docker_build_redhat_ubi
