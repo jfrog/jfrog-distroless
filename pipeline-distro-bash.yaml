@@ -34,8 +34,55 @@ pipelines:
             - name: distrolessGithubRepo
           integrations:
             - name: artifact_test    
-    
-      - name: DockerPush
+      - name: docker_build_2
+        type: DockerBuild
+        configuration:
+          affinityGroup: dockerGroup
+          dockerFileLocation: customize-example
+          dockerFileName: Dockerfile.python
+          dockerImageName: 'chartstesting-distroless-local.jfrog.io/python'
+          dockerImageTag: ${run_number}
+          inputResources:
+            - name: distrolessGithubRepo
+          integrations:
+            - name: artifact_test
+      - name: docker_build_3
+        type: DockerBuild
+        configuration:
+          affinityGroup: dockerGroup
+          dockerFileLocation: customize-example
+          dockerFileName: Dockerfile.curl
+          dockerImageName: 'chartstesting-distroless-local.jfrog.io/curl'
+          dockerImageTag: ${run_number}
+          inputResources:
+            - name: distrolessGithubRepo
+          integrations:
+            - name: artifact_test
+      - name: docker_build_4
+        type: DockerBuild
+        configuration:
+          affinityGroup: dockerGroup
+          dockerFileLocation: customize-example
+          dockerFileName: Dockerfile.distroless
+          dockerImageName: 'chartstesting-distroless-local.jfrog.io/distroless'
+          dockerImageTag: ${run_number}
+          inputResources:
+            - name: distrolessGithubRepo
+          integrations:
+            - name: artifact_test
+      - name: docker_build_5
+        type: DockerBuild
+        configuration:
+          affinityGroup: dockerGroup
+          dockerFileLocation: customize-example
+          dockerFileName: Dockerfile.redhat-ubi
+          dockerImageName: 'chartstesting-distroless-local.jfrog.io/redhat-ubi'
+          dockerImageTag: ${run_number}
+          inputResources:
+            - name: distrolessGithubRepo
+          integrations:
+            - name: artifact_test    
+      - name: DockerPush_1
         type: Bash
         configuration:
           affinityGroup: dockerGroup
@@ -47,10 +94,56 @@ pipelines:
           onExecute:
             - echo "Starting the build"
             - curl -fL https://getcli.jfrog.io | sh
-            - ./jfrog --version
-            - echo ${int_artifact_test_url} ${int_artifact_test_user} ${int_artifact_test_password} ${int_artifact_test_apikey} $res_docker_build_1_dockerImageName 
-            - echo "docker login -u ${int_artifact_test_user} -p ${int_artifact_test_apikey} ${int_artifact_test_url}" 
-#            - docker login -u ${int_artifact_test_user} -p ${int_artifact_test_apikey} ${int_artifact_test_url}
             - export JFROG_CLI_OFFER_CONFIG=false; ./jfrog rt docker-push chartstesting-distroless-local.jfrog.io/artifactory-rh-ubi:${run_number} distroless-local --build-name="DistrolessPipe" --build-number=${run_number} --server-id=chartstesting --url=${int_artifact_test_url} --user=${int_artifact_test_user} --password=${int_artifact_test_apikey}
-          onSuccess:
-            - echo "Triggered the build"
+      - name: DockerPush_2
+        type: Bash
+        configuration:
+          affinityGroup: dockerGroup
+          inputSteps:
+            - name: docker_build_2
+          integrations:
+            - name: artifact_test
+        execution:
+          onExecute:
+            - echo "Starting the build"
+            - curl -fL https://getcli.jfrog.io | sh
+            - export JFROG_CLI_OFFER_CONFIG=false; ./jfrog rt docker-push chartstesting-distroless-local.jfrog.io/python:${run_number} distroless-local --build-name="DistrolessPipe" --build-number=${run_number} --server-id=chartstesting --url=${int_artifact_test_url} --user=${int_artifact_test_user} --password=${int_artifact_test_apikey}
+      - name: DockerPush_3
+        type: Bash
+        configuration:
+          affinityGroup: dockerGroup
+          inputSteps:
+            - name: docker_build_3
+          integrations:
+            - name: artifact_test
+        execution:
+          onExecute:
+            - echo "Starting the build"
+            - curl -fL https://getcli.jfrog.io | sh
+            - export JFROG_CLI_OFFER_CONFIG=false; ./jfrog rt docker-push chartstesting-distroless-local.jfrog.io/curl:${run_number} distroless-local --build-name="DistrolessPipe" --build-number=${run_number} --server-id=chartstesting --url=${int_artifact_test_url} --user=${int_artifact_test_user} --password=${int_artifact_test_apikey}
+      - name: DockerPush_4
+        type: Bash
+        configuration:
+          affinityGroup: dockerGroup
+          inputSteps:
+            - name: docker_build_4
+          integrations:
+            - name: artifact_test
+        execution:
+          onExecute:
+            - echo "Starting the build"
+            - curl -fL https://getcli.jfrog.io | sh
+            - export JFROG_CLI_OFFER_CONFIG=false; ./jfrog rt docker-push chartstesting-distroless-local.jfrog.io/distroless:${run_number} distroless-local --build-name="DistrolessPipe" --build-number=${run_number} --server-id=chartstesting --url=${int_artifact_test_url} --user=${int_artifact_test_user} --password=${int_artifact_test_apikey}
+      - name: DockerPush_5
+        type: Bash
+        configuration:
+          affinityGroup: dockerGroup
+          inputSteps:
+            - name: docker_build_5
+          integrations:
+            - name: artifact_test
+        execution:
+          onExecute:
+            - echo "Starting the build"
+            - curl -fL https://getcli.jfrog.io | sh
+            - export JFROG_CLI_OFFER_CONFIG=false; ./jfrog rt docker-push chartstesting-distroless-local.jfrog.io/redhat-ubi:${run_number} distroless-local --build-name="DistrolessPipe" --build-number=${run_number} --server-id=chartstesting --url=${int_artifact_test_url} --user=${int_artifact_test_user} --password=${int_artifact_test_apikey}
