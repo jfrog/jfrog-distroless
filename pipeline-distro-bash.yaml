@@ -237,4 +237,4 @@ pipelines:
 #            - docker exec -it test ls
 #            - docker exec -it test "ps -ef"
             - until $(curl --output /dev/null --silent --head --fail localhost:8082/artifactory/api/system/ping -uadmin:password); do     echo '.'; sleep 5; done
-            - docker exec -it test "curl -s http://localhost:8082/router/api/v1/system/health"
+            - curl -s http://localhost:8082/router/api/v1/system/health
