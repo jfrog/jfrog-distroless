@@ -180,11 +180,11 @@ pipelines:
         execution:
           onExecute:
             - echo "Collecting Buildinfo"            
-#      - name: BuildPublish
-#        type: PublishBuildInfo
-#        configuration:
-#          affinityGroup: dockerGroup
-#          inputSteps:
-#            - name: DockerPush_5
-#          outputResources:
-#            - name: distrolessArtifactory
+      - name: BuildPublish
+        type: PublishBuildInfo
+        configuration:
+          affinityGroup: dockerGroup
+          inputSteps:
+            - name: CollectinBuildinfo
+          outputResources:
+            - name: distrolessArtifactory
