@@ -222,8 +222,8 @@ pipelines:
             - name: BuildPublish_redhat_ubi_rt7
         execution:
           onExecute:   
-            - docker run -dit -p 8082:8082 chartstesting-distroless-local.jfrog.io/artifactory-rh-ubi:${run_number}
+ #           - docker run -dit -p 8082:8082 chartstesting-distroless-local.jfrog.io/artifactory-rh-ubi:${run_number}
  #           - until $(curl --output /dev/null --silent --head --fail localhost:8082/artifactory/api/system/ping -uadmin:password); do     printf '.';     sleep 5; done
-            - sleep 120
+ #           - sleep 120
             - curl -s http://localhost:8082/router/api/v1/system/health
             - docker ps
