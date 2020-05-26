@@ -233,6 +233,7 @@ pipelines:
             - netstat -tulnp
             - docker run -dit --name test chartstesting-distroless-local.jfrog.io/artifactory-rh-ubi:${run_number}
             - docker ps
+            - docker logs -f test
             - docker exec -it test ls
             - docker exec -it test "ps -ef"
             - docker exec -it test "until $(curl --output /dev/null --silent --head --fail localhost:8082/artifactory/api/system/ping -uadmin:password); do     printf '.';     sleep 5; done"
