@@ -169,21 +169,45 @@ pipelines:
           onExecute:
             - echo "Starting the build"
             - curl -fL https://getcli.jfrog.io | sh
-            - export JFROG_CLI_OFFER_CONFIG=false; ./jfrog rt docker-push chartstesting-distroless-local.jfrog.io/redhat-ubi:${run_number} distroless-local --build-name="DistrolessPipe" --build-number=${run_number} --server-id=chartstesting --url=${int_artifact_test_url} --user=${int_artifact_test_user} --password=${int_artifact_test_apikey}
-      - name: CollectinBuildinfo
-        type: Bash
-        configuration:
-#          inputSteps:
-#            - name: DockerPush_5
-          inputResources:
-            - name: distrolessArtifactory
-        execution:
-          onExecute:
-            - echo "Collecting Buildinfo"            
+            - export JFROG_CLI_OFFER_CONFIG=false; ./jfrog rt docker-push chartstesting-distroless-local.jfrog.io/redhat-ubi:${run_number} distroless-local --build-name="DistrolessPipe" --build-number=${run_number} --server-id=chartstesting --url=${int_artifact_test_url} --user=${int_artifact_test_user} --password=${int_artifact_test_apikey}            
       - name: BuildPublish
         type: PublishBuildInfo
         configuration:
+          forceXrayScan: true
           inputSteps:
-            - name: CollectinBuildinfo
+            - name: DockerPush_1
           outputResources:
             - name: distrolessArtifactory
+      - name: BuildPublish
+        type: PublishBuildInfo
+        configuration:
+          forceXrayScan: true
+          inputSteps:
+            - name: DockerPush_2
+          outputResources:
+            - name: distrolessArtifactory
+      - name: BuildPublish
+        type: PublishBuildInfo
+        configuration:
+          forceXrayScan: true
+          inputSteps:
+            - name: DockerPush_3
+          outputResources:
+            - name: distrolessArtifactory            
+      - name: BuildPublish
+        type: PublishBuildInfo
+        configuration:
+          forceXrayScan: true
+          inputSteps:
+            - name: DockerPush_4
+          outputResources:
+            - name: distrolessArtifactory            
+      - name: BuildPublish
+        type: PublishBuildInfo
+        configuration:
+          forceXrayScan: true
+          inputSteps:
+            - name: DockerPush_5
+          outputResources:
+            - name: distrolessArtifactory            
+            
