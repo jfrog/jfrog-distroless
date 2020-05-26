@@ -4,8 +4,6 @@ resources:
     configuration:
       gitProvider: shahin_test
       path: shahiinn/jfrog-distroless
-      buildOn:
-        commit: false
       branches:
         include: master
   - name: file_test
