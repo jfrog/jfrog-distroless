@@ -158,7 +158,6 @@ pipelines:
         type: Bash
         configuration:
           affinityGroup: image5
-          affinityGroup: dockerGroup
           inputSteps:
             - name: docker_build_redhat_ubi
           integrations:
