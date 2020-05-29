@@ -130,8 +130,8 @@ dpkg_list(
 http_file(
     name = "adoptopenjdk",
     executable = True,
-    sha256 = "330d19a2eaa07ed02757d7a785a77bab49f5ee710ea03b4ee2fa220ddd0feffc",
-    urls = ["https://deepscan.jfrog.io/deepscan/distroless-generic/java/OpenJDK11U-jdk_x64_linux_hotspot_11.0.6_10.tar.gz"],
+    sha256 = "eefd7b967ae0865f47f6abd2da26853bda5ebec72dad7034fd993082554e4fef",
+    urls = ["https://deepscan.jfrog.io/deepscan/distroless-generic/java/adoptopenjdk-11.0.7+10-linux.tar.gz"],
 )
 
 # PostgreSQL Client for MongoDB -> PostgreSQL migration

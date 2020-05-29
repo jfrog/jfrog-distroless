@@ -53,7 +53,7 @@ docker_build(
         # cmd = ["/path/to/deploy.jar", "--option1", ...]
     ],
     symlinks = {
-        "/usr/bin/java": "/java/jdk-11.0.6+10/bin/java",
+        "/usr/bin/java": "/java/jdk-11.0.7+10/bin/java",
     },
     tars = ["//experimental/adoptopenjdk:adoptopenjdk.tar"],
 )
@@ -64,7 +64,7 @@ docker_build(
     entrypoint = ["/busybox/sh"],
      stamp = True,
      symlinks = {
-             "/usr/bin/jar": "/java/jdk-11.0.6+10/bin/jar",
+             "/usr/bin/jar": "/java/jdk-11.0.7+10/bin/jar",
          }
 )
 
