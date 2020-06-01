@@ -12,6 +12,7 @@ passwd_entry(
     name = "root_user",
     gid = 0,
     uid = 0,
+    home = "/root",
     username = "root",
 )
 
