@@ -16,10 +16,10 @@ resources:
     type: BuildInfo
     configuration:
       sourceArtifactory: artifact_test
-      buildName: DistrolessPipe
-      buildNumber: 1
+      buildName: Distroless_Examples_Pipeline
+      buildNumber: ${run_number}
 pipelines:
-  - name: DistrolessPipe
+  - name: Distroless_Examples_Pipeline
     steps:
       - name: start
         type: Bash
