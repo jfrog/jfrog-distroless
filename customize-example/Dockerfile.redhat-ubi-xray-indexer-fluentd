@@ -9,6 +9,7 @@ FROM registry.access.redhat.com/${UBI_BASE_IMAGE}
 
 ARG XRAY_BASE_VERSION
 ARG UBI_BASE_IMAGE
+ARG LOG_VENDOR
 
 LABEL name="JFrog Xray Indexer" \
       description="JFrog Xray Indexer image based on the Red Hat Universal Base Image." \
@@ -22,7 +23,8 @@ ENV JF_XRAY_USER=xray \
     XRAY_VERSION=${XRAY_BASE_VERSION} \
     JF_PRODUCT_HOME=/opt/jfrog/xray \
     JF_PRODUCT_DATA_INTERNAL=/var/opt/jfrog/xray \
-    SERVICE_NAME=indexer
+    SERVICE_NAME=indexer \
+    LOG_VENDOR=${LOG_VENDOR}
 
 COPY --from=base /opt/jfrog/xray /opt/jfrog/xray
 COPY --from=base /postgresql-client /postgresql-client
