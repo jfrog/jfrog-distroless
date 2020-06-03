@@ -1,5 +1,6 @@
 ARG XRAY_BASE_VERSION=3.3.0
 ARG UBI_BASE_IMAGE=ubi8
+ARG LOG_VENDOR=splunk
 
 FROM docker.bintray.io/jfrog/xray-server:${XRAY_BASE_VERSION} AS base
 
@@ -54,7 +55,7 @@ RUN mkdir -p /usr/lib/rpm/redhat/ && \
 # REMOVE THE DEV TOOLS NEEDED FOR GEM INSTALL NOW..
 RUN yum remove -y --disableplugin=subscription-manager gcc gcc-c++ make
 
-COPY fluent.conf.xray /etc/td-agent/td-agent.conf
+COPY ${LOG_VENDOR}/fluent.conf.xray /etc/td-agent/td-agent.conf
 
 RUN chown -R ${JF_XRAY_USER}:${JF_XRAY_USER} /etc/td-agent/td-agent.conf
 
