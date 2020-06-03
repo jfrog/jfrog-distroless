@@ -1,6 +1,6 @@
 ARG XRAY_BASE_VERSION=3.3.0
 ARG UBI_BASE_IMAGE=ubi8
-ARG LOG_VENDOR=splunk
+ARG LOG_VENDOR=elastic
 
 FROM docker.bintray.io/jfrog/xray-server:${XRAY_BASE_VERSION} AS base
 

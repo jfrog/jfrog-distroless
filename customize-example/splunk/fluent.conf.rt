@@ -113,8 +113,8 @@
   @type record_transformer
   enable_ruby true
   <record>
-    repo ${record["request_url"].split('/')[3]}
-    image ${record["request_url"].split('/')[5]}
+    repo ${record["request_url"].include?("/api/docker") && !record["request_url"].include?("/api/docker/null") && !record["request_url"].include?("/api/docker/v2") ? (record["request_url"].split('/')[3]) : ("")}
+    image ${record["request_url"].include?("/api/docker") && !record["request_url"].include?("/api/docker/null") && !record["request_url"].include?("/api/docker/v2")  ? (record["request_url"].split('/')[5]) : ("")}
   </record>
 </filter>
 <source>
@@ -176,7 +176,7 @@
   tag jfrog.rt.access.audit
   <parse>
     @type regexp
-    expression /^(?<timestamp>[^ ]*)\|(?<user_ip>[^\|]*)\|(?<user>[^\|]*)\|(?<logged_principal>[^\|]*)\|(?<entity_name>[^\|]*)\|(?<event_type>[^\|]*)\|(?<event>[^\|]*)\|(?<data_changed>[^.]*)$$/
+    expression /^(?<timestamp>[^ ]*)\|(?<token_id>[^ ]*)\|(?<user_ip>[^ ]*)\|(?<user>[^ ]*)\|(?<logged_principal>[^ ]*)\|(?<entity_name>[^ ]*)\|(?<event_type>[^ ]*)\|(?<event>[^ ]*)\|(?<data_changed>[^.]*)$/
     time_key timestamp
     time_format %Y-%m-%dT%H:%M:%S.%LZ
   </parse>
@@ -223,18 +223,17 @@
   </buffer>
 </match>
 #END CALL HOME
-
-#ELASTIC OUTPUT
+#SPLUNK OUTPUT
 <match jfrog.**>
-  @type elasticsearch
-  @id elasticsearch
-  @log_level info
-  include_tag_key true
-  type_name fluentd
-  host elasticsearch
-  port 9200
-  index_name unified-artifactory
-  logstash_format false
+  @type splunk_hec
+  host HEC_HOST
+  port HEC_PORT
+  token HEC_TOKEN
+  format json
+  # buffered output parameter
+  flush_interval 10s
+  # ssl parameter
+  use_ssl true
+  ca_file /path/to/ca.pem
 </match>
-#END ELASTIC OUTPUT
-
+#END SPLUNK OUTPUT
