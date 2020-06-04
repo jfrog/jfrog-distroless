@@ -11,7 +11,6 @@ ARG XRAY_BASE_VERSION
 ARG UBI_BASE_IMAGE
 ARG LOG_VENDOR
 
-
 LABEL name="JFrog Xray Analysis" \
       description="JFrog Xray Analysis image based on the Red Hat Universal Base Image." \
       vendor="JFrog" \
