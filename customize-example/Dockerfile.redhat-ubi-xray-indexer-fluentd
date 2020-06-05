@@ -1,6 +1,6 @@
 ARG XRAY_BASE_VERSION=3.3.0
 ARG UBI_BASE_IMAGE=ubi8
-ARG FLUENT_CONF=fluent.conf.xray
+ARG FLUENT_CONF=elastic/fluent.conf.xray
 
 FROM docker.bintray.io/jfrog/xray-indexer:${XRAY_BASE_VERSION} AS base
 

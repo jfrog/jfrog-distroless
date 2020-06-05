@@ -1,6 +1,6 @@
 ARG ROUTER_BASE_VERSION=1.2.1
 ARG UBI_BASE_IMAGE=ubi8
-ARG FLUENT_CONF=fluent.conf.xray
+ARG FLUENT_CONF=elastic/fluent.conf.xray
 
 FROM docker.bintray.io/jfrog/router:${ROUTER_BASE_VERSION} AS base
 
