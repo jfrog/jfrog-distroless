@@ -1,5 +1,6 @@
 ARG XRAY_BASE_VERSION=3.3.0
 ARG UBI_BASE_IMAGE=ubi8
+ARG FLUENT_CONF=elastic/fluent.conf.xray
 
 FROM docker.bintray.io/jfrog/xray-persist:${XRAY_BASE_VERSION} AS base
 
@@ -8,6 +9,7 @@ FROM registry.access.redhat.com/${UBI_BASE_IMAGE}
 
 ARG XRAY_BASE_VERSION
 ARG UBI_BASE_IMAGE
+ARG FLUENT_CONF
 
 LABEL name="JFrog Xray Persist" \
       description="JFrog Xray Persist image based on the Red Hat Universal Base Image." \
@@ -21,7 +23,8 @@ ENV JF_XRAY_USER=xray \
     XRAY_VERSION=${XRAY_BASE_VERSION} \
     JF_PRODUCT_HOME=/opt/jfrog/xray \
     JF_PRODUCT_DATA_INTERNAL=/var/opt/jfrog/xray \
-    SERVICE_NAME=persist
+    SERVICE_NAME=persist \
+    FLUENT_CONF=${FLUENT_CONF}
 
 COPY --from=base /opt/jfrog/xray /opt/jfrog/xray
 COPY --from=base /postgresql-client /postgresql-client
@@ -57,7 +60,7 @@ RUN yum remove -y --disableplugin=subscription-manager gcc gcc-c++ make
 
 USER $JF_XRAY_USER
 
-COPY fluent.conf.xray /etc/td-agent/td-agent.conf
+COPY ${FLUENT_CONF} /etc/td-agent/td-agent.conf
 
 VOLUME /var/opt/jfrog/xray
 
