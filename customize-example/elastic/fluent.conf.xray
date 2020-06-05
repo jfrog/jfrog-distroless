@@ -134,11 +134,11 @@
 <match jfrog.**>
   @type elasticsearch
   @id elasticsearch
-  include_tag_key true
-  type_name fluentd
   host elasticsearch
   port 9200
   index_name unified-xray
+  include_tag_key true
+  type_name fluentd
   logstash_format false
 </match>
 #END ELASTIC OUTPUT
