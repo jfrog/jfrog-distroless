@@ -2,7 +2,7 @@
 This project is based on Google [distroless](https://github.com/GoogleContainerTools/distroless) project 
 and build using [Bazel](https://bazel.build/) build tool
 
-##Pipeline test
+##Pipeline test new
 
 # Goal
 Create a light weight image with no security vulnerabilities 
