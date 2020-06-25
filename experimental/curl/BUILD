@@ -5,9 +5,8 @@ genrule(
     name = "curl_tar",
     srcs = ["@curl//file:downloaded"],
     outs = ["curl.tar"],
-    cmd = "mkdir curl; tar xjf $(<) -C curl --strip-components=1; \
-           mv curl/curl.ermine curl/curl; \
-           tar -cf $@ curl",
+    cmd = "mkdir curl; tar xzf $(<) -C curl --strip-components=1; \
+           tar -cf $@ curl"
 )
 
 
