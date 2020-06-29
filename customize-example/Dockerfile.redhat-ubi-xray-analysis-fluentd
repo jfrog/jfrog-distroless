@@ -1,4 +1,4 @@
-ARG XRAY_BASE_VERSION=3.3.0
+ARG XRAY_BASE_VERSION=3.5.2
 ARG UBI_BASE_IMAGE=ubi8
 
 FROM docker.bintray.io/jfrog/xray-analysis:${XRAY_BASE_VERSION} AS base
