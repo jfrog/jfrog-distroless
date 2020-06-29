@@ -1,7 +1,7 @@
 # An example of customising Artifactory using RedHat Univeral Base Image (UBI).
 # Using Docker multi stage build.
 # Taking the Artifactory file system
-ARG ARTIFACTORY_BASE_VERSION=7.5.5
+ARG ARTIFACTORY_BASE_VERSION=7.6.1
 ARG UBI_BASE_IMAGE=ubi8
 
 # The Artifactory official Docker image

@@ -1,5 +1,6 @@
-ARG ROUTER_BASE_VERSION=1.2.1
+ARG ROUTER_BASE_VERSION=1.4.0
 ARG UBI_BASE_IMAGE=ubi8
+ARG FLUENT_CONF=elastic/fluent.conf.xray
 
 FROM docker.bintray.io/jfrog/router:${ROUTER_BASE_VERSION} AS base
 
@@ -8,6 +9,7 @@ FROM registry.access.redhat.com/${UBI_BASE_IMAGE}
 
 ARG ROUTER_BASE_VERSION
 ARG UBI_BASE_IMAGE
+ARG FLUENT_CONF
 
 LABEL name="JFrog Router" \
       description="JFrog Router image based on the Red Hat Universal Base Image." \
@@ -21,7 +23,8 @@ ENV JF_ROUTER_USER=router \
     ROUTER_VERSION=${ROUTER_BASE_VERSION} \
     JF_PRODUCT_HOME=/opt/jfrog/router \
     JF_PRODUCT_DATA_INTERNAL=/var/opt/jfrog/router \
-    SERVICE_NAME=router
+    SERVICE_NAME=router \
+    FLUENT_CONF=${FLUENT_CONF}
 
 COPY --from=base /opt/jfrog/router /opt/jfrog/router
 
@@ -58,6 +61,6 @@ USER $JF_ROUTER_USER
 
 VOLUME /var/opt/jfrog/router
 
-COPY fluent.conf.xray /etc/td-agent/td-agent.conf
+COPY ${FLUENT_CONF} /etc/td-agent/td-agent.conf
 
 ENTRYPOINT ["/opt/jfrog/router/app/bin/entrypoint-router.sh"]

@@ -1,8 +1,9 @@
 # An example of customising Artifactory using RedHat Univeral Base Image (UBI).
 # Using Docker multi stage build.
 # Taking the Artifactory file system
-ARG ARTIFACTORY_BASE_VERSION=7.4.3
+ARG ARTIFACTORY_BASE_VERSION=7.6.1
 ARG UBI_BASE_IMAGE=ubi8
+ARG FLUENT_CONF=elastic/fluent.conf.rt
 
 # The Artifactory official Docker image
 FROM docker.bintray.io/jfrog/artifactory-pro:${ARTIFACTORY_BASE_VERSION} AS base
@@ -12,6 +13,7 @@ FROM registry.access.redhat.com/${UBI_BASE_IMAGE}
 
 ARG ARTIFACTORY_BASE_VERSION
 ARG UBI_BASE_IMAGE
+ARG FLUENT_CONF
 
 LABEL name="JFrog Artifactory Pro" \
       description="JFrog Artifactory Pro image based on the Red Hat Universal Base Image." \
@@ -28,7 +30,8 @@ ENV JF_ARTIFACTORY_USER=artifactory \
     RECOMMENDED_MAX_OPEN_FILES=32000 \
     MIN_MAX_OPEN_FILES=10000 \
     RECOMMENDED_MAX_OPEN_PROCESSES=1024 \
-    POSTGRESQL_VERSION=9.4.1212
+    POSTGRESQL_VERSION=9.4.1212 \
+    FLUENT_CONF=${FLUENT_CONF}
 
 # Copy needed file system from base (Artifactory image)
 COPY --from=base /opt/jfrog /opt/jfrog
@@ -71,7 +74,7 @@ RUN mkdir -p /usr/lib/rpm/redhat/ && \
 # REMOVE THE DEV TOOLS NEEDED FOR GEM INSTALL NOW..
 RUN yum remove -y --disableplugin=subscription-manager gcc gcc-c++ make
 
-COPY fluent.conf.rt /etc/td-agent/td-agent.conf
+COPY ${FLUENT_CONF} /etc/td-agent/td-agent.conf
 
 RUN chown ${JF_ARTIFACTORY_USER}:${JF_ARTIFACTORY_USER} /etc/td-agent/td-agent.conf
 
