@@ -20,4 +20,4 @@ of the packages in `gcr.io/distroless/static`, and
 
 ## Usage
 
-Users are expected to include their compiled application and set the correct cmd in their image.
+Users are expected to include their compiled application and set the correct cmd in thei
