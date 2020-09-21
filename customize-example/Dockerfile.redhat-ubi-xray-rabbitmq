@@ -7,7 +7,7 @@ LABEL name="JFrog Xray Rabbit MQ" \
       com.jfrog.license_terms="https://jfrog.com/xray/eula/"
 
 ARG RABBITMQ_AUTOCLUSTER_VERSION=0.10.0
-ARG RABBITMQ_VERSION=3.8.8
+ARG RABBITMQ_VERSION=3.8.14
 
 LABEL io.k8s.description="Lightweight open source message broker" \
     io.k8s.display-name="RabbitMQ" \
@@ -59,7 +59,7 @@ RUN set -xe && \
 
 COPY xray-rabbitmq-docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN mkdir -p /licenses && chmod 0777 /licenses && cp -rf /opt/rabbitmq/LICENSE /licenses/LICENSE
-
+RUN mkdir -p /opt/bitnami/rabbitmq/ && chown -R 0777 /opt/bitnami/rabbitmq/ && chown -R rabbitmq:rabbitmq /opt/bitnami/rabbitmq
 USER 1001
 ENV PATH=$RABBITMQ_HOME/sbin:$PATH
 ENTRYPOINT ["docker-entrypoint.sh"]
