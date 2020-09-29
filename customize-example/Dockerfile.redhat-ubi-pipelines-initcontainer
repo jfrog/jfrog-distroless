@@ -17,11 +17,11 @@ COPY entplus_EULA.txt /licenses/
 
 # Environment needed for Pipelines
 ENV JF_PIPELINES_USER=pipelines \
-    PIPELINES_USER_ID=1035
+    PIPELINES_USER_ID=1000721117
 
 RUN mkdir -p /home/${JF_PIPELINES_USER}
-RUN useradd -M -s /usr/sbin/nologin --uid 1035 --user-group pipelines && \
-    chown -R 1035:1035 /home/${JF_PIPELINES_USER}
+RUN useradd -M -s /usr/sbin/nologin --uid ${PIPELINES_USER_ID} --user-group pipelines && \
+    chown -R ${PIPELINES_USER_ID}:${PIPELINES_USER_ID} /home/${JF_PIPELINES_USER}
 
 USER ${JF_PIPELINES_USER}
 

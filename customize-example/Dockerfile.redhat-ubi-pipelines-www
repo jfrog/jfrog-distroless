@@ -15,7 +15,7 @@ LABEL name="JFrog Pipelines WWW" \
 
 # Environment needed for Pipelines
 ENV JF_PIPELINES_USER=pipelines \
-    PIPELINES_USER_ID=1035 \
+    PIPELINES_USER_ID=1000721117 \
     PIPELINES_VERSION=${PIPELINES_BASE_VERSION} \
     JF_PRODUCT_HOME=/opt/jfrog/pipelines \
     JF_PRODUCT_DATA_INTERNAL=/var/opt/jfrog/pipelines \
@@ -31,8 +31,8 @@ COPY entplus_EULA.txt /licenses/
 
 RUN mkdir -p /var/opt/jfrog && chmod 0777 /var/opt/jfrog
 
-RUN useradd -M -s /usr/sbin/nologin --uid 1035 --user-group pipelines && \
-    chown -R 1035:1035 /opt/jfrog/pipelines /var/opt/jfrog && \
+RUN useradd -M -s /usr/sbin/nologin --uid ${PIPELINES_USER_ID} --user-group pipelines && \
+    chown -R ${PIPELINES_USER_ID}:${PIPELINES_USER_ID} /opt/jfrog/pipelines /var/opt/jfrog && \
     yum install -y --disableplugin=subscription-manager wget && \
     yum install -y --disableplugin=subscription-manager procps && \
     yum install -y --disableplugin=subscription-manager net-tools && \
