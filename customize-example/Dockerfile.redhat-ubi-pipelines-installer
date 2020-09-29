@@ -3,7 +3,7 @@ ARG PIPELINES_BASE_VERSION
 FROM docker.bintray.io/jfrog/pipelines-installer:${PIPELINES_BASE_VERSION} AS base
 
 # The new image based on registry.access.redhat.com/ubi
-FROM registry.access.redhat.com/ubi8
+FROM registry.access.redhat.com/ubi8/nodejs-10
 
 USER root
 
@@ -15,7 +15,7 @@ LABEL name="JFrog Pipelines Installer" \
 
 # Environment needed for Pipelines
 ENV JF_PIPELINES_USER=pipelines \
-    PIPELINES_USER_ID=1035 \
+    PIPELINES_USER_ID=1000721117 \
     PIPELINES_VERSION=${PIPELINES_BASE_VERSION} \
     JF_PRODUCT_HOME=/opt/jfrog/pipelines \
     JF_PRODUCT_DATA_INTERNAL=/var/opt/jfrog/pipelines
@@ -34,13 +34,25 @@ COPY --from=base /opt/jfrog/pipelines /opt/jfrog/pipelines
 COPY entplus_EULA.txt /licenses/
 
 RUN mkdir -p /var/opt/jfrog && chmod 0777 /var/opt/jfrog
+RUN mkdir p /opt/jfrog/pipelines/var/etc/ && chmod 0777 /opt/jfrog/pipelines/var/etc/
 
-RUN useradd -M -s /usr/sbin/nologin --uid 1035 --user-group pipelines && \
-    chown -R 1035:1035 /opt/jfrog/pipelines /var/opt/jfrog && \
+RUN useradd -M -s /usr/sbin/nologin --uid ${PIPELINES_USER_ID} --user-group pipelines && \
+    chown -R ${PIPELINES_USER_ID}:${PIPELINES_USER_ID} /opt/jfrog/pipelines /var/opt/jfrog && \
     yum install -y --disableplugin=subscription-manager wget && \
     yum install -y --disableplugin=subscription-manager procps && \
     yum install -y --disableplugin=subscription-manager net-tools && \
-    yum install -y --disableplugin=subscription-manager hostname
+    yum install -y --disableplugin=subscription-manager https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm && \
+    yum install -y --disableplugin=subscription-manager hostname python36 python3-pip nc
+
+RUN yum install -y --disableplugin=subscription-manager http://www6.atomicorp.com/channels/atomic/centos/7/x86_64/RPMS/atomic-release-1.0-21.el7.art.noarch.rpm && \
+    yum install -y --disableplugin=subscription-manager http://www6.atomicorp.com/channels/atomic/centos/7/x86_64/RPMS/oniguruma-5.9.5-3.el7.art.x86_64.rpm && \
+    yum install -y --disableplugin=subscription-manager http://www6.atomicorp.com/channels/atomic/centos/7/x86_64/RPMS/jq-1.5-1.el7.art.x86_64.rpm
+
+RUN wget https://github.com/mikefarah/yq/releases/download/3.4.0/yq_linux_amd64 -O /usr/bin/yq && chmod +x /usr/bin/yq
+
+# install psql
+RUN yum install -y --disableplugin=subscription-manager https://download.postgresql.org/pub/repos/yum/10/redhat/rhel-8-x86_64/postgresql10-libs-10.14-1PGDG.rhel8.x86_64.rpm && \
+    yum install -y --disableplugin=subscription-manager https://download.postgresql.org/pub/repos/yum/10/redhat/rhel-8-x86_64/postgresql10-10.14-1PGDG.rhel8.x86_64.rpm
 
 USER ${JF_PIPELINES_USER}
 WORKDIR /opt/jfrog/pipelines/installer

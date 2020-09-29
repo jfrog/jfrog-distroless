@@ -13,7 +13,7 @@ LABEL name="JFrog Xray Router" \
 
 # Environment needed for Router
 ENV JF_ROUTER_USER=router \
-    ROUTER_USER_ID=1117 \
+    ROUTER_USER_ID=1000721117 \
     ROUTER_VERSION=${ROUTER_BASE_VERSION} \
     JF_PRODUCT_HOME=/opt/jfrog/router \
     JF_PRODUCT_DATA_INTERNAL=/var/opt/jfrog/router \
@@ -27,8 +27,8 @@ COPY --from=base /opt/jfrog/router/app/doc/* /licenses/
 
 RUN mkdir -p /var/opt/jfrog && chmod 0777 /var/opt/jfrog
 
-RUN useradd -M -s /usr/sbin/nologin --uid 1117 --user-group router && \
-    chown -R 1117:1117 /opt/jfrog/router /var/opt/jfrog && \
+RUN useradd -M -s /usr/sbin/nologin --uid ${ROUTER_USER_ID} --user-group router && \
+    chown -R ${ROUTER_USER_ID}:${ROUTER_USER_ID} /opt/jfrog/router /var/opt/jfrog && \
     yum install -y --disableplugin=subscription-manager wget && \
     yum install -y --disableplugin=subscription-manager procps && \
     yum install -y --disableplugin=subscription-manager net-tools && \

@@ -1,18 +1,28 @@
-FROM registry.access.redhat.com/ubi8
+# BITNAMI DEBIAN-10 DOCKERFILE CAN BE FOUND HERE:
+# https://github.com/bitnami/bitnami-docker-rabbitmq/blob/master/3.8/debian-10/Dockerfile
+# JFROG REDHAT UBI PORT TO WORK IN BITNAMI RABBITMQ HELM CHARTS
 
-LABEL name="JFrog Xray Rabbit MQ" \
+FROM bitnami/rabbitmq:3.8.3-debian-10-r40 as base
+
+FROM registry.access.redhat.com/ubi8
+ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
+LABEL name="JFrog Rabbit MQ" \
       description="JFrog Rabbit MQ image based on the Red Hat Universal Base Image." \
       vendor="JFrog" \
       summary="JFrog Rabbit MQ (Red Hat UBI)" \
-      com.jfrog.license_terms="https://jfrog.com/xray/eula/"
+      com.jfrog.license_terms="https://jfrog.com/platform/enterprise-plus-eula/"
 
-ARG RABBITMQ_AUTOCLUSTER_VERSION=0.10.0
-ARG RABBITMQ_VERSION=3.8.14
+ARG RABBITMQ_VERSION=3.8.3
 
 LABEL io.k8s.description="Lightweight open source message broker" \
     io.k8s.display-name="RabbitMQ" \
-    io.openshift.expose-services="4369:epmd, 5672:amqp, 15672:http" \
+    io.openshift.expose-services="4369:epmd, 5671:amqp, 5672:amqp, 15672:http" \
     io.openshift.tags="rabbitmq"
+
+# FIX THE LOCALE ISSUE
+RUN yum install -y --disableplugin=subscription-manager -y openssl curl ca-certificates fontconfig gzip glibc-langpack-en tar \
+    && yum  -y --disableplugin=subscription-manager update; yum --disableplugin=subscription-manager clean all
+
 
 ENV GPG_KEY="0A9AF2115F4687BD29803A206B73A36E6026DFCA" \
     HOME=/var/lib/rabbitmq \
@@ -23,7 +33,7 @@ ENV GPG_KEY="0A9AF2115F4687BD29803A206B73A36E6026DFCA" \
     LANGUAGE=en_US.:en \
     LC_ALL=en_US.UTF-8
 
-RUN yum install xz -y
+RUN yum install -y --disableplugin=subscription-manager xz
 RUN set -xe && \
     curl -LO https://github.com/rabbitmq/erlang-rpm/releases/download/v23.0/erlang-23.0-1.el8.x86_64.rpm && \
     rpm -Uvh ./erlang-23.0-1.el8.x86_64.rpm && \
@@ -57,17 +67,21 @@ RUN set -xe && \
     yum install -y $INSTALL_PKGS && \
     rm -rf /var/cache/yum
 
-COPY xray-rabbitmq-docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
-RUN mkdir -p /licenses && chmod 0777 /licenses && cp -rf /opt/rabbitmq/LICENSE /licenses/LICENSE
-RUN mkdir -p /opt/bitnami/rabbitmq/ && chown -R 0777 /opt/bitnami/rabbitmq/ && chown -R rabbitmq:rabbitmq /opt/bitnami/rabbitmq
+# COPY OVER THE RABBITMQ LICENSES INTO THE FOLDER FOR REDHAT TO SCAN
+RUN mkdir -p /licenses && chmod 0777 /licenses && cp -rf /opt/rabbitmq/LICENSE* /licenses/
+COPY --from=base /opt/bitnami /opt/bitnami
 
-# ENABLE RABBITMQ MANAGEMENT PORT
-RUN rabbitmq-plugins enable rabbitmq_management
+RUN mkdir -p /opt/bitnami/rabbitmq/ && chown -R 0777 /opt/bitnami/rabbitmq/ && chown -R 1000721001:1000721001 /opt/bitnami/rabbitmq
+RUN mkdir -p /var/log/rabbitmq/log/ && chmod -R 0777 /var/log
+RUN mkdir -p /bitnami && chmod -R 0777 /bitnami
+ENV BITNAMI_APP_NAME="rabbitmq" \
+    LANG="en_US.UTF-8" \
+    LANGUAGE="en_US:en"
+
 EXPOSE 4369 5672 15672 25672
 
 USER 1000721001
-ENV PATH=$RABBITMQ_HOME/sbin:$PATH
-ENTRYPOINT ["docker-entrypoint.sh"]
-
-
-CMD ["rabbitmq-server"]
+ENV PATH=/opt/bitnami/rabbitmq/sbin:$PATH
+RUN mkdir -p /opt/bitnami/rabbitmq/test
+ENTRYPOINT [ "/opt/bitnami/scripts/rabbitmq/entrypoint.sh" ]
+CMD [ "/opt/bitnami/scripts/rabbitmq/run.sh" ]

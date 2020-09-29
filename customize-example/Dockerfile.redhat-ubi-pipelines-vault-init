@@ -15,7 +15,7 @@ LABEL name="JFrog Pipelines Vault Init" \
 
 # Environment needed for Pipelines
 ENV JF_PIPELINES_USER=vault \
-    PIPELINES_USER_ID=1035 \
+    PIPELINES_USER_ID=1000721117 \
     PIPELINES_VERSION=${PIPELINES_BASE_VERSION} \
     JF_PRODUCT_HOME=/opt/jfrog/pipelines \
     JF_PRODUCT_DATA_INTERNAL=/var/opt/jfrog/pipelines \

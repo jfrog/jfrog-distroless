@@ -11,7 +11,7 @@ LABEL name="JFrog Pipelines Vault" \
 
 ENV JF_VAULT_USER=vault \
     JF_VAULT_USER_GROUP=vault \
-    VAULT_USER_ID=1036 \
+    VAULT_USER_ID=1000721117 \
     VAULT_VERSION=${VAULT_BASE_VERSION}
 
 # Create a vault user and group first so the IDs get set the same way,

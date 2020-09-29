@@ -17,7 +17,7 @@ LABEL name="JFrog Artifactory Pro" \
 
 # Environment needed for Artifactory
 ENV JF_ARTIFACTORY_USER=artifactory \
-    ARTIFACTORY_USER_ID=1030 \
+    ARTIFACTORY_USER_ID=1000721030 \
     ARTIFACTORY_VERSION=${ARTIFACTORY_BASE_VERSION} \
     JF_PRODUCT_HOME=/opt/jfrog/artifactory \
     JF_PRODUCT_DATA_INTERNAL=/var/opt/jfrog/artifactory \
