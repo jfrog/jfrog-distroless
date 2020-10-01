@@ -11,7 +11,7 @@ ARG RABBITMQ_VERSION=3.8.14
 
 LABEL io.k8s.description="Lightweight open source message broker" \
     io.k8s.display-name="RabbitMQ" \
-    io.openshift.expose-services="4369:epmd, 5672:amqp, 15672:http" \
+    io.openshift.expose-services="4369:epmd, 5671:amqp, 5672:amqp, 15672:http" \
     io.openshift.tags="rabbitmq"
 
 ENV GPG_KEY="0A9AF2115F4687BD29803A206B73A36E6026DFCA" \
@@ -23,7 +23,11 @@ ENV GPG_KEY="0A9AF2115F4687BD29803A206B73A36E6026DFCA" \
     LANGUAGE=en_US.:en \
     LC_ALL=en_US.UTF-8
 
-RUN yum install xz -y
+
+# FIX THE LOCALE ISSUE
+RUN yum install -y --disableplugin=subscription-manager -y openssl curl ca-certificates fontconfig gzip glibc-langpack-en tar xz \
+    && yum  -y --disableplugin=subscription-manager update; yum --disableplugin=subscription-manager clean all
+
 RUN set -xe && \
     curl -LO https://github.com/rabbitmq/erlang-rpm/releases/download/v23.0/erlang-23.0-1.el8.x86_64.rpm && \
     rpm -Uvh ./erlang-23.0-1.el8.x86_64.rpm && \
@@ -59,15 +63,10 @@ RUN set -xe && \
 
 COPY xray-rabbitmq-docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN mkdir -p /licenses && chmod 0777 /licenses && cp -rf /opt/rabbitmq/LICENSE /licenses/LICENSE
-RUN mkdir -p /opt/bitnami/rabbitmq/ && chown -R 0777 /opt/bitnami/rabbitmq/ && chown -R rabbitmq:rabbitmq /opt/bitnami/rabbitmq
-
-# ENABLE RABBITMQ MANAGEMENT PORT
-RUN rabbitmq-plugins enable rabbitmq_management
-EXPOSE 4369 5672 15672 25672
 
 USER 1000721001
 ENV PATH=$RABBITMQ_HOME/sbin:$PATH
 ENTRYPOINT ["docker-entrypoint.sh"]
 
-
+EXPOSE 4369 5672 15672
 CMD ["rabbitmq-server"]
