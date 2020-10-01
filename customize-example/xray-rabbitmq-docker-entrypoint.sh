@@ -382,6 +382,8 @@ if [ "$1" = 'rabbitmq-server' ] && [ "$shouldWriteConfig" ]; then
 	fi
 fi
 
+rabbitmq-plugins enable rabbitmq_management
+
 combinedSsl='/tmp/rabbitmq-ssl/combined.pem'
 if [ "$haveSslConfig" ] && [[ "$1" == rabbitmq* ]] && [ ! -f "$combinedSsl" ]; then
 	# Create combined cert
