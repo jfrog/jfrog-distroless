@@ -23,11 +23,15 @@ ENV JF_PIPELINES_USER=pipelines \
     APP_HOME_DIR=/opt/jfrog/pipelines/app/www \
     LOG_DIR=/opt/jfrog/pipelines/var/log \
     NODE_PATH=/opt/jfrog/pipelines/app/node_modules \
-    EXEC_TEMPLATES_DIR=/opt/jfrog/pipelines/app/execTemplates
+    EXEC_TEMPLATES_DIR=/opt/jfrog/pipelines/app/execTemplates \
+    HOME=/home \
+    OLDPWD=/home \
+    SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 
 # COPY IN PIPELINES FROM BASE IMAGE
 COPY --from=base /opt/jfrog/pipelines /opt/jfrog/pipelines
-
+COPY --from=base /home /home
+COPY --from=base /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 # Add EULA information to meet the Red Hat container image certification requirements
 COPY entplus_EULA.txt /licenses/
 

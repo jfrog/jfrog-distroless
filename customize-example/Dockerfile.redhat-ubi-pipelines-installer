@@ -54,6 +54,7 @@ RUN wget https://github.com/mikefarah/yq/releases/download/3.4.0/yq_linux_amd64 
 RUN yum install -y --disableplugin=subscription-manager https://download.postgresql.org/pub/repos/yum/10/redhat/rhel-8-x86_64/postgresql10-libs-10.14-1PGDG.rhel8.x86_64.rpm && \
     yum install -y --disableplugin=subscription-manager https://download.postgresql.org/pub/repos/yum/10/redhat/rhel-8-x86_64/postgresql10-10.14-1PGDG.rhel8.x86_64.rpm
 
+RUN mkdir -p /usr/local/bin && cp -rf /usr/bin/psql /usr/local/bin/psql
 USER ${JF_PIPELINES_USER}
 WORKDIR /opt/jfrog/pipelines/installer
 ENTRYPOINT ["/bin/bash", "execUtil.sh"]

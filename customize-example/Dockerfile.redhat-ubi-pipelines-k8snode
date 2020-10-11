@@ -16,7 +16,7 @@ LABEL name="JFrog Pipelines K8s Node" \
 
 # Set vars
 ENV DOCKER_VERSION=18.09.9
-ENV NODE_VERSION=10.18.0
+ENV NODE_VERSION=10.19.0
 
 #RUN apt-get update && \
 #    apt-get install sudo grep jq tar curl python-minimal wget ca-certificates rsync vim -y
@@ -31,7 +31,7 @@ RUN yum install -y --disableplugin=subscription-manager wget && \
 
 
 
-RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash
+RUN wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.36.0/install.sh | bash
 ENV NVM_DIR=/root/.nvm
 RUN . "$NVM_DIR/nvm.sh" && nvm install ${NODE_VERSION}
 RUN . "$NVM_DIR/nvm.sh" && nvm use v${NODE_VERSION}
