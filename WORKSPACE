@@ -45,6 +45,15 @@ dpkg_src(
 )
 
 dpkg_src(
+    name = "debian_buster",
+    arch = "amd64",
+    distro = "buster",
+    sha256 = "ca19e4187523f4b087a2e7aaa2662c6a0b46dc81ff2f3dd44d9c5d95df0df212",
+    snapshot = "20191028T085816Z",
+    url = "https://deepscan.jfrog.io/deepscan/debian/archive",
+)
+
+dpkg_src(
     name = "debian_stretch_backports",
     arch = "amd64",
     distro = "stretch-backports",
@@ -82,7 +91,6 @@ dpkg_list(
         "libc6",
         "base-files",
         "ca-certificates",
-#        "openssl=1.1.1a-1",
         "openssl=1.1.0l-1~deb9u1",
         "libssl1.1=1.1.0l-1~deb9u1",
         "libtinfo5",
@@ -93,7 +101,7 @@ dpkg_list(
         "net-tools",
         "procps=2:3.3.15-2",
         "libprocps7",
-        "libsystemd0",
+        "libsystemd0=241-7~deb10u1",
         "libselinux1",
         "libpcre3",
         "liblzma5",
@@ -123,6 +131,7 @@ dpkg_list(
         "@debian_stretch//file:Packages.json",
         "@debian_stretch_local//file:Packages.json",
         "@debian_stretch_openssl//file:Packages.json",
+        "@debian_buster//file:Packages.json",
     ],
 )
 
@@ -149,12 +158,6 @@ http_file(
     urls = ["https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64"],
 )
 
-#http_file(
-#    name = "busybox",
-#    executable = True,
-#    sha256 = "5776b1f4fbff641eb09024483fde28467e81bc74118c0c65ce5a8ad7a1029063",
-#    urls = ["https://busybox.net/downloads/binaries/1.30.0-i686/busybox"],
-#)
 #use this fixed version for this issue https://github.com/GoogleContainerTools/distroless/issues/225
 http_file(
     name = "busybox",
