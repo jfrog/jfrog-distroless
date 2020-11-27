@@ -20,6 +20,7 @@ ENV JF_ROUTER_USER=router \
     SERVICE_NAME=router
 
 COPY --from=base /opt/jfrog/router /opt/jfrog/router
+COPY --from=base /var/opt/jfrog/router /var/opt/jfrog/router
 
 # Add license information to meet the Red Hat container image certification requirements
 COPY --from=base /opt/jfrog/router/app/doc/* /licenses/
