@@ -5,8 +5,8 @@
 # The Artifactory official Docker image
 FROM docker.bintray.io/jfrog/artifactory-pro:6.9.1 AS base
 
-# The new image based on ubuntu:18.10
-FROM ubuntu:18.10
+# The new image based on ubuntu:18.04
+FROM ubuntu:18.04
 
 # Environment needed for Artifactory
 ENV ARTIFACTORY_USER_NAME=artifactory \
@@ -16,7 +16,7 @@ ENV ARTIFACTORY_USER_NAME=artifactory \
     ARTIFACTORY_EXTRA_CONF=/artifactory_extra_conf \
     RECOMMENDED_MAX_OPEN_FILES=32000 \
     MIN_MAX_OPEN_FILES=10000 \
-    JAVA_HOME=/java/jdk-11.0.6+10 \
+    JAVA_HOME=/java/jdk-11.0.2+9 \
     RECOMMENDED_MAX_OPEN_PROCESSES=1024
 
 # Copy needed file system from base (Artifactory image)

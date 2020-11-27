@@ -6,7 +6,7 @@
 FROM docker.bintray.io/jfrog/artifactory-pro:6.9.1 AS artifactory
 
 # This will be your custom distroless image. In this example it's artifactory-java:adoptopenjdk11-20
-FROM docker.jfrog.io/jfrog/distroless/base/artifactory-java:adoptopenjdk11-20
+FROM docker.bintray.io/jfrog/distroless/base/artifactory-java:adoptopenjdk11-20
 
 USER root
 
