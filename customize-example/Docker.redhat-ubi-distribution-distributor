@@ -1,0 +1,47 @@
+# An example of customising Distribution using RedHat Univeral Base Image (UBI).
+# Using Docker multi stage build.
+# Taking the Distribution file system
+
+ARG DISTRIBUTION_BASE_VERSION
+
+# The Distribution official Docker image
+FROM docker.bintray.io/jfrog/distribution-distributor:${DISTRIBUTION_BASE_VERSION} AS base
+
+# The new image based on registry.access.redhat.com/ubi
+FROM registry.access.redhat.com/ubi8
+
+LABEL name="JFrog distribution" \
+      description="JFrog Distribution image based on the Red Hat Universal Base Image." \
+      vendor="JFrog" \
+      summary="JFrog Distribution (Red Hat UBI)" \
+      com.jfrog.license_terms="https://jfrog.com/distribution/eula/"
+
+# Environment needed for Distribution
+ENV JF_DISTRIBUTION_USER=distribution \
+    DISTRIBUTION_USER_ID=1020 \
+    DISTRIBUTION_VERSION=${DISTRIBUTION_BASE_VERSION} \
+    JF_PRODUCT_HOME=/opt/jfrog/distribution \
+    JF_PRODUCT_DATA_INTERNAL=/var/opt/jfrog/distribution \
+    SERVICE_NAME=distribution
+
+
+COPY --from=base /opt/jfrog/distribution /opt/jfrog/distribution
+COPY --from=base /var/opt/jfrog/distribution /var/opt/jfrog/distribution
+
+# Add license information to meet the Red Hat container image certification requirements
+COPY --from=base /opt/jfrog/distribution/app/doc/* /licenses/
+
+RUN mkdir -p /var/opt/jfrog && chmod 0775 /var/opt/jfrog
+
+RUN useradd -M -s /usr/sbin/nologin --uid ${DISTRIBUTION_USER_ID} --user-group ${JF_DISTRIBUTION_USER} && \
+    chown -R ${JF_DISTRIBUTION_USER}:${JF_DISTRIBUTION_USER} ${JF_PRODUCT_HOME} ${JF_PRODUCT_DATA_INTERNAL} && \
+    yum install -y --disableplugin=subscription-manager wget && \
+    yum install -y --disableplugin=subscription-manager procps && \
+    yum install -y --disableplugin=subscription-manager net-tools && \
+    yum install -y --disableplugin=subscription-manager hostname
+
+USER distribution
+
+VOLUME /var/opt/jfrog/distribution
+
+ENTRYPOINT ["/opt/jfrog/distribution/app/bin/wrapper.sh"]
