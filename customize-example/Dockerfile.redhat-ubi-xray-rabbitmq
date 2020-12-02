@@ -6,7 +6,9 @@ LABEL name="JFrog Xray Rabbit MQ" \
       summary="JFrog Rabbit MQ (Red Hat UBI)" \
       com.jfrog.license_terms="https://jfrog.com/xray/eula/"
 
-ARG RABBITMQ_VERSION=3.8.9
+
+ARG RABBITMQ_AUTOCLUSTER_VERSION=0.10.0
+ARG RABBITMQ_VERSION=3.8.8
 
 LABEL io.k8s.description="Lightweight open source message broker" \
     io.k8s.display-name="RabbitMQ" \
