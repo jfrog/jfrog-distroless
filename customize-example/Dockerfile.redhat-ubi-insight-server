@@ -1,0 +1,46 @@
+# An example of customising Distribution using RedHat Univeral Base Image (UBI).
+# Using Docker multi stage build.
+# Taking the Mission-control file system
+
+ARG MISSION_CONTROL_BASE_VERSION
+
+# The Mission-control official Docker image
+FROM docker.bintray.io/jfrog/insight-server:${MISSION_CONTROL_BASE_VERSION} AS base
+
+# The new image based on registry.access.redhat.com/ubi
+FROM registry.access.redhat.com/ubi8
+
+LABEL name="JFrog Mission-control" \
+      description="JFrog Mission-control image based on the Red Hat Universal Base Image." \
+      vendor="JFrog" \
+      summary="JFrog Mission-control (Red Hat UBI)" \
+      com.jfrog.license_terms="https://jfrog.com/mc/eula/"
+
+# Environment needed for Mission-control
+ENV JF_MC_USER=jfmc \
+    MC_USER_ID=1050 \
+    JF_PRODUCT_HOME=/opt/jfrog/mc \
+    JF_PRODUCT_DATA_INTERNAL=/var/opt/jfrog/mc \
+    SERVICE_NAME=insight-server
+
+
+COPY --from=base /opt/jfrog/mc /opt/jfrog/mc
+COPY --from=base /var/opt/jfrog/mc /var/opt/jfrog/mc
+
+# Add license information to meet the Red Hat container image certification requirements
+COPY --from=base /opt/jfrog/mc/app/doc/* /licenses/
+
+RUN mkdir -p /var/opt/jfrog && chmod 0775 /var/opt/jfrog
+
+RUN useradd -M -s /usr/sbin/nologin --uid ${MC_USER_ID} --user-group ${JF_MC_USER} && \
+    chown -R ${JF_MC_USER}:${JF_MC_USER} ${JF_PRODUCT_HOME} ${JF_PRODUCT_DATA_INTERNAL} && \
+    yum install -y --disableplugin=subscription-manager wget && \
+    yum install -y --disableplugin=subscription-manager procps && \
+    yum install -y --disableplugin=subscription-manager net-tools && \
+    yum install -y --disableplugin=subscription-manager hostname
+
+USER jfmc
+
+VOLUME /var/opt/jfrog/mc
+
+ENTRYPOINT ["/opt/jfrog/mc/app/bin/entrypoint-server.sh"]
