@@ -85,7 +85,7 @@ dpkg_list(
 #        "openssl=1.1.1a-1",
         "openssl=1.1.0l-1~deb9u1",
         "libssl1.1=1.1.0l-1~deb9u1",
-        "libtinfo5",
+        "libtinfo6",
         "netbase",
         "tzdata",
         "bash",
