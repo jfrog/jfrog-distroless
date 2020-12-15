@@ -77,7 +77,7 @@ docker_build(
         ":group_tar",
         ":tmp.tar",
         ":nsswitch.tar",
-        "@debian_stretch//file:os_release.tar",
+        "@debian_buster//file:os_release.tar",
     ],
 )
 
