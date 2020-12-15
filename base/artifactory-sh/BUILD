@@ -96,7 +96,7 @@ docker_build(
             packages["libexpat1"],
             packages["libfontconfig1"],
             packages["dash"],
-            packages["libtinfo5"],
+            packages["libtinfo6"],
             packages["zlib1g"],
             packages["libstdc++6"],
             packages["libgcc1"],
