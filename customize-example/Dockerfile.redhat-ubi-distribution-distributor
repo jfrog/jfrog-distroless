@@ -19,10 +19,9 @@ LABEL name="JFrog distribution" \
 # Environment needed for Distribution
 ENV JF_DISTRIBUTION_USER=distribution \
     DISTRIBUTION_USER_ID=1020 \
-    DISTRIBUTION_VERSION=${DISTRIBUTION_BASE_VERSION} \
     JF_PRODUCT_HOME=/opt/jfrog/distribution \
     JF_PRODUCT_DATA_INTERNAL=/var/opt/jfrog/distribution \
-    SERVICE_NAME=distribution
+    SERVICE_NAME=distributor
 
 
 COPY --from=base /opt/jfrog/distribution /opt/jfrog/distribution

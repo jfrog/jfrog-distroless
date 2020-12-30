@@ -25,6 +25,15 @@ HOME_URL="https://github.com/GoogleContainerTools/distroless"
 SUPPORT_URL="https://github.com/GoogleContainerTools/distroless/blob/master/README.md"
 BUG_REPORT_URL="https://github.com/GoogleContainerTools/distroless/issues/new"
 """
+DEBIAN_BUSTER_OS_RELEASE = """PRETTY_NAME="Distroless"
+NAME="Debian GNU/Linux"
+ID="debian"
+VERSION_ID="10"
+VERSION="Debian GNU/Linux 10 (buster)"
+HOME_URL="https://github.com/GoogleContainerTools/distroless"
+SUPPORT_URL="https://github.com/GoogleContainerTools/distroless/blob/master/README.md"
+BUG_REPORT_URL="https://github.com/GoogleContainerTools/distroless/issues/new"
+"""
 
 # VERSION and VERSION_ID aren't set on unknown distros
 DEBIAN_UNKNOWN_OS_RELEASE = """PRETTY_NAME="Distroless"
@@ -38,6 +47,7 @@ BUG_REPORT_URL="https://github.com/GoogleContainerTools/distroless/issues/new"
 osReleaseForDistro = {
     "jessie": DEBIAN_JESSIE_OS_RELEASE,
     "stretch": DEBIAN_STRETCH_OS_RELEASE,
+    "buster": DEBIAN_BUSTER_OS_RELEASE,
     "???": DEBIAN_UNKNOWN_OS_RELEASE,
 }
 
@@ -50,7 +60,7 @@ class TestUtil(unittest.TestCase):
         self.assertEqual(CHECKSUM_TXT, actual)
 
     def test_generate_debian_os_release(self):
-        for distro in ["jessie", "stretch", "???"]:
+        for distro in ["jessie", "stretch", "buster" , "???"]:
             output_file = StringIO()
             util.generate_os_release(distro, output_file)
             self.assertEqual(osReleaseForDistro[distro], output_file.getvalue())

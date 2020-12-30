@@ -32,7 +32,7 @@ docker_build(
         packages["libfontconfig1"],
         packages["bash"],
         packages["dash"],
-        packages["libtinfo5"],
+        packages["libtinfo6"],
         packages["libstdc++6"],
         packages["libgcc1"]
     ],

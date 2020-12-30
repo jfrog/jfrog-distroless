@@ -5,11 +5,11 @@ FROM docker.bintray.io/jfrog/router:${ROUTER_BASE_VERSION} AS base
 # The new image based on registry.access.redhat.com/ubi
 FROM registry.access.redhat.com/ubi8
 
-LABEL name="JFrog Distribution Router" \
-      description="JFrog Distribution Router image based on the Red Hat Universal Base Image." \
+LABEL name="JFrog Mission-control Router" \
+      description="JFrog Mission-control Router image based on the Red Hat Universal Base Image." \
       vendor="JFrog" \
-      summary="JFrog Distribution Router (Red Hat UBI)" \
-      com.jfrog.license_terms="https://jfrog.com/distribution/eula/"
+      summary="JFrog Mission-control Router (Red Hat UBI)" \
+      com.jfrog.license_terms="https://jfrog.com/mission-control/eula/"
 
 # Environment needed for Router
 ENV JF_ROUTER_USER=router \

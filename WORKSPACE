@@ -36,42 +36,19 @@ package_manager_repositories()
 
 ## Snapshot repo has folder that Package.gz don't change
 dpkg_src(
-    name = "debian_stretch",
+    name = "debian_buster",
     arch = "amd64",
-    distro = "stretch",
-    sha256 = "79a66cd92ba9096fce679e15d0b5feb9effcf618b0a6d065eb32684dbffd0311",
+    distro = "buster",
+    sha256 = "996001ca07a8ea54c4d54539de7ed96d1d2cb1a2c0a3040c1be8fa89820f6bff",
     snapshot = "20190224T095432Z",
     url = "https://deepscan.jfrog.io/deepscan/debian/archive",
 )
 
 dpkg_src(
-    name = "debian_stretch_backports",
-    arch = "amd64",
-    distro = "stretch-backports",
-    sha256 = "521da2a9eb91afccfb008272a05c7e8e2fde1d1d54f46a1d356b7be88920fffe",
-    snapshot = "20190217T090420Z",
-    url = "https://deepscan.jfrog.io/deepscan/debian/archive",
-)
-
-dpkg_src(
-    name = "debian_stretch_security",
+    name = "debian_buster_security",
     package_prefix = "https://deepscan.jfrog.io/deepscan/debian/archive/debian-security/20190131T235445Z/",
-    packages_gz_url = "https://deepscan.jfrog.io/deepscan/debian/archive/debian-security/20190131T235445Z/dists/stretch/updates/main/binary-amd64/Packages.gz",
-    sha256 = "4108944dd44b1b0d57c4765115244d363c1d69285c1d574ad61bb51f6d81828f",
-)
-
-dpkg_src(
-    name = "debian_stretch_local",
-    package_prefix = "https://deepscan.jfrog.io/deepscan/debian-local/",
-    packages_gz_url = "https://deepscan.jfrog.io/deepscan/debian-local/dists/stretch/main/binary-amd64/Packages.gz",
-    sha256 = "538d763e5199f6c95abee89239b4d9f70f2d2914c9de52083276caa914702a3e",
-)
-
-dpkg_src(
-    name = "debian_stretch_openssl",
-    package_prefix = "https://deepscan.jfrog.io/artifactory/snapshot.debian.org-gcp/archive/debian-security/20191028T085816Z/",
-    packages_gz_url = "https://deepscan.jfrog.io/artifactory/snapshot.debian.org-gcp/archive/debian-security/20191028T085816Z/dists/stretch/updates/main/binary-amd64/Packages.gz",
-    sha256 = "acea7d952d8ab84de3cd2c26934a1bcf5ad244d344ecdb7b2d0173712bbd9d7b",
+    packages_gz_url = "https://deepscan.jfrog.io/deepscan/debian/archive/debian-security/20190131T235445Z/dists/buster/updates/main/binary-amd64/Packages.gz",
+    sha256 = "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
 )
 
 dpkg_list(
@@ -82,16 +59,15 @@ dpkg_list(
         "libc6",
         "base-files",
         "ca-certificates",
-#        "openssl=1.1.1a-1",
-        "openssl=1.1.0l-1~deb9u1",
-        "libssl1.1=1.1.0l-1~deb9u1",
-        "libtinfo5",
+        "openssl",
+        "libssl1.1",
+        "libtinfo6",
         "netbase",
         "tzdata",
         "bash",
         "dash",
         "net-tools",
-        "procps=2:3.3.15-2",
+        "procps",
         "libprocps7",
         "libsystemd0",
         "libselinux1",
@@ -102,7 +78,7 @@ dpkg_list(
         "libgomp1",
         "libstdc++6",
         "zlib1g",
-        "libgcrypt20=1.8.4-5",
+        "libgcrypt20",
         "libgpg-error0",
         "libpng16-16",
         "libfreetype6",
@@ -116,13 +92,9 @@ dpkg_list(
     ],
     # Takes the first package found: security updates should go first
     # If there was a security fix to a package before the stable release, this will find
-    # the older security release. This happened for stretch libc6.
     sources = [
-        "@debian_stretch_security//file:Packages.json",
-        "@debian_stretch_backports//file:Packages.json",
-        "@debian_stretch//file:Packages.json",
-        "@debian_stretch_local//file:Packages.json",
-        "@debian_stretch_openssl//file:Packages.json",
+        "@debian_buster_security//file:Packages.json",
+        "@debian_buster//file:Packages.json",
     ],
 )
 
@@ -184,11 +156,11 @@ load(
 
 # Used to generate java ca certs.
 docker_pull(
-    name = "debian9",
-    # From tag: 2019-02-27-130449
-    digest = "sha256:fd26dfa474b76ef931e439537daba90bbd90d6c5bbdd0252616e6d87251cd9cd",
+    name = "debian10",
+    # From tag: 2020-11-18-130739
+    digest = "sha256:5dd21a5ed0a9cd98c5d271dc8c7c11b2583d14071437c2ef86d0b25ab3070911",
     registry = "gcr.io",
-    repository = "google-appengine/debian9",
+    repository = "google-appengine/debian10",
 )
 
 docker_repositories()
