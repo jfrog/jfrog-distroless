@@ -100,6 +100,8 @@ docker_build(
             packages["zlib1g"],
             packages["libstdc++6"],
             packages["libgcc1"],
+            packages["libncurses6"],
+            packages["ncurses-base"],
         ],
     stamp = True,
     tars = [
