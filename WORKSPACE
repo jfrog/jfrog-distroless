@@ -33,22 +33,21 @@ package_manager_repositories()
 
 ## This is from release debian repo, the problem is that the Package.gz change so need to update chacksume all the time
 
-
 ## Snapshot repo has folder that Package.gz don't change
 dpkg_src(
     name = "debian_buster",
     arch = "amd64",
     distro = "buster",
-    sha256 = "996001ca07a8ea54c4d54539de7ed96d1d2cb1a2c0a3040c1be8fa89820f6bff",
-    snapshot = "20190224T095432Z",
-    url = "https://deepscan.jfrog.io/deepscan/debian/archive",
+    sha256 = "15d6bbf761c95c4795d50d41a0385fd643c32b670c58d7abaa17f9736f17e578",
+    snapshot = "20210122T024434Z",
+    url = "https://snapshot.debian.org/archive",
 )
 
 dpkg_src(
     name = "debian_buster_security",
-    package_prefix = "https://deepscan.jfrog.io/deepscan/debian/archive/debian-security/20190131T235445Z/",
-    packages_gz_url = "https://deepscan.jfrog.io/deepscan/debian/archive/debian-security/20190131T235445Z/dists/buster/updates/main/binary-amd64/Packages.gz",
-    sha256 = "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+    package_prefix = "https://snapshot.debian.org/archive/debian-security/20210121T194458Z/",
+    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20210121T194458Z/dists/buster/updates/main/binary-amd64/Packages.gz",
+    sha256 = "6f89d1f4955a69eba6c83ad5acd8d2ab3cbf47bfc49375ea45d7aefb22ada934",
 )
 
 dpkg_list(
@@ -89,6 +88,8 @@ dpkg_list(
         "db-util",
         "db5.3-util",
         "libdb5.3",
+        "libncurses6",
+        "ncurses-base",
     ],
     # Takes the first package found: security updates should go first
     # If there was a security fix to a package before the stable release, this will find
@@ -138,8 +139,8 @@ http_file(
 http_file(
     name = "curl",
     executable = True,
-    sha256 = "cfd3c343c8730e2d03565800a8736a75ac7f6abea323081465b520a61db5c9b1",
-    urls = ["https://deepscan.jfrog.io/deepscan/distroless-generic/curl/curl-7.71.0-linux.tar.gz"],
+    sha256 = "2d7237ec551fbe1a7ddaa8ede3aea5390fa354f6e2b45ccd65209e2d6c67290b",
+    urls = ["https://deepscan.jfrog.io/deepscan/distroless-generic/curl/curl-7.74.0-linux.tar.gz"],
 )
 # Docker rules.
 git_repository(

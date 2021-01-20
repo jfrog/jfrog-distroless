@@ -11,11 +11,11 @@ commandTests:
   - name: busybox-owner
     command: ["ls","-ld","/busybox"]
     expectedOutput: ['drwxr-xr-x    2 root     root']
-  # Check curl version 7.71.0 installed
+  # Check curl version 7.74.0 installed
   - name: curl version
     command: ["curl", "--version"]
     exitCode: 0
-    expectedOutput: ['curl 7\.71\.0']
+    expectedOutput: ['curl 7\.74\.0']
   - name: curl
     command: ["curl","-h"]
     expectedOutput: ['Usage: curl \[options\.\.\.\] <url>']

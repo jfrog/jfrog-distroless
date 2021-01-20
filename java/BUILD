@@ -34,7 +34,9 @@ docker_build(
         packages["dash"],
         packages["libtinfo6"],
         packages["libstdc++6"],
-        packages["libgcc1"]
+        packages["libgcc1"],
+        packages["libncurses6"],
+        packages["ncurses-base"],
     ],
     stamp = True,
     entrypoint = ["/busybox/sh"],
