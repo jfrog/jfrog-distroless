@@ -19,3 +19,11 @@ commandTests:
   - name: curl
     command: ["curl","-h"]
     expectedOutput: ['Usage: curl \[options\.\.\.\] <url>']
+  # Check top cmd
+  - name: top
+    command: ["top", "-n", "1", "-b"]
+    exitCode: 0
+  # Check ps cmd
+  - name: ps
+    command: ["ps"]
+    exitCode: 0
