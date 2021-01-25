@@ -13,7 +13,7 @@ LABEL name="JFrog Xray Analysis" \
 
 # Environment needed for Xray
 ENV JF_XRAY_USER=xray \
-    XRAY_USER_ID=1035 \
+    XRAY_USER_ID=1000721035 \
     XRAY_VERSION=${XRAY_BASE_VERSION} \
     JF_PRODUCT_HOME=/opt/jfrog/xray \
     JF_PRODUCT_DATA_INTERNAL=/var/opt/jfrog/xray \
