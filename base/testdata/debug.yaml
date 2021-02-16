@@ -7,7 +7,7 @@ fileExistenceTests:
 commandTests:
   - name: busybox
     command: ["/busybox/busybox"]
-    expectedOutput: ['BusyBox v1\.30\.1']
+    expectedOutput: ['BusyBox v1\.32\.1']
   - name: busybox-owner
     command: ["ls","-ld","/busybox"]
     expectedOutput: ['drwxr-xr-x    2 root     root']
