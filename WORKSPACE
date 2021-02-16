@@ -38,16 +38,16 @@ dpkg_src(
     name = "debian_buster",
     arch = "amd64",
     distro = "buster",
-    sha256 = "15d6bbf761c95c4795d50d41a0385fd643c32b670c58d7abaa17f9736f17e578",
-    snapshot = "20210122T024434Z",
+    sha256 = "e096054471ae9a772fa67006cd0d9a0b125bb30443625fb6b66935e2a9331e98",
+    snapshot = "20210216T023642Z",
     url = "https://snapshot.debian.org/archive",
 )
 
 dpkg_src(
     name = "debian_buster_security",
-    package_prefix = "https://snapshot.debian.org/archive/debian-security/20210121T194458Z/",
-    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20210121T194458Z/dists/buster/updates/main/binary-amd64/Packages.gz",
-    sha256 = "6f89d1f4955a69eba6c83ad5acd8d2ab3cbf47bfc49375ea45d7aefb22ada934",
+    package_prefix = "https://snapshot.debian.org/archive/debian-security/20210215T180445Z/",
+    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20210215T180445Z/dists/buster/updates/main/binary-amd64/Packages.gz",
+    sha256 = "666dad92ef97c05f72264ab570ccb4059e6993cc00c823b427a93f1f3349743e",
 )
 
 dpkg_list(
@@ -122,19 +122,13 @@ http_file(
     urls = ["https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64"],
 )
 
-#http_file(
-#    name = "busybox",
-#    executable = True,
-#    sha256 = "5776b1f4fbff641eb09024483fde28467e81bc74118c0c65ce5a8ad7a1029063",
-#    urls = ["https://busybox.net/downloads/binaries/1.30.0-i686/busybox"],
-#)
-#use this fixed version for this issue https://github.com/GoogleContainerTools/distroless/issues/225
 http_file(
     name = "busybox",
     executable = True,
-    sha256 = "af052caf38fe81eae321005c5c151650d64714bbe0a3f5e1f7cb39ba179cf7d6",
-    urls = ["https://deepscan.jfrog.io/deepscan/distroless-generic/busybox/1.30.0-glibc-busybox.tar.xz"],
+    sha256 = "233d850e3927bb99d8fcb9a55930cac0c8ad41eaad6a8fc2b02c4e0f88acf042",
+    urls = ["https://deepscan.jfrog.io/deepscan/distroless-generic/busybox/busybox-1.32.1.tar.xz"],
 )
+
 #Added complied and slimed curl binary from source https://github.com/curl/curl/releases
 http_file(
     name = "curl",
