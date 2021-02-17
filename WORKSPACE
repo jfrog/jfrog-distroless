@@ -39,15 +39,15 @@ dpkg_src(
     arch = "amd64",
     distro = "buster",
     sha256 = "e096054471ae9a772fa67006cd0d9a0b125bb30443625fb6b66935e2a9331e98",
-    snapshot = "20210216T023642Z",
+    snapshot = "20210216T210840Z",
     url = "https://snapshot.debian.org/archive",
 )
 
 dpkg_src(
     name = "debian_buster_security",
-    package_prefix = "https://snapshot.debian.org/archive/debian-security/20210215T180445Z/",
-    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20210215T180445Z/dists/buster/updates/main/binary-amd64/Packages.gz",
-    sha256 = "666dad92ef97c05f72264ab570ccb4059e6993cc00c823b427a93f1f3349743e",
+    package_prefix = "https://snapshot.debian.org/archive/debian-security/20210216T201258Z/",
+    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20210216T201258Z/dists/buster/updates/main/binary-amd64/Packages.gz",
+    sha256 = "979b105c890ce629a002d66c79b67381c5b78b4769abbeddad3a57225c1c1159",
 )
 
 dpkg_list(
@@ -56,6 +56,7 @@ dpkg_list(
         # Version required to skip a security fix to the pre-release library
         # TODO: Remove when there is a security fix or dpkg_list finds the recent version
         "libc6",
+        "libc-bin",
         "base-files",
         "ca-certificates",
         "openssl",
@@ -125,8 +126,8 @@ http_file(
 http_file(
     name = "busybox",
     executable = True,
-    sha256 = "233d850e3927bb99d8fcb9a55930cac0c8ad41eaad6a8fc2b02c4e0f88acf042",
-    urls = ["https://deepscan.jfrog.io/deepscan/distroless-generic/busybox/busybox-1.32.1.tar.xz"],
+    sha256 = "9c1cc2735e2ea21c4579be452b313ce4120866a8c2b9dfc45bb7f9bf02d34949",
+    urls = ["https://deepscan.jfrog.io/deepscan/distroless-generic/busybox/1.32.1-glibc-busybox.tar.xz"],
 )
 
 #Added complied and slimed curl binary from source https://github.com/curl/curl/releases
