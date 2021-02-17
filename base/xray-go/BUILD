@@ -85,6 +85,8 @@ docker_build(
                 packages["db-util"],
                 packages["db5.3-util"],
                 packages["libdb5.3"],
+                packages["libncurses6"],
+                packages["ncurses-base"],
             ],
     tars = [
             ":passwd",

@@ -33,22 +33,21 @@ package_manager_repositories()
 
 ## This is from release debian repo, the problem is that the Package.gz change so need to update chacksume all the time
 
-
 ## Snapshot repo has folder that Package.gz don't change
 dpkg_src(
     name = "debian_buster",
     arch = "amd64",
     distro = "buster",
-    sha256 = "996001ca07a8ea54c4d54539de7ed96d1d2cb1a2c0a3040c1be8fa89820f6bff",
-    snapshot = "20190224T095432Z",
-    url = "https://deepscan.jfrog.io/deepscan/debian/archive",
+    sha256 = "e096054471ae9a772fa67006cd0d9a0b125bb30443625fb6b66935e2a9331e98",
+    snapshot = "20210216T210840Z",
+    url = "https://snapshot.debian.org/archive",
 )
 
 dpkg_src(
     name = "debian_buster_security",
-    package_prefix = "https://deepscan.jfrog.io/deepscan/debian/archive/debian-security/20190131T235445Z/",
-    packages_gz_url = "https://deepscan.jfrog.io/deepscan/debian/archive/debian-security/20190131T235445Z/dists/buster/updates/main/binary-amd64/Packages.gz",
-    sha256 = "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+    package_prefix = "https://snapshot.debian.org/archive/debian-security/20210216T201258Z/",
+    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20210216T201258Z/dists/buster/updates/main/binary-amd64/Packages.gz",
+    sha256 = "979b105c890ce629a002d66c79b67381c5b78b4769abbeddad3a57225c1c1159",
 )
 
 dpkg_list(
@@ -57,6 +56,7 @@ dpkg_list(
         # Version required to skip a security fix to the pre-release library
         # TODO: Remove when there is a security fix or dpkg_list finds the recent version
         "libc6",
+        "libc-bin",
         "base-files",
         "ca-certificates",
         "openssl",
@@ -89,6 +89,8 @@ dpkg_list(
         "db-util",
         "db5.3-util",
         "libdb5.3",
+        "libncurses6",
+        "ncurses-base",
     ],
     # Takes the first package found: security updates should go first
     # If there was a security fix to a package before the stable release, this will find
@@ -121,25 +123,19 @@ http_file(
     urls = ["https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64"],
 )
 
-#http_file(
-#    name = "busybox",
-#    executable = True,
-#    sha256 = "5776b1f4fbff641eb09024483fde28467e81bc74118c0c65ce5a8ad7a1029063",
-#    urls = ["https://busybox.net/downloads/binaries/1.30.0-i686/busybox"],
-#)
-#use this fixed version for this issue https://github.com/GoogleContainerTools/distroless/issues/225
 http_file(
     name = "busybox",
     executable = True,
-    sha256 = "af052caf38fe81eae321005c5c151650d64714bbe0a3f5e1f7cb39ba179cf7d6",
-    urls = ["https://deepscan.jfrog.io/deepscan/distroless-generic/busybox/1.30.0-glibc-busybox.tar.xz"],
+    sha256 = "9c1cc2735e2ea21c4579be452b313ce4120866a8c2b9dfc45bb7f9bf02d34949",
+    urls = ["https://deepscan.jfrog.io/deepscan/distroless-generic/busybox/1.32.1-glibc-busybox.tar.xz"],
 )
+
 #Added complied and slimed curl binary from source https://github.com/curl/curl/releases
 http_file(
     name = "curl",
     executable = True,
-    sha256 = "cfd3c343c8730e2d03565800a8736a75ac7f6abea323081465b520a61db5c9b1",
-    urls = ["https://deepscan.jfrog.io/deepscan/distroless-generic/curl/curl-7.71.0-linux.tar.gz"],
+    sha256 = "2d7237ec551fbe1a7ddaa8ede3aea5390fa354f6e2b45ccd65209e2d6c67290b",
+    urls = ["https://deepscan.jfrog.io/deepscan/distroless-generic/curl/curl-7.74.0-linux.tar.gz"],
 )
 # Docker rules.
 git_repository(
