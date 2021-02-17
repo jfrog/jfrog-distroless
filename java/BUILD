@@ -3,10 +3,16 @@ package(default_visibility = ["//visibility:public"])
 load("@io_bazel_rules_docker//docker:docker.bzl", "docker_build")
 load("@package_bundle//file:packages.bzl", "packages")
 load("//cacerts:java.bzl", "cacerts_java")
+load("//locale:locale.bzl", "locale")
 load("@io_bazel_rules_docker//java:image.bzl", "java_image")
 
 cacerts_java(
     name = "cacerts_java",
+)
+
+locale(
+    name = "locale",
+    deb = packages["libc-bin"],
 )
 
 docker_build(
@@ -14,6 +20,7 @@ docker_build(
     base = "//cc:debug",
     debs = [
         packages["zlib1g"],
+        packages["libc-bin"],
         packages["net-tools"],
         packages["libprocps7"],
         packages["procps"],
@@ -40,8 +47,10 @@ docker_build(
     ],
     stamp = True,
     entrypoint = ["/busybox/sh"],
-
-    tars = [":cacerts_java"],
+    env = {
+        "LANG": "C.UTF-8",
+    },
+    tars = [":cacerts_java",":locale",],
 )
 
 docker_build(

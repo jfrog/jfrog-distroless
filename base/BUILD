@@ -46,10 +46,16 @@ pkg_tar(
 
 load("@package_bundle//file:packages.bzl", "packages")
 load("//cacerts:cacerts.bzl", "cacerts")
+load("//locale:locale.bzl", "locale")
 
 cacerts(
     name = "cacerts",
     deb = packages["ca-certificates"],
+)
+
+locale(
+    name = "locale",
+    deb = packages["libc-bin"],
 )
 
 # Create /tmp, too many things assume it exists.
@@ -63,6 +69,7 @@ docker_build(
         packages["base-files"],
         packages["netbase"],
         packages["tzdata"],
+        packages["libc-bin"],
         ":cacerts.deb",
     ],
     env = {
@@ -71,6 +78,7 @@ docker_build(
         # TODO: We should run update-ca-certifaces, but that requires "openssl rehash"
         # which would probably need to be run inside the container
         "SSL_CERT_FILE": "/etc/ssl/certs/ca-certificates.crt",
+        "LANG": "C.UTF-8",
     },
     tars = [
         ":passwd",

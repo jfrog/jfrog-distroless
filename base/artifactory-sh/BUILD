@@ -63,10 +63,16 @@ pkg_tar(
 
 load("@package_bundle//file:packages.bzl", "packages")
 load("//cacerts:cacerts.bzl", "cacerts")
+load("//locale:locale.bzl", "locale")
 
 cacerts(
     name = "cacerts",
     deb = packages["ca-certificates"],
+)
+
+locale(
+    name = "locale",
+    deb = packages["libc-bin"],
 )
 
 # Create /tmp, too many things assume it exists.
