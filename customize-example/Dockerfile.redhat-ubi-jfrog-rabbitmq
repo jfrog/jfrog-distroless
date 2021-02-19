@@ -2,7 +2,7 @@
 # https://github.com/bitnami/bitnami-docker-rabbitmq/blob/master/3.8/debian-10/Dockerfile
 # JFROG REDHAT UBI PORT TO WORK IN BITNAMI RABBITMQ HELM CHARTS
 
-FROM bitnami/rabbitmq:3.8.3-debian-10-r40 as base
+FROM bitnami/rabbitmq:3.8.9-debian-10-r20 as base
 
 FROM registry.access.redhat.com/ubi8
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
@@ -12,7 +12,7 @@ LABEL name="JFrog Rabbit MQ" \
       summary="JFrog Rabbit MQ (Red Hat UBI)" \
       com.jfrog.license_terms="https://jfrog.com/platform/enterprise-plus-eula/"
 
-ARG RABBITMQ_VERSION=3.8.3
+ARG RABBITMQ_VERSION=3.8.9
 
 LABEL io.k8s.description="Lightweight open source message broker" \
     io.k8s.display-name="RabbitMQ" \
@@ -44,11 +44,12 @@ RUN set -xe && \
 
 # COPY OVER THE RABBITMQ LICENSES INTO THE FOLDER FOR REDHAT TO SCAN
 COPY --from=base /opt/bitnami /opt/bitnami
-RUN mkdir -p /licenses && chmod 0755 /licenses && cp -rf /opt/bitnami/rabbitmq/licenses/* /licenses
-
+COPY xray-rabbitmq-setup.sh /opt/bitnami/scripts/rabbitmq/setup.sh
+RUN mkdir -p /licenses && chmod 0755 /licenses && cp -rf /opt/bitnami/rabbitmq/licenses/* /licenses && chmod 0755 /opt/bitnami/scripts/rabbitmq/setup.sh
 RUN mkdir -p /opt/bitnami/rabbitmq/ && chown -R 0777 /opt/bitnami/rabbitmq/ && chown -R 1000721001:1000721001 /opt/bitnami/rabbitmq
 RUN mkdir -p /var/log/rabbitmq/log/ && chmod -R 0777 /var/log
 RUN mkdir -p /bitnami && chmod -R 0777 /bitnami
+
 ENV BITNAMI_APP_NAME="rabbitmq" \
     LANG="en_US.UTF-8" \
     LANGUAGE="en_US:en"
