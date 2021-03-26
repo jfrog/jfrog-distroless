@@ -25,8 +25,8 @@ RUN yum install -y --disableplugin=subscription-manager -y openssl curl ca-certi
 
 
 ENV GPG_KEY="0A9AF2115F4687BD29803A206B73A36E6026DFCA" \
-    HOME=/var/lib/rabbitmq \
-    RABBITMQ_HOME=/opt/rabbitmq \
+    HOME=/opt/bitnami/rabbitmq  \
+    RABBITMQ_HOME=/opt/bitnami \
     RABBITMQ_LOGS=- \
     RABBITMQ_SASL_LOGS=- \
     LANG=en_US.UTF-8 \
