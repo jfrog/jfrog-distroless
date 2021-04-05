@@ -51,7 +51,7 @@ RUN useradd -M -s /usr/sbin/nologin --uid ${ARTIFACTORY_USER_ID} --user-group ${
 
 # Add RUN instruction for updating the vulnerability found in openssl-libs package.
 
-RUN yum  update openssl-libs
+RUN yum  update openssl-libs -y 
 
 
 USER $JF_ARTIFACTORY_USER
