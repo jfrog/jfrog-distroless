@@ -49,6 +49,10 @@ RUN useradd -M -s /usr/sbin/nologin --uid ${ARTIFACTORY_USER_ID} --user-group ${
     yum install -y --disableplugin=subscription-manager net-tools && \
     yum install -y --disableplugin=subscription-manager hostname
 
+# Add RUN instruction for updating the vulnerability found in openssl-libs package.
+
+RUN microdnf update openssl-libs
+
 
 USER $JF_ARTIFACTORY_USER
 
