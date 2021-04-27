@@ -78,23 +78,64 @@ docker_build(
     debs = [
             	packages["bash"],
                 packages["dash"],
+                packages["libc6"],
                 packages["libtinfo6"],
                 packages["zlib1g"],
                 packages["libstdc++6"],
+                packages["libselinux1"],
                 packages["libgcc1"],
                 packages["db-util"],
                 packages["db5.3-util"],
                 packages["libdb5.3"],
                 packages["libncurses6"],
+                packages["libncursesw6"],
                 packages["ncurses-base"],
+                packages["ncurses-bin"],
+                packages["coreutils"],
+                packages["gzip"],
+                packages["grep"],
+                packages["unzip"],
+                packages["sed"],
+                packages["findutils"],
+                packages["original-awk"],
+                packages["tar"],
+                packages["inetutils-tools"],
+                packages["util-linux"],
+                packages["libpcre3"],
+                packages["libbz2-1.0"],
+                packages["libattr1"],
+                packages["libacl1"],
+                packages["hostname"],
+                packages["vim-tiny"],
+                packages["vim-common"],
+                packages["wget"],
+                packages["libpcre2-8-0"],
+                packages["libgnutls30"],
+                packages["libidn2-0"],
+                packages["libnettle6"],
+                packages["libpsl5"],
+                packages["libuuid1"],
+                packages["libgmp10"],
+                packages["libhogweed4"], 
+                packages["libp11-kit0"], 
+                packages["libtasn1-6"],  
+                packages["libunistring2"],
+                packages["libffi6"],
+                packages["debianutils"],
+                packages["libpcap0.8"],
+                packages["tcpdump"],
+                packages["lsof"],
+                packages["tree"],
             ],
     tars = [
             ":passwd",
             ":group_tar",
-            "//experimental/postgresql-client:postgresql-client.tar",
         ],
-    env = {"PATH": "$PATH:/postgresql-client/bin"},
-    entrypoint = ["/busybox/sh"]
+    symlinks = {
+            "/usr/bin/awk": "/usr/bin/original-awk",
+            "/usr/bin/vi": "/usr/bin/vim.tiny",
+        },
+    entrypoint = ["/bin/sh"]
 )
 container_test(
     name = "creds_test",
@@ -108,11 +149,11 @@ container_test(
     image = ":xray-go",
 )
 
-container_test(
-    name = "psql_test",
-    configs = ["testdata/psql.yaml"],
-    image = ":xray-go",
-)
+#container_test(
+#    name = "psql_test",
+#    configs = ["testdata/psql.yaml"],
+#    image = ":xray-go",
+#)
 
 load("@io_bazel_rules_docker//container:container.bzl", "container_push")
 container_push(

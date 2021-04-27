@@ -19,6 +19,7 @@ docker_build(
     name = "java-base",
     base = "//cc:debug",
     debs = [
+        packages["libc6"],
         packages["zlib1g"],
         packages["libc-bin"],
         packages["net-tools"],
@@ -44,13 +45,52 @@ docker_build(
         packages["libgcc1"],
         packages["libncurses6"],
         packages["ncurses-base"],
+        packages["ncurses-bin"],
+        packages["coreutils"],
+        packages["gzip"],
+        packages["grep"],
+        packages["unzip"],
+        packages["sed"],
+        packages["findutils"],
+        packages["original-awk"],
+        packages["tar"],
+        packages["inetutils-tools"],
+        packages["util-linux"],
+        packages["libbz2-1.0"],
+        packages["libattr1"],
+        packages["libacl1"],
+        packages["hostname"],
+        packages["vim-tiny"],
+        packages["vim-common"],
+        packages["wget"],
+        packages["libpcre2-8-0"],
+        packages["libgnutls30"],
+        packages["libidn2-0"],
+        packages["libnettle6"],
+        packages["libpsl5"],
+        packages["libuuid1"],
+        packages["libgmp10"],
+        packages["libhogweed4"], 
+        packages["libp11-kit0"], 
+        packages["libtasn1-6"],  
+        packages["libunistring2"],
+        packages["libffi6"],
+        packages["debianutils"],
+        packages["libpcap0.8"],
+        packages["tcpdump"],
+        packages["lsof"],
+        packages["tree"],
     ],
     stamp = True,
-    entrypoint = ["/busybox/sh"],
+    entrypoint = ["/bin/sh"],
     env = {
         "LANG": "C.UTF-8",
     },
     tars = [":cacerts_java",":locale",],
+    symlinks = {
+            "/usr/bin/awk": "/usr/bin/original-awk",
+            "/usr/bin/vi": "/usr/bin/vim.tiny",
+    },
 )
 
 docker_build(
@@ -64,7 +104,7 @@ docker_build(
         # cmd = ["/path/to/deploy.jar", "--option1", ...]
     ],
     symlinks = {
-        "/usr/bin/java": "/java/jdk-11.0.7+10/bin/java",
+        "/usr/bin/java": "/java/jdk-11.0.11+9/bin/java",
     },
     tars = ["//experimental/adoptopenjdk:adoptopenjdk.tar"],
 )
@@ -72,10 +112,10 @@ docker_build(
 docker_build(
     name = "debug",
     base = ":java11",
-    entrypoint = ["/busybox/sh"],
+    entrypoint = ["/bin/sh"],
      stamp = True,
      symlinks = {
-             "/usr/bin/jar": "/java/jdk-11.0.7+10/bin/jar",
+             "/usr/bin/jar": "/java/jdk-11.0.11+9/bin/jar",
          }
 )
 
