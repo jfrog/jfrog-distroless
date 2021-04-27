@@ -26,18 +26,18 @@ passwd_entry(
 )
 
 passwd_entry(
-    name = "jfmc_user",
-    gid = 1050,
-    uid = 1050,
-    home = "/home/jfmc",
-    username = "jfmc",
+    name = "insight_user",
+    gid = 1040,
+    uid = 1040,
+    home = "/home/insight",
+    username = "insight",
 )
 
 passwd_tar(
     name = "passwd",
     entries = [
         ":root_user",
-        ":jfmc_user",
+        ":insight_user",
         ":elasticsearch_user",
     ],
     passwd_file_pkg_dir = "etc",
@@ -51,15 +51,15 @@ group_entry(
 )
 
 group_entry(
-    name = "jfmc_group",
-    gid = 1050,
-    groupname = "jfmc",
+    name = "insight_group",
+    gid = 1040,
+    groupname = "insight",
 )
 
 group_entry(
     name = "elasticsearch_group",
     gid = 1000,
-    users = ["jfmc", "elasticsearch"],
+    users = ["insight", "elasticsearch"],
     groupname = "elasticsearch",
 )
 
@@ -67,7 +67,7 @@ group_file(
     name = "group",
     entries = [
         ":root_group",
-        ":jfmc_group",
+        ":insight_group",
         ":elasticsearch_group",
     ],
 )
@@ -98,19 +98,62 @@ docker_build(
     debs = [
         	packages["bash"],
             packages["dash"],
+            packages["libc6"],
             packages["libtinfo6"],
+            packages["libselinux1"],
             packages["zlib1g"],
             packages["libstdc++6"],
             packages["libgcc1"],
             packages["libncurses6"],
+            packages["libncursesw6"],
             packages["ncurses-base"],
+            packages["ncurses-bin"],
+            packages["coreutils"],
+            packages["gzip"],
+            packages["grep"],
+            packages["unzip"],
+            packages["sed"],
+            packages["findutils"],
+            packages["original-awk"],
+            packages["tar"],
+            packages["inetutils-tools"],
+            packages["util-linux"],
+            packages["libpcre3"],
+            packages["libbz2-1.0"],
+            packages["libattr1"],
+            packages["libacl1"],
+            packages["hostname"],
+            packages["vim-tiny"],
+            packages["vim-common"],
+            packages["wget"],
+            packages["libpcre2-8-0"],
+            packages["libgnutls30"],
+            packages["libidn2-0"],
+            packages["libnettle6"],
+            packages["libpsl5"],
+            packages["libuuid1"],
+            packages["libgmp10"],
+            packages["libhogweed4"], 
+            packages["libp11-kit0"], 
+            packages["libtasn1-6"],  
+            packages["libunistring2"],
+            packages["libffi6"],
+            packages["debianutils"],
+            packages["libpcap0.8"],
+            packages["tcpdump"],
+            packages["lsof"],
+            packages["tree"],
         ],
     stamp = True,
     tars = [
             ":passwd",
             ":group_tar",
         ],
-    entrypoint = ["/busybox/sh"]
+    symlinks = {
+            "/usr/bin/awk": "/usr/bin/original-awk",
+            "/usr/bin/vi": "/usr/bin/vim.tiny",
+        },
+    entrypoint = ["/bin/sh"]
 )
 
 container_test(

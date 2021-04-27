@@ -38,16 +38,16 @@ dpkg_src(
     name = "debian_buster",
     arch = "amd64",
     distro = "buster",
-    sha256 = "e096054471ae9a772fa67006cd0d9a0b125bb30443625fb6b66935e2a9331e98",
-    snapshot = "20210216T210840Z",
+    sha256 = "b044c73a46671536011a26aedd8490dd31140538264ac12f26dc6dd0b4f0fcb8",
+    snapshot = "20210617T083720Z",
     url = "https://snapshot.debian.org/archive",
 )
 
 dpkg_src(
     name = "debian_buster_security",
-    package_prefix = "https://snapshot.debian.org/archive/debian-security/20210216T201258Z/",
-    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20210216T201258Z/dists/buster/updates/main/binary-amd64/Packages.gz",
-    sha256 = "979b105c890ce629a002d66c79b67381c5b78b4769abbeddad3a57225c1c1159",
+    package_prefix = "https://snapshot.debian.org/archive/debian-security/20210615T212258Z/",
+    packages_gz_url = "https://snapshot.debian.org/archive/debian-security/20210615T212258Z/dists/buster/updates/main/binary-amd64/Packages.gz",
+    sha256 = "112e78c3a5e6b27e22c9bc51fe1fd1fdef5ca9fe6d1af90de1392784aecdeeac",
 )
 
 dpkg_list(
@@ -91,6 +91,42 @@ dpkg_list(
         "libdb5.3",
         "libncurses6",
         "ncurses-base",
+        "libncursesw6",
+        "ncurses-bin",
+        "coreutils",
+        "gzip",
+        "grep",
+        "unzip",
+        "sed",
+        "findutils",
+        "original-awk",
+        "tar",
+        "inetutils-tools",
+        "util-linux",
+        "libbz2-1.0",
+        "libattr1",
+        "libacl1",
+        "hostname",
+        "vim-tiny",
+        "vim-common",
+        "wget",
+        "libpcre2-8-0",
+        "libgnutls30",
+        "libidn2-0",
+        "libnettle6",
+        "libpsl5",
+        "libuuid1",
+        "libgmp10",
+        "libhogweed4", 
+        "libp11-kit0", 
+        "libtasn1-6",  
+        "libunistring2",
+        "libffi6",
+        "debianutils",
+        "libpcap0.8",
+        "tcpdump",
+        "lsof",
+        "tree",
     ],
     # Takes the first package found: security updates should go first
     # If there was a security fix to a package before the stable release, this will find
@@ -104,17 +140,17 @@ dpkg_list(
 http_file(
     name = "adoptopenjdk",
     executable = True,
-    sha256 = "eefd7b967ae0865f47f6abd2da26853bda5ebec72dad7034fd993082554e4fef",
-    urls = ["https://deepscan.jfrog.io/deepscan/distroless-generic/java/adoptopenjdk-11.0.7+10-linux.tar.gz"],
+    sha256 = "47545884a5b4cc8becaa7338b53e0dabc6196fedea9bf8b30fa388985e35bcaf",
+    urls = ["https://deepscan.jfrog.io/deepscan/distroless-generic/java/adoptopenjdk-11.0.11+9-linux.tar.gz"],
 )
 
 # PostgreSQL Client for MongoDB -> PostgreSQL migration
-http_file(
-    name = "postgresql-client",
-    executable = True,
-    sha256 = "18102fdccdd3c71e34f4d827e3f51fa3d694f55bf25c4c06af397aa241ecb15d",
-    urls = ["https://deepscan.jfrog.io/deepscan/distroless-generic/postgresql/postgresql-9.5.2-1-linux-x64-binaries.tar.gz"],
-)
+    #http_file(
+    #    name = "postgresql-client",
+    #    executable = True,
+    #    sha256 = "18102fdccdd3c71e34f4d827e3f51fa3d694f55bf25c4c06af397aa241ecb15d",
+    #    urls = ["https://deepscan.jfrog.io/deepscan/distroless-generic/postgresql/postgresql-9.5.2-1-linux-x64-binaries.tar.gz"],
+    #)
 
 http_file(
     name = "jq",
@@ -123,19 +159,19 @@ http_file(
     urls = ["https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64"],
 )
 
-http_file(
-    name = "busybox",
-    executable = True,
-    sha256 = "9c1cc2735e2ea21c4579be452b313ce4120866a8c2b9dfc45bb7f9bf02d34949",
-    urls = ["https://deepscan.jfrog.io/deepscan/distroless-generic/busybox/1.32.1-glibc-busybox.tar.xz"],
-)
+    #http_file(
+    #    name = "busybox",
+    #    executable = True,
+    #    sha256 = "87dffd21959238a0a088509123616f57420022db1a656870fae780e9b2a683cd",
+    #    urls = ["https://deepscan.jfrog.io/deepscan/distroless-generic/busybox/1.32.1-glibc-busybox.tar.xz"],
+    #)
 
 #Added complied and slimed curl binary from source https://github.com/curl/curl/releases
 http_file(
     name = "curl",
     executable = True,
-    sha256 = "2d7237ec551fbe1a7ddaa8ede3aea5390fa354f6e2b45ccd65209e2d6c67290b",
-    urls = ["https://deepscan.jfrog.io/deepscan/distroless-generic/curl/curl-7.74.0-linux.tar.gz"],
+    sha256 = "3317a3396ff0331a1adbaafa44a257a697e3031ead25f74cd38434f4a96d6a14",
+    urls = ["https://deepscan.jfrog.io/deepscan/distroless-generic/curl/curl-7.77.0-linux.tar.gz"],
 )
 # Docker rules.
 git_repository(
@@ -153,8 +189,8 @@ load(
 # Used to generate java ca certs.
 docker_pull(
     name = "debian10",
-    # From tag: 2020-11-18-130739
-    digest = "sha256:5dd21a5ed0a9cd98c5d271dc8c7c11b2583d14071437c2ef86d0b25ab3070911",
+    # From tag: 2021-06-09
+    digest = "sha256:3242ff21417c7722482c2085f86f28ed4f76cde00bf880f15fc1795975bc2a81",
     registry = "gcr.io",
     repository = "google-appengine/debian10",
 )

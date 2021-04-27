@@ -65,7 +65,7 @@ docker_build(
         ":passwd",
         ":group_tar",
     ],
-    entrypoint = ["/busybox/sh"]
+    entrypoint = ["/bin/sh"]
 )
 
 docker_build(
@@ -76,7 +76,7 @@ docker_build(
         ":passwd",
         ":group_tar",
     ],
-    entrypoint = ["/busybox/sh"]
+    entrypoint = ["/bin/sh"]
 )
 
 container_test(

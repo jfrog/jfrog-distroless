@@ -1,7 +1,7 @@
 package(default_visibility = ["//visibility:public"])
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 
-# For convenience, rename busybox-x86_64 to busybox.
+# For convenience, rename adoptopenjdk to java.
 genrule(
     name = "adoptopenjdk_tar",
     srcs = ["@adoptopenjdk//file:downloaded"],
