@@ -126,7 +126,7 @@ http_file(
 http_file(
     name = "busybox",
     executable = True,
-    sha256 = "9c1cc2735e2ea21c4579be452b313ce4120866a8c2b9dfc45bb7f9bf02d34949",
+    sha256 = "87dffd21959238a0a088509123616f57420022db1a656870fae780e9b2a683cd",
     urls = ["https://deepscan.jfrog.io/deepscan/distroless-generic/busybox/1.32.1-glibc-busybox.tar.xz"],
 )
 
