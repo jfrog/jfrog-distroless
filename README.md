@@ -1,4 +1,7 @@
-# JFrog distroless base images 
+# ⚠️ DEPRECATED - JFrog distroless base images 
+
+JFrog products no longer use distroless images as base image. All the base images has been updated with the [Red Hat's UBI micro](https://www.redhat.com/en/blog/introduction-ubi-micro) images.
+
 This project is based on Google [distroless](https://github.com/GoogleContainerTools/distroless) project 
 and build using [Bazel](https://bazel.build/) build tool
 
