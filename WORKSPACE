@@ -104,8 +104,8 @@ dpkg_list(
 http_file(
     name = "adoptopenjdk",
     executable = True,
-    sha256 = "eefd7b967ae0865f47f6abd2da26853bda5ebec72dad7034fd993082554e4fef",
-    urls = ["https://deepscan.jfrog.io/deepscan/distroless-generic/java/adoptopenjdk-11.0.7+10-linux.tar.gz"],
+    sha256 = "47545884a5b4cc8becaa7338b53e0dabc6196fedea9bf8b30fa388985e35bcaf",
+    urls = ["https://deepscan.jfrog.io/deepscan/distroless-generic/java/adoptopenjdk-11.0.11+9-linux.tar.gz"],
 )
 
 # PostgreSQL Client for MongoDB -> PostgreSQL migration
@@ -126,7 +126,7 @@ http_file(
 http_file(
     name = "busybox",
     executable = True,
-    sha256 = "9c1cc2735e2ea21c4579be452b313ce4120866a8c2b9dfc45bb7f9bf02d34949",
+    sha256 = "87dffd21959238a0a088509123616f57420022db1a656870fae780e9b2a683cd",
     urls = ["https://deepscan.jfrog.io/deepscan/distroless-generic/busybox/1.32.1-glibc-busybox.tar.xz"],
 )
 
