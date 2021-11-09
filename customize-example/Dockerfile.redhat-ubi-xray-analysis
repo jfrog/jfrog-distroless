@@ -22,7 +22,7 @@ ENV JF_XRAY_USER=xray \
 
 COPY --from=base /opt/jfrog/xray /opt/jfrog/xray
 COPY --from=base /var/opt/jfrog/xray /var/opt/jfrog/xray
-COPY --from=base /postgresql-client /postgresql-client
+#COPY --from=base /postgresql-client /postgresql-client
 
 # Add license information to meet the Red Hat container image certification requirements
 COPY --from=base /opt/jfrog/xray/app/doc/* /licenses/
