@@ -1,12 +1,12 @@
 schemaVersion: "1.0.0"
 commandTests:
-  # Check that jfmc user
-  - name: check jfmc creds
+  # Check that insight user
+  - name: check insight creds
     command: ["cat", "/etc/passwd"]
-    expectedOutput: ["jfmc:x:1050:1050:user:/home/jfmc:/bin/bash"]
+    expectedOutput: ["insight:x:1040:1040:user:/home/insight:/bin/bash"]
   - name: check elasticsearch creds
     command: ["cat", "/etc/passwd"]
     expectedOutput: ["elasticsearch:x:1000:1000:user:/home/elasticsearch:/bin/bash"]
-  - name: check jfmc groups
-    command: ["id", "jfmc"]
-    expectedOutput: ["groups.*1050.*jfmc.*1000.*elasticsearch.*"]
+  - name: check insight groups
+    command: ["id", "insight"]
+    expectedOutput: ["groups.*1040.*insight.*1000.*elasticsearch.*"]
